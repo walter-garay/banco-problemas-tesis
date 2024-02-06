@@ -1,0 +1,16 @@
+# Django
+/api/__pycache__
+/Django/__pycache__
+/api/*.pyc
+/api/*.pyo
+/api/*.pyd
+/DjangoBackend/media
+env/
+db.sqlite3
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Otros
+node_modules/
