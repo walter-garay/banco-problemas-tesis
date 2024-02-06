@@ -96,9 +96,11 @@ const problemas = [
 
 
 export default function ProblemsPage() {
+    
+
     return (
-        <div className="w-full py-8 px-3 flex flex-col items-center space-y-4 sm:px-8">
-            <Button>Agregar problema</Button>
+        <div className="w-full py-8 px-3 flex flex-col items-center space-y-5 sm:px-8">
+            <Button href="/nuevo" target="_self">Agregar problema</Button>
             {
                 problemas.map(( {id, title, area, cantRecursos, description, dateRegistration, status} ) => (
                     <ProblemCard 
