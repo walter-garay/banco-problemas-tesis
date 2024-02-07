@@ -85,14 +85,15 @@ const problemas = [
     },
     {
         id: 10,
-        title: "Desafíos en la Adopción de Tecnologías Educativas en Escuelas de Tokio, Japón",
-        area: "Educación",
-        cantRecursos: 6,
-        description: "La resistencia a la integración de tecnologías educativas en las aulas limita el potencial de aprendizaje de los estudiantes y dificulta la preparación para el futuro digital.",
-        dateRegistration: "20/03/2024",
-        status: "Revisión pendiente"
+        title: undefined,
+        area: undefined,
+        cantRecursos: undefined,
+        description: undefined,
+        dateRegistration: undefined,
+        status: undefined
     }
 ];
+
 
 
 export default function ProblemsPage() {

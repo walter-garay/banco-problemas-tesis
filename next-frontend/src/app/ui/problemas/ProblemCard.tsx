@@ -11,12 +11,12 @@ type ProblemCardProps = {
 }
 
 export default function ProblemCard({
-        title = 'Default Title', 
-        status = 'Default Status', 
-        area = 'Default Area', 
+        title = 'Esta solicitud no tiene un título definido', 
+        status = 'Sin estado', 
+        area = 'No especificado', 
         cantRecursos = 0, 
-        description = 'Default Description', 
-        dateRegistration = "sin fecha" 
+        description = 'La descripción de este problema no ha sido detallada', 
+        dateRegistration = "*" 
     } : ProblemCardProps) {
         
     return (
@@ -29,7 +29,7 @@ export default function ProblemCard({
                 </TagStatusProblemCard>
             </h1>
             
-            <p className="font-medium">Área del problema: <span className="font-normal">{area}</span></p>
+            <p className="font-medium">Sector del problema: <span className="font-normal">{area}</span></p>
             <p className="font-medium">Recursos compartidos: <span className="font-normal">{cantRecursos}</span></p>
             <p className="mt-3 mb-3">{description}</p>
 
