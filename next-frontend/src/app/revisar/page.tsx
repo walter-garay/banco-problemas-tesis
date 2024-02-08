@@ -17,6 +17,7 @@ export default function ReviewProblemDialog({}) {
             bg-white rounded-xl
             shadow-sm
             block justify-center
+            p-12
             ">
             
             {/* <div className="flex justify-between mb-4">
