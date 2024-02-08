@@ -1,5 +1,5 @@
-import ButtonProblemCard from "./ButtonProblemCard";
 import TagStatusProblemCard from "./TagStatusProblemCard";
+import Button from "../Button";
 
 type ProblemCardProps = {
     title?: string,
@@ -35,7 +35,15 @@ export default function ProblemCard({
 
             <div className="flex justify-between">
                 <p className="mt-auto text-sm font-medium">Regitrado el {dateRegistration}</p>
-                <ButtonProblemCard/>
+                <Button href="/revisar" target="_self"
+                    className="bg-slate-500 
+                    hover:bg-slate-600
+                    w-24 h-8
+                    text-white font-semibold 
+                    rounded-md shadow-md text-sm"
+                    >
+                    Revisar                    
+                </Button>
             </div>
 
         </div>

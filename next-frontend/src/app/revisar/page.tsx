@@ -9,7 +9,7 @@ import DropdownSectores from "../ui/problemas/DropdownSectore";
 
 
 
-export default function NewProblemDialog({}) {
+export default function ReviewProblemDialog({}) {
     return (
         <div className="
             w-full

@@ -1,6 +1,12 @@
+'use client'
+import React, { useState } from "react";
+
 import ProblemCard from "../ui/problemas/ProblemCard";
 import Button from "../ui/Button";
 
+import { Dialog } from 'primereact/dialog';
+
+import NewProblemDialog from "@/app/nuevo/page";
 
 const problemas = [
     {
@@ -98,12 +104,13 @@ const problemas = [
 
 
 export default function ProblemsPage() {
-    
+    const [visible, setVisible] = useState(false);
 
     return (
-        <div className="w-full py-8 px-3 flex flex-col items-center space-y-5 sm:px-8">
-            <Button href="/nuevo" target="_self"
+        <main className="w-full py-8 px-3 flex flex-col items-center space-y-5 sm:px-8 ">
+            <Button
                 className="bg-blue-700 hover:bg-blue-800 w-44 h-10 text-white "
+                onClick={() => setVisible(true)}
             >Agregar problema</Button>
             {
                 problemas.map(( {id, title, area, cantRecursos, description, dateRegistration, status} ) => (
@@ -118,6 +125,18 @@ export default function ProblemsPage() {
                     />  
                 ))
             }
-        </div>
+            <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
+                className="w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
+                pt={{
+                    root: { className: 'min-h-full sm:min-h-96 sm:mx-6' },
+                    
+                }}
+                >
+                <NewProblemDialog />
+            </Dialog>
+            
+            
+        </main>
+        
     );
 }
