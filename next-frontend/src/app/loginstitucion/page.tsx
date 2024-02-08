@@ -1,15 +1,11 @@
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { InputWithLabel } from "@/components/ui/input"
 import React from 'react';
 import Link from 'next/link';
 import { IoPersonAddSharp } from "react-icons/io5";
 import { ImLibrary } from "react-icons/im";
 
-// Asegúrate de importar correctamente tu componente InputWithLabel
-
-export default function Login({}) {
-    return (
+export default function LoginInstitucion({}) {
+    return(
         <div className="flex items-center justify-center h-screen ">
             <div className="max-w-3xl py-9 px-6 sm:px-9 mx-auto sm:mx-auto sm:max-w-2xl flex flex-col items-center space-y-9 bg-white rounded-xl shadow-sm">
 
@@ -37,10 +33,26 @@ export default function Login({}) {
                     </div>
                 </div>
 
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-x-4 sm:space-y-0">
+                    <div className="w-full sm:w-1/2">
+                        <InputWithLabel 
+                            id="title" label="Razón Social" type="text"  
+                            placeholder="Móviles España, S.A.U." 
+                        />
+                    </div>
+
+                    <div className="w-full sm:w-1/2">
+                        <InputWithLabel 
+                            id="title" label="RUC" type="text"  
+                            placeholder="345634523423" 
+                        />
+                    </div>
+                </div>
+
                 <div className="w-full sm:w-full ">
                     <InputWithLabel 
-                        id="title" label="Nombre y Apellidos" type="text"  
-                        placeholder="Erick Vasquez" 
+                        id="title" label="Representante" type="text"  
+                        placeholder="Erickson Melaino Vasquez Rengifo" 
                     />  
                 </div>
 
@@ -55,7 +67,7 @@ export default function Login({}) {
                     <div className="w-full sm:w-1/2">
                         <InputWithLabel 
                             id="title" label="Telefóno" type="text"  
-                            placeholder="" 
+                            placeholder="939323721" 
                         />
                     </div>
                 </div>
@@ -63,7 +75,7 @@ export default function Login({}) {
                 <div className="w-full sm:w-full ">
                     <InputWithLabel 
                         id="title" label="Contraseña" type="password"  
-                        placeholder="*******" 
+                        placeholder="**********" 
                     />
                 </div>
 
