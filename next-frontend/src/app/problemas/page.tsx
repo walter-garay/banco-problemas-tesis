@@ -1,5 +1,6 @@
 import ProblemCard from "../ui/problemas/ProblemCard";
-import Button from "../ui/problemas/Button";
+import Button from "../ui/Button";
+
 
 const problemas = [
     {
@@ -101,7 +102,9 @@ export default function ProblemsPage() {
 
     return (
         <div className="w-full py-8 px-3 flex flex-col items-center space-y-5 sm:px-8">
-            <Button href="/nuevo" target="_self">Agregar problema</Button>
+            <Button href="/nuevo" target="_self"
+                className="bg-blue-700 hover:bg-blue-800 w-44 h-10 text-white "
+            >Agregar problema</Button>
             {
                 problemas.map(( {id, title, area, cantRecursos, description, dateRegistration, status} ) => (
                     <ProblemCard 

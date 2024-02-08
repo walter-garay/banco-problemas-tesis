@@ -23,12 +23,21 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 )
 Input.displayName = "Input"
 
+export function LabelWithInput({ ...props }) {
+  return (
+    <div className="grid w-full items-center gap-2.5">
+      <Label htmlFor={props.htmlFor}> {props.label} </Label>
+      {props.children}
+  </div>  
+  )
+}
+
 export function InputWithLabel({ ...props }) {
   return (
     <div className="grid w-full items-center gap-1.5">
       <Label htmlFor={props.id} > {props.label} </Label>
       <Input id={props.id} {...props}></Input>
-  </div>  
-  )
+  </div>  
+  )
 }
 
