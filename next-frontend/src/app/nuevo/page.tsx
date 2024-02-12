@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import Button from "../ui/Button";
 
 import { FileUpload } from 'primereact/fileupload';
-import DropdownSectores from "../ui/problemas/DropdownSectore";
+import DropdownSectores from "../ui/problemas/DropdownSector";
 
 
 

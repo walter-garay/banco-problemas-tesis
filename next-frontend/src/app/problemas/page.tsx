@@ -1,8 +1,10 @@
 'use client'
 import React, { useState } from "react";
+import { Suspense } from "react";
 
 import ProblemCard from "../ui/problemas/ProblemCard";
 import Button from "../ui/Button";
+import MyModalComponent from "../ui/MyModal"
 
 import { Dialog } from 'primereact/dialog';
 
@@ -105,13 +107,25 @@ const problemas = [
 
 export default function ProblemsPage() {
     const [visible, setVisible] = useState(false);
+    const [open, setOpen] = useState(false);
 
+    const handleOpen = () => {
+        setOpen(true);
+        document.body.style.overflow = 'hidden';
+    }
+    const handleClose = () => {
+        setOpen(false);
+        document.body.style.overflow = 'auto';
+    }
+    
     return (
-        <main className="w-full py-8 px-3 flex flex-col items-center space-y-5 sm:px-8 ">
+        <main className="relative w-full flex flex-col items-center gap-y-5">
+            <Button onClick={handleOpen} className='bg-slate-800 text-white w-36 h-10 mb-4'>Abrir Diálogo</Button>
             <Button
-                className="bg-blue-700 hover:bg-blue-800 w-44 h-10 text-white "
-                onClick={() => setVisible(true)}
-            >Agregar problema</Button>
+                className="bg-blue-700 mt-8 hover:bg-blue-800 w-44 h-10 text-white "
+                onClick={() => setVisible(true)}>
+                Agregar problema
+            </Button>
             {
                 problemas.map(( {id, title, area, cantRecursos, description, dateRegistration, status} ) => (
                     <ProblemCard 
@@ -125,17 +139,22 @@ export default function ProblemsPage() {
                     />  
                 ))
             }
-            <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
-                className="w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
-                pt={{
-                    root: { className: 'min-h-full sm:min-h-96 sm:mx-6' },
-                    
-                }}
-                >
-                <NewProblemDialog />
-            </Dialog>
-            
-            
+            <Suspense>
+                <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
+                    className="w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
+                    pt={{
+                        root: { className: 'min-h-full md:min-h-96' },
+                        
+                    }}
+                    >
+                    <NewProblemDialog />
+                </Dialog>
+            </Suspense>
+            <Suspense>
+                <MyModalComponent isOpen={open} onClose={handleClose}  className=" absolute bg-opacity-40  space-y-4 lg:space-y-0 lg:space-x-5 lg:mx-5 py-6 h-screen">
+                </MyModalComponent>
+            </Suspense>       
+
         </main>
         
     );

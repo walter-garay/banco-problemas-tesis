@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Banco de Problemas para Tesis - UDH",
-  description: "Esta plataforma permite a las personas y empresas registrar sus necesidades o problemas para que los estudiantes de la Universidad De Huánuco puedan proponer soluciones en sus tesis.",
+  description: "Esta plataforma permite a las personas y empresas registrar sus necesidades o problemas para que los estudiantes de la Universidad De Huánuco puedan proponer soluciones en sus tesis."
 };
 
 export default function RootLayout({
@@ -27,4 +27,5 @@ export default function RootLayout({
     </PrimeReactProvider>
   );
 }
+
 
