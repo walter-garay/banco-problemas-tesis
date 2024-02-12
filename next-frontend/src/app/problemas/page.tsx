@@ -7,108 +7,25 @@ import Button from "../ui/Button";
 import MyModalComponent from "../ui/MyModal"
 
 import { Dialog } from 'primereact/dialog';
+import { LabelWithInput } from "@/components/ui/input";
+
+import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 
 import NewProblemDialog from "@/app/nuevo/page";
 
-const problemas = [
-    {
-        id: 1,
-        title: "Problema de Calidad en el Proceso de Producción de Automóviles en Detroit, EE. UU.",
-        area: "Manufactura",
-        cantRecursos: 5,
-        description: "Deficiencias en el control de calidad durante la producción de automóviles generan productos defectuosos, aumentando los costos de garantía y afectando la reputación de la marca.",
-        dateRegistration: "15/09/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 2,
-        title: "Descoordinación en la Logística de Distribución de Alimentos en Buenos Aires, Argentina",
-        area: "Logística",
-        cantRecursos: 4,
-        description: "Falta de coordinación en la cadena de suministro de alimentos provoca retrasos en la distribución, resultando en desperdicio de productos perecederos y afectando la disponibilidad en los mercados locales.",
-        dateRegistration: "02/03/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 3,
-        title: "Ineficiencia en el Sistema de Gestión de Inventarios de una Cadena de Tiendas en Madrid, España",
-        area: "Comercio Minorista",
-        cantRecursos: 6,
-        description: "Problemas en la gestión de inventarios generan pérdidas por obsolescencia y roturas de stock, impactando en las ventas y la satisfacción del cliente.",
-        dateRegistration: "18/07/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 4,
-        title: "Falta de Capacitación en la Prevención de Ciberataques en Empresas Tecnológicas en Silicon Valley, EE. UU.",
-        area: "Seguridad Informática",
-        cantRecursos: 8,
-        description: "La carencia de programas de capacitación en ciberseguridad contribuye a vulnerabilidades en sistemas informáticos, exponiendo a las empresas a riesgos de ciberataques y pérdida de datos sensibles.",
-        dateRegistration: "30/04/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 5,
-        title: "Problema de Desarrollo de Recursos Humanos en Empresas Petroleras en Dubai, Emiratos Árabes Unidos",
-        area: "Recursos Humanos",
-        cantRecursos: 7,
-        description: "La falta de programas de desarrollo profesional afecta la retención del talento y el desempeño laboral en el sector petrolero, comprometiendo la eficiencia operativa.",
-        dateRegistration: "12/01/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 6,
-        title: "Ineficacia en la Gestión de Residuos en Hoteles de Cancún, México",
-        area: "Sostenibilidad Ambiental",
-        cantRecursos: 4,
-        description: "La falta de políticas y prácticas sostenibles en la gestión de residuos en hoteles contribuye a la contaminación ambiental y afecta la imagen turística de la ciudad.",
-        dateRegistration: "22/05/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 7,
-        title: "Problemas en la Comunicación Interna en Empresas de Telecomunicaciones en Seúl, Corea del Sur",
-        area: "Comunicación Organizacional",
-        cantRecursos: 6,
-        description: "La falta de canales efectivos de comunicación interna dificulta la coordinación entre departamentos, generando malentendidos y ralentizando la toma de decisiones.",
-        dateRegistration: "10/11/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 8,
-        title: "Ineficiencia Energética en Edificios de Oficinas en Nueva York, EE. UU.",
-        area: "Eficiencia Energética",
-        cantRecursos: 5,
-        description: "La falta de medidas eficaces para mejorar la eficiencia energética en edificios de oficinas contribuye al desperdicio de recursos y aumenta los costos operativos.",
-        dateRegistration: "05/08/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 9,
-        title: "Problemas en la Gestión de Proyectos de Construcción en Sídney, Australia",
-        area: "Construcción",
-        cantRecursos: 8,
-        description: "La falta de planificación y supervisión adecuada en proyectos de construcción resulta en retrasos, sobrecostos y baja calidad en las edificaciones.",
-        dateRegistration: "14/06/2024",
-        status: "Revisión pendiente"
-    },
-    {
-        id: 10,
-        title: undefined,
-        area: undefined,
-        cantRecursos: undefined,
-        description: undefined,
-        dateRegistration: undefined,
-        status: undefined
-    }
-];
-
+import { problemas, ramas, sectores, prioridades, tipo_solicitante, estados } from "@/data";
 
 
 export default function ProblemsPage() {
+    const [selectedRama, setSelectedRama] = useState(null);
+    const [selectedSector, setSelectedSector] = useState(null);
+    const [selectedPrioridad, setSelectedPrioridad] = useState(null);
+    const [selectedTipoSolicitante, setSelectedTipoSolicitante] = useState(null);
+    const [selectedEstado, setSelectedEstado] = useState(null);
+    
     const [visible, setVisible] = useState(false);
-    const [open, setOpen] = useState(false);
-
+    
+    const [isOpen, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
         document.body.style.overflow = 'hidden';
@@ -119,42 +36,108 @@ export default function ProblemsPage() {
     }
     
     return (
-        <main className="relative w-full flex flex-col items-center gap-y-5">
-            <Button onClick={handleOpen} className='bg-slate-800 text-white w-36 h-10 mb-4'>Abrir Diálogo</Button>
-            <Button
-                className="bg-blue-700 mt-8 hover:bg-blue-800 w-44 h-10 text-white "
-                onClick={() => setVisible(true)}>
-                Agregar problema
-            </Button>
-            {
-                problemas.map(( {id, title, area, cantRecursos, description, dateRegistration, status} ) => (
-                    <ProblemCard 
-                        key={id}
-                        title={title}
-                        area={area}
-                        cantRecursos={cantRecursos}
-                        description={description}
-                        dateRegistration={dateRegistration}
-                        status={status}
-                    />  
-                ))
-            }
+        <main className="relative w-full flex ">
+            <div className=" ml-8 mt-8 h-full space-y-6 max-w-full w-2/6">
+                <span className="flex items-center gap-x-1 mb-4">
+                    <h1 className="font-medium text-slate-700 text-xl">Filtrar problemas</h1>
+                    <i className="pi pi-filter text-slate-800" ></i> 
+                </span>
+                <LabelWithInput htmlFor="rama" label="Rama" >  
+                    <Dropdown value={selectedRama} onChange={(e: DropdownChangeEvent) => setSelectedRama(e.value)} options={ramas} optionLabel="label" 
+                    showClear optionGroupLabel="label" optionGroupChildren="items" 
+                    className="w-72 max-w-96" placeholder="Todos" />
+                </LabelWithInput>
+
+                {/* Dropdown para Sectores */}
+                <LabelWithInput htmlFor="sector" label="Sector">
+                    <Dropdown
+                    value={selectedSector}
+                    onChange={(e) => setSelectedSector(e.value)}
+                    options={sectores.map(sector => ({ label: sector, value: sector }))}
+                    optionLabel="label"
+                    showClear
+                    placeholder="Todos"
+                    className="w-72 max-w-96"
+                    />
+                </LabelWithInput>
+
+                {/* Dropdown para Prioridades */}
+                <LabelWithInput htmlFor="prioridad" label="Prioridad">
+                    <Dropdown
+                    value={selectedPrioridad}
+                    onChange={(e) => setSelectedPrioridad(e.value)}
+                    options={prioridades.map(prioridad => ({ label: prioridad, value: prioridad }))}
+                    optionLabel="label"
+                    showClear
+                    placeholder="Todos"
+                    className="w-72 max-w-96"
+                    />
+                </LabelWithInput>
+
+                {/* Dropdown para Tipo de Solicitante */}
+                <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">
+                    <Dropdown
+                    value={selectedTipoSolicitante}
+                    onChange={(e) => setSelectedTipoSolicitante(e.value)}
+                    options={tipo_solicitante.map(tipo => ({ label: tipo, value: tipo }))}
+                    optionLabel="label"
+                    showClear
+                    placeholder="Todos"
+                    className="w-72 max-w-96"
+                    />
+                </LabelWithInput>
+
+                {/* Dropdown para Estados */}
+                <LabelWithInput htmlFor="estado" label="Estado">
+                    <Dropdown
+                    value={selectedEstado}
+                    onChange={(e) => setSelectedEstado(e.value)}
+                    options={estados.map(estado => ({ label: estado, value: estado }))}
+                    optionLabel="label"
+                    showClear
+                    placeholder="Todos"
+                    className="w-72 max-w-96"
+                    />
+                </LabelWithInput>
+            </div>
+
+            <div className="flex-col flex items-center w-5/6">
+                <Button
+                    className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 w-44 h-10 text-white "
+                    onClick={() => setVisible(true)}>
+                    Agregar problema
+                </Button>
+                <div className="px-4 flex-col space-y-5 my-6">
+                    {
+                        problemas.map(( {id, title, area, cantRecursos, description, dateRegistration, status} ) => (
+                            <ProblemCard 
+                                key={id}
+                                title={title}
+                                area={area}
+                                cantRecursos={cantRecursos}
+                                description={description}
+                                dateRegistration={dateRegistration}
+                                status={status}
+                                openDialog={handleOpen}
+                            />  
+                        ))
+                    }
+                </div>
+            </div>
             <Suspense>
                 <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
                     className="w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
                     pt={{
-                        root: { className: 'min-h-full md:min-h-96' },
-                        
+                        root: { className: 'min-h-full md:min-h-96' },     
                     }}
                     >
                     <NewProblemDialog />
                 </Dialog>
             </Suspense>
-            <Suspense>
-                <MyModalComponent isOpen={open} onClose={handleClose}  className=" absolute bg-opacity-40  space-y-4 lg:space-y-0 lg:space-x-5 lg:mx-5 py-6 h-screen">
+            <Suspense >
+                <MyModalComponent isOpen={isOpen} onClose={handleClose}  className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
                 </MyModalComponent>
             </Suspense>       
-
         </main>
         
     );

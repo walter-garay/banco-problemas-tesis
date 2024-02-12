@@ -18,7 +18,7 @@ type MyModalProps = {
     className?: string;
 };
 
-export default function MyModalComponent({isOpen, className}: MyModalProps) {
+export default function MyModalComponent({isOpen, onClose, className}: MyModalProps) {
     const [valueSocial, setValueSocial] = useState<number>(3);
     const [valueTecnologico, setValueTecnologico] = useState<number>(3);
     const [valueEconomico, setValueEconomico] = useState<number>(3);
@@ -26,23 +26,14 @@ export default function MyModalComponent({isOpen, className}: MyModalProps) {
     const [valueEcologico, setValueEcologico] = useState<number>(3);
     const [valueLegal, setValueLegal] = useState<number>(3);
     
-    
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    }
-    const handleClose = () => {
-        setOpen(false);
-        document.body.style.overflow = 'auto';
-    }
 
     return (
         isOpen && (
-        <div className={`bg-black w-full h-full ${className}`}>
-            <div className='lg:flex gap-x-6 h-full sm:px-8'>
-                <div className="relative bg-white shadow-sm rounded-xl w-full max-h-screen overflow-y-auto flex flex-col items-center px-8 py-8">
-                    <i className="pi pi-times absolute top-2 right-2 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={handleClose}></i>                    <h1 className="font-bold text-gray-800 text-xl mb-4">Información Brindada</h1> 
+        <div className={`fixed inset-0 bg-white lg:bg-black w-screen lg:bg-opacity-40 h-full lg:h-screen ${className}`}>
+            <div className='lg:flex gap-x-6 h-full sm:px-8 overflow-y-auto'>
+                <div className=" lg:bg-white shadow-sm rounded-xl w-full lg:max-h-screen lg:overflow-y-auto flex flex-col items-center lg:p-8">
+                    {/* <i className="pi pi-times fixed top-7 right-11 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={onClose}></i> */}
+                    <h1 className="font-bold text-gray-800 text-xl mb-4">Información Brindada</h1> 
                     <h2 className="mb-2 font-medium">Del solicitante</h2>
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl '>
                         
@@ -65,20 +56,20 @@ export default function MyModalComponent({isOpen, className}: MyModalProps) {
 
                         <LabelWithInput htmlFor="title" label="Nombre / Razón Social" >  
                             <Input id="title" type="text" 
-                                defaultValue={"IMPORTACIONES ACEROS PADRINOS LATINOS S.A.C"} disabled >
+                                defaultValue={"IMPORTACIONES ACEROS PADRINOS LATINOS S.A.C"} readOnly >
                             </Input>          
                         </LabelWithInput>
 
                         <div className="flex gap-5">
                             <div className="w-3/5">
                                 <LabelWithInput htmlFor="email" label="Correo" className="">
-                                    <Input id="email" defaultValue={"contacto@acerospl.com"} disabled></Input>
+                                    <Input id="email" defaultValue={"contacto@acerospl.com"} readOnly></Input>
                                 </LabelWithInput>
                             </div>
 
                             <div className="w-2/5">
-                                <LabelWithInput htmlFor="phone" label="Número de contacto">
-                                    <Input id="phone" defaultValue={"+51 951648955"} disabled></Input>
+                                <LabelWithInput htmlFor="phone" label="Número">
+                                    <Input id="phone" defaultValue={"+51 951648955"} readOnly></Input>
                                 </LabelWithInput>
                             </div>
 
@@ -93,7 +84,8 @@ export default function MyModalComponent({isOpen, className}: MyModalProps) {
                         <LabelWithInput htmlFor="title" label="Título del problema" >  
                             <Input id="title" type="text" 
                                 defaultValue="Problema con la conexión a internet en las zonas altas de Yuragyacu, Huánuco " 
-                                disabled>
+                                readOnly
+                                >
                             </Input>          
                         </LabelWithInput>
 
@@ -106,7 +98,6 @@ export default function MyModalComponent({isOpen, className}: MyModalProps) {
                         </LabelWithInput>
 
                         <LabelWithInput htmlFor="anexos" label="Sector del problema">  
-
                             <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
                             <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
                             <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
@@ -116,12 +107,13 @@ export default function MyModalComponent({isOpen, className}: MyModalProps) {
                 </div>
 
 
-                <div className="relative bg-white shadow-sm rounded-xl w-full max-h-screen overflow-y-auto flex flex-col items-center px-8 py-8">
-                    <i className="pi pi-times absolute top-2 right-2 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={handleClose}></i>
-                    <h1 className="font-bold text-gray-800 text-xl mb-2">Información Limpia</h1> 
-                    <p className="w-full text-left font-normal text-gray-500 text-sm mb-4 mt-4 leading-6">Un título claro y una descripción detallada mejorarán la comprensión de los tesistas. Ajusta y refina la información brindada por el solicitante:</p>                                        
+                <div className="relative mt-8 lg:mt-0 lg:bg-white shadow-sm rounded-xl w-full max-h-screen lg:overflow-y-auto flex flex-col items-center lg:p-8">
+                    <i className="pi pi-times fixed lg:top-7 lg:right-11 top-1 right-1.5 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={onClose}></i>
+                    <h1 className="font-bold text-gray-800 text-xl mb-5">Información Limpia</h1> 
                     
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
+                        <p className="w-full text-left font-normal text-gray-500 text-sm mb-4 leading-6">Un título claro y una descripción detallada mejorarán la comprensión de los tesistas. Ajusta y refina la información brindada por el solicitante:</p>                                        
+
                         <LabelWithInput htmlFor="title" label="Titulo mejorado" >  
                             <Input id="title" type="text" 
                                 defaultValue="Problema con la conexión a internet en las zonas altas de Yuragyacu, Huánuco " 
@@ -155,10 +147,10 @@ export default function MyModalComponent({isOpen, className}: MyModalProps) {
 
                         <LabelWithInput label="Nivel de impacto" className="gap-y-5">
                             <p className="w-full text-left font-normal text-gray-500 text-sm leading-6">
-                                Indica el nivel de impacto que tendría solucionar el problema en las siguientes áreas
+                                Indica el nivel de impacto y viabilidad que tendría solucionar el problema en las siguientes áreas
                             </p>
 
-                            <div className="flex gap-x-8">
+                            <div className="md:flex md:gap-x-8 space-y-4 md:space-y-0">
                                 <div className="">
                                     <h3 className="text-xs font-medium">Social</h3>
                                     <div className="space-y-0">
@@ -183,7 +175,7 @@ export default function MyModalComponent({isOpen, className}: MyModalProps) {
                                 </div>
                             </div>
 
-                            <div className="flex gap-x-8">
+                            <div className="md:flex md:gap-x-8 space-y-4 md:space-y-0">
                                 <div className="">
                                     <h3 className="text-xs font-medium">Político</h3>
                                     <div className="space-y-0">
@@ -208,21 +200,18 @@ export default function MyModalComponent({isOpen, className}: MyModalProps) {
                             </div>
 
                         </LabelWithInput>
-
-
-
-                        <p className="w-full text-left font-normal text-gray-500 text-sm mb-4 pt-4 leading-6">
+                    </div>
+                    <div className='mx-6 bg:mx-0'>
+                        <p className="w-full text-left font-normal text-gray-500 text-sm mb-8 pt-6 leading-6">
                             Si la información brindada es muy confunsa y no se puede mejorar, debe presionar el botón "Desaprobar" para notificar al solicitante sobre su error y que pueda corregirlo.
                         </p>                                        
                         
                         <div className="w-full space-y-2 md:gap-x-2 md:flex-row-reverse md:flex md:space-y-0 justify-start">
                             <Button className="h-10  bg-blue-700 text-white rounded-xl md:w-52 w-full hover:bg-blue-800">Guardar y publicar</Button>
-                            <Button className="h-10  bg-gray-600 text-white rounded-xl md:w-40 w-full hover:bg-gray-700">Desapobar</Button>
-                        </div>
-
-                    
+                            <Button className="h-10  bg-gray-100 text-gray-600 border-gray-700 border rounded-xl md:w-40 w-full hover:bg-gray-200">Desapobar</Button>
+                        </div> 
                     </div>
-                    
+                                
                 </div>
 
         
