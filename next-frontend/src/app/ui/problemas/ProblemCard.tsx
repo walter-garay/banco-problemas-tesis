@@ -7,7 +7,8 @@ type ProblemCardProps = {
     area?: string,
     cantRecursos?: number,
     description?: string,
-    dateRegistration?: string
+    dateRegistration?: string,
+    openDialog?: () => void
 }
 
 export default function ProblemCard({
@@ -16,7 +17,8 @@ export default function ProblemCard({
         area = 'No especificado', 
         cantRecursos = 0, 
         description = 'La descripción de este problema no ha sido detallada', 
-        dateRegistration = "*" 
+        dateRegistration = "*",
+        openDialog
     } : ProblemCardProps) {
         
     return (
@@ -35,9 +37,10 @@ export default function ProblemCard({
 
             <div className="flex justify-between">
                 <p className="mt-auto text-sm font-medium">Regitrado el {dateRegistration}</p>
-                <Button href="/revisar" target="_self"
-                    className="bg-slate-500 
-                    hover:bg-slate-600
+                <Button
+                    onClick={openDialog}
+                    className="bg-slate-600 
+                    hover:bg-slate-700
                     w-24 h-8
                     text-white font-semibold 
                     rounded-md shadow-md text-sm"
