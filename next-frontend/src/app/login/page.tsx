@@ -36,7 +36,7 @@ export default function Login({}) {
 
                 <div className="flex items-center ">
                     <h1 className="mb-0 mr-3">Olvidaste tu Contraseña?</h1>
-                    <Link href="" passHref={true} legacyBehavior={true}>
+                    <Link href="/recuperar" passHref={true} legacyBehavior={true}>
                         <a className="underline text-green-900">Ingrese Aquí</a>
                     </Link>
                 </div>
