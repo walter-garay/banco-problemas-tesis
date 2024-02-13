@@ -36,16 +36,17 @@ export default function ProblemsPage() {
     }
     
     return (
-        <main className="relative w-full flex ">
-            <div className=" ml-8 mt-8 h-full space-y-6 max-w-full w-2/6">
-                <span className="flex items-center gap-x-1 mb-4">
-                    <h1 className="font-medium text-slate-700 text-xl">Filtrar problemas</h1>
-                    <i className="pi pi-filter text-slate-800" ></i> 
+        <main className="relative w-full flex justify-center gap-x-8">
+            <div className="mt-24 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
+                <span className="flex items-center gap-x-1.5 mb-4">
+                    <i className="pi pi-filter text-slate-600" ></i> 
+                    <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
+                    
                 </span>
                 <LabelWithInput htmlFor="rama" label="Rama" >  
                     <Dropdown value={selectedRama} onChange={(e: DropdownChangeEvent) => setSelectedRama(e.value)} options={ramas} optionLabel="label" 
                     showClear optionGroupLabel="label" optionGroupChildren="items" 
-                    className="w-72 max-w-96" placeholder="Todos" />
+                    className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
                 </LabelWithInput>
 
                 {/* Dropdown para Sectores */}
@@ -57,7 +58,7 @@ export default function ProblemsPage() {
                     optionLabel="label"
                     showClear
                     placeholder="Todos"
-                    className="w-72 max-w-96"
+                    className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
                     />
                 </LabelWithInput>
 
@@ -70,7 +71,7 @@ export default function ProblemsPage() {
                     optionLabel="label"
                     showClear
                     placeholder="Todos"
-                    className="w-72 max-w-96"
+                    className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
                     />
                 </LabelWithInput>
 
@@ -83,7 +84,7 @@ export default function ProblemsPage() {
                     optionLabel="label"
                     showClear
                     placeholder="Todos"
-                    className="w-72 max-w-96"
+                    className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
                     />
                 </LabelWithInput>
 
@@ -96,18 +97,18 @@ export default function ProblemsPage() {
                     optionLabel="label"
                     showClear
                     placeholder="Todos"
-                    className="w-72 max-w-96"
+                    className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm border-gray-300"
                     />
                 </LabelWithInput>
             </div>
 
-            <div className="flex-col flex items-center w-5/6">
+            <div className="flex-col flex items-center ">
                 <Button
                     className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 w-44 h-10 text-white "
                     onClick={() => setVisible(true)}>
                     Agregar problema
                 </Button>
-                <div className="px-4 flex-col space-y-5 my-6">
+                <div className="flex-col space-y-5 my-6">
                     {
                         problemas.map(( {id, title, area, cantRecursos, description, dateRegistration, status} ) => (
                             <ProblemCard 
