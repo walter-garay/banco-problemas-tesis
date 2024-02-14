@@ -46,7 +46,7 @@ export const problemas = [
         cantRecursos: 5,
         description: "Deficiencias en el control de calidad durante la producción de automóviles generan productos defectuosos, aumentando los costos de garantía y afectando la reputación de la marca.",
         dateRegistration: "15/09/2024",
-        status: "Revisión pendiente"
+        status: "Publicado"
     },
     {
         id: 2,
@@ -64,7 +64,7 @@ export const problemas = [
         cantRecursos: 6,
         description: "Problemas en la gestión de inventarios generan pérdidas por obsolescencia y roturas de stock, impactando en las ventas y la satisfacción del cliente.",
         dateRegistration: "18/07/2024",
-        status: "Revisión pendiente"
+        status: "Publicado"
     },
     {
         id: 4,
@@ -73,7 +73,7 @@ export const problemas = [
         cantRecursos: 8,
         description: "La carencia de programas de capacitación en ciberseguridad contribuye a vulnerabilidades en sistemas informáticos, exponiendo a las empresas a riesgos de ciberataques y pérdida de datos sensibles.",
         dateRegistration: "30/04/2024",
-        status: "Revisión pendiente"
+        status: "Publicado"
     },
     {
         id: 5,
@@ -91,7 +91,7 @@ export const problemas = [
         cantRecursos: 4,
         description: "La falta de políticas y prácticas sostenibles en la gestión de residuos en hoteles contribuye a la contaminación ambiental y afecta la imagen turística de la ciudad.",
         dateRegistration: "22/05/2024",
-        status: "Revisión pendiente"
+        status: "Desaprobado"
     },
     {
         id: 7,
@@ -100,7 +100,7 @@ export const problemas = [
         cantRecursos: 6,
         description: "La falta de canales efectivos de comunicación interna dificulta la coordinación entre departamentos, generando malentendidos y ralentizando la toma de decisiones.",
         dateRegistration: "10/11/2024",
-        status: "Revisión pendiente"
+        status: "Publicado"
     },
     {
         id: 8,
@@ -109,7 +109,7 @@ export const problemas = [
         cantRecursos: 5,
         description: "La falta de medidas eficaces para mejorar la eficiencia energética en edificios de oficinas contribuye al desperdicio de recursos y aumenta los costos operativos.",
         dateRegistration: "05/08/2024",
-        status: "Revisión pendiente"
+        status: "Desaprobado"
     },
     {
         id: 9,

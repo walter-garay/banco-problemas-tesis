@@ -11,6 +11,7 @@ type ProblemCardProps = {
     openDialog?: () => void
 }
 
+
 export default function ProblemCard({
         title = 'Esta solicitud no tiene un título definido', 
         status = 'Sin estado', 
@@ -24,9 +25,9 @@ export default function ProblemCard({
     return (
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
             
-            <h1 className=" mb-4 font-bold">
+            <h1 className=" mb-4 font-bold ">
                 <span className="mr-2">{title}</span>
-                <TagStatusProblemCard>
+                <TagStatusProblemCard status={status}>
                     {status}
                 </TagStatusProblemCard>
             </h1>

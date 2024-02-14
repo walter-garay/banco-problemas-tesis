@@ -34,6 +34,15 @@ export default function ProblemsPage() {
         setOpen(false);
         document.body.style.overflow = 'auto';
     }
+
+    function filtrarProblemasPorStatus(problemas: any[], statusOrden: string[]) {
+        return problemas.filter((problema) => statusOrden.includes(problema.status));
+    }
+
+    const problemasFiltrados = filtrarProblemasPorStatus(problemas,  ["Revisión pendiente", "Desaprobado", "Publicado"]);
+
+
+    
     
     return (
         <main className="relative w-full flex justify-center gap-x-8">
@@ -109,21 +118,23 @@ export default function ProblemsPage() {
                     Agregar problema
                 </Button>
                 <div className="flex-col space-y-5 my-6">
-                    {
-                        problemas.map(( {id, title, area, cantRecursos, description, dateRegistration, status} ) => (
-                            <ProblemCard 
-                                key={id}
-                                title={title}
-                                area={area}
-                                cantRecursos={cantRecursos}
-                                description={description}
-                                dateRegistration={dateRegistration}
-                                status={status}
-                                openDialog={handleOpen}
-                            />  
-                        ))
-                    }
+                {
+                    problemasFiltrados
+                    .map(({ id, title, area, cantRecursos, description, dateRegistration, status }) => (
+                        <ProblemCard
+                            key={id}
+                            title={title}
+                            area={area}
+                            cantRecursos={cantRecursos}
+                            description={description}
+                            dateRegistration={dateRegistration}
+                            status={status}
+                            openDialog={handleOpen}
+                        />
+                    ))
+                }
                 </div>
+
             </div>
             <Suspense>
                 <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
