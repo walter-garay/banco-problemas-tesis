@@ -19,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      spacing: {
+        '200': '50rem', // Ejemplo: Valor máximo de ml-128
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
