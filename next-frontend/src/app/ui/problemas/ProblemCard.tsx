@@ -18,7 +18,7 @@ export default function ProblemCard({
         area = 'No especificado', 
         cantRecursos = 0, 
         description = 'La descripción de este problema no ha sido detallada', 
-        dateRegistration = "*",
+        dateRegistration = "Sin fecha de registro",
         openDialog
     } : ProblemCardProps) {
         

@@ -1,17 +1,19 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Suspense } from "react";
 
 import ProblemCard from "../ui/problemas/ProblemCard";
 import Button from "../ui/Button";
 import MyModalComponent from "../ui/MyModal"
 
-import { Dialog } from 'primereact/dialog';
 import { LabelWithInput } from "@/components/ui/input";
+import NewProblemDialog from "@/app/nuevo/page";
 
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+import { Dialog } from 'primereact/dialog';
 
-import NewProblemDialog from "@/app/nuevo/page";
+import { RawProblem } from '@/models/ProblemModels'; 
+import { getItems } from '@/api/apiService';
 
 import { problemas, ramas, sectores, prioridades, tipo_solicitante, estados } from "@/data";
 
@@ -35,12 +37,28 @@ export default function ProblemsPage() {
         document.body.style.overflow = 'auto';
     }
 
+    const [rawProblems, setRawProblems] = useState<RawProblem[]>([]);
+
+
     function filtrarProblemasPorStatus(problemas: any[], statusOrden: string[]) {
         return problemas.filter((problema) => statusOrden.includes(problema.status));
     }
 
     const problemasFiltrados = filtrarProblemasPorStatus(problemas,  ["Revisión pendiente", "Desaprobado", "Publicado"]);
 
+    useEffect(() => {
+        const fetchRawProblems = async () => {
+        try {
+            const data = await getItems('rawproblems'); // Reemplaza 'rawProblems' con la ruta correcta de tu modelo en la API
+            setRawProblems(data);
+            console.log(data);
+        } catch (error) {
+            console.error('Error al obtener datos rawProblems:', error);
+        }
+        };
+    
+        fetchRawProblems();
+    }, []);
 
     
     
@@ -119,19 +137,23 @@ export default function ProblemsPage() {
                 </Button>
                 <div className="flex-col space-y-5 my-6">
                 {
-                    problemasFiltrados
-                    .map(({ id, title, area, cantRecursos, description, dateRegistration, status }) => (
+                    rawProblems.map(({ id, title, sector, description, raw_status, created_at, file_1, file_2, file_3, file_4 }) => {
+                        // Filtrar y contar los archivos no nulos
+                        const cantRecursos: number = [file_1, file_2, file_3, file_4].filter(file => file !== null).length;
+                    
+                        return (
                         <ProblemCard
                             key={id}
                             title={title}
-                            area={area}
-                            cantRecursos={cantRecursos}
+                            area={sector} 
+                            cantRecursos={cantRecursos} 
                             description={description}
-                            dateRegistration={dateRegistration}
-                            status={status}
+                            dateRegistration={created_at ? new Intl.DateTimeFormat('es-ES').format(new Date(created_at)) : ''}
+                            status={raw_status}
                             openDialog={handleOpen}
                         />
-                    ))
+                        );
+                    })
                 }
                 </div>
 

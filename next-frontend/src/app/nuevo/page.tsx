@@ -9,6 +9,7 @@ import DropdownSectores from "../ui/problemas/DropdownSector";
 
 
 
+
 export default function NewProblemDialog({}) {
     return (
         <div className="
