@@ -8,7 +8,7 @@ import Innovacion from '../imgages/Innovacion.png';
 import Button from "../ui/Button";
 import image from "@/images/Innovacion.png"
 
-export default function Login({}) {
+export default function LandingPage({}) {
     return (
         <div className="flex items-center h-full mx-12 pt-4">
             <div className="bg-white rounded-3xl shadow-md p-12 mt-28 ml-24">
