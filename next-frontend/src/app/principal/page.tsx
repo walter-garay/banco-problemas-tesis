@@ -11,10 +11,10 @@ import image from "@/images/Innovacion.png"
 export default function Login({}) {
     return (
         <div className="flex items-center h-full mx-12 pt-4">
-            <div className="bg-white rounded-3xl shadow-md p-10">
+            <div className="bg-white rounded-3xl shadow-md p-12 mt-28 ml-24">
                 <div>
-                    <h1 className="bold-heading" style={{ fontSize: '5.5em', marginBottom: '20px', fontFamily: 'sans-serif'}}>Banco<br />de Ideas</h1>
-                    <p style={{ fontSize: '2.5em', marginBottom: '40px', fontFamily: 'unset'}}>
+                    <h1 className="bold-heading" style={{ fontSize: '5.5em', marginBottom: '20px', fontFamily: 'sans-serif'}}>Banco<br/>de Ideas</h1>
+                    <p style={{ fontSize: '2em', marginBottom: '40px', fontFamily: 'unset'}}>
                         Deja en evidencia un problema que te aqueje para que nosotros 
                         como universidad lo solucionemos.</p>
                     <p className="bold-heading " style={{ fontSize: '2em', marginBottom: '20px',fontFamily: 'sans-serif'}}>@MerakT _ devs</p>
@@ -28,7 +28,7 @@ export default function Login({}) {
                 </div>
             </div>
 
-            <div className="flex flex-col gap-y-2 items-center justify-center h-full w-full ">
+            <div className="flex flex-col gap-y-2 items-center justify-center h-full w-full mb-8">
                 <Image
                     src={image}
                     alt="Innovacion"
