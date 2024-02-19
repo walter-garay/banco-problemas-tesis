@@ -36,22 +36,31 @@ export default function Registro({}) {
                     </div>
                 </div>
 
-                <div className="w-full sm:w-full">
-                    <a>Nombres y Apellidos</a>
-                    <InputWithLabel 
-                        id="title" label="Nombre y Apellidos" type="text"  
-                        placeholder="Erick Vasquez" 
-                    />  
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-x-4 sm:space-y-0">
+                    <div className="w-full sm:w-1/2">
+                        <a>Nombres</a>
+                        <InputWithLabel 
+                            id="title" label="Nombre y Apellidos" type="text"  
+                            placeholder="Erick" 
+                        /> 
+                    </div> 
+
+                    <div className="w-full sm:w-1/2">
+                        <a>Apellidos</a>
+                        <InputWithLabel 
+                            id="title" label="Apellido" type="text"  
+                            placeholder="Vasquez Rengifo" 
+                        />
+                    </div>
                 </div>
 
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-x-4 sm:space-y-0">
                     <div className="w-full sm:w-1/2">
-                    <a>Correo Electronico</a>
+                        <a>Correo Electronico</a>
                         <InputWithLabel 
                             id="title" label="Email" type="email"  
                             placeholder="davidcito@gmail.com" 
                         />
-                        
                     </div>
 
                     <div className="w-full sm:w-1/2">
