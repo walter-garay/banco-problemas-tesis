@@ -36,7 +36,7 @@ export default function Registro({}) {
                     </div>
                 </div>
 
-                <div className="w-full sm:w-full ">
+                <div className="w-full sm:w-full">
                     <a>Nombres y Apellidos</a>
                     <InputWithLabel 
                         id="title" label="Nombre y Apellidos" type="text"  
@@ -78,9 +78,9 @@ export default function Registro({}) {
                 </div>
 
                 <div className="flex items-center">
-                    <h1 className="mb-0 mr-3 ">Ya estás registrado?</h1>
+                    <h1 className="mb-0 mr-3 mt-4">Ya estás registrado?</h1>
                     <Link href="/login" passHref={true} legacyBehavior={true}>
-                        <a className="underline text-green-900">Acceder</a>
+                        <a className="underline text-green-900 mt-4">Acceder</a>
                     </Link>
                 </div>
             </div>

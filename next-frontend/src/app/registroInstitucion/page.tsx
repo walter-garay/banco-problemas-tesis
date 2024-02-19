@@ -93,9 +93,9 @@ export default function LoginInstitucion({}) {
                 </div>
 
                 <div className="flex items-center">
-                    <h1 className="mb-0 mr-3 ">Ya estás registrado?</h1>
+                    <h1 className="mb-0 mr-3 mt-4">Ya estás registrado?</h1>
                     <Link href="/login" passHref={true} legacyBehavior={true}>
-                        <a className="underline text-green-900">Acceder</a>
+                        <a className="underline text-green-900 mt-4">Acceder</a>
                     </Link>
                 </div>
             </div>

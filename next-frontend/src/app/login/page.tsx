@@ -28,16 +28,16 @@ export default function Login({}) {
                     />
                 </div>
 
-                <div className="flex items-center ">
+                <div className="flex items-center">
                     <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded shadow-md focus:outline-none focus:shadow-outline-green active:bg-green-900">
                         Iniciar
                     </button>
                 </div>
 
-                <div className="flex items-center ">
-                    <h1 className="mb-0 mr-3">Olvidaste tu Contraseña?</h1>
+                <div className="flex items-center">
+                    <h1 className="mb-0 mr-3 mt-4">Olvidaste tu Contraseña?</h1>
                     <Link href="/recuperar" passHref={true} legacyBehavior={true}>
-                        <a className="underline text-green-900">Ingrese Aquí</a>
+                        <a className="underline text-green-900 mt-4">Ingrese Aquí</a>
                     </Link>
                 </div>
 
