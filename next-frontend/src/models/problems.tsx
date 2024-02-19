@@ -1,7 +1,6 @@
 // Interfaces para los modelos de Django
-type RawStatusOptions = 'revisión pendiente' | 'rechazado' | 'publicado';
+type RawStatusOptions = 'Revisión Pendiente' | 'Desaprobado' | 'Publicado';
 
-type StatusOptions = 'tomado' | 'abandonado' | 'finalizado';
 
 export interface Usuario {
   id: number;
@@ -10,7 +9,7 @@ export interface Usuario {
 }
 
 export interface RawProblem {
-  id?: number;
+  id: number;
   applicant: number;
   title: string;
   sector: string;

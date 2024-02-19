@@ -4,15 +4,17 @@ import { Suspense } from "react";
 
 import ProblemCard from "../ui/problemas/ProblemCard";
 import Button from "../ui/Button";
-import MyModalComponent from "../ui/MyModal"
+
+import ReviewProblemDialog from "./reviewProblemDialog"
+import NewProblemDialog from "./newProblemDialog";
+
 
 import { LabelWithInput } from "@/components/ui/input";
-import NewProblemDialog from "@/app/nuevo/page";
 
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { Dialog } from 'primereact/dialog';
 
-import { RawProblem } from '@/models/ProblemModels'; 
+import { RawProblem } from '@/models/problems'; 
 import { getItems } from '@/api/apiService';
 
 import { problemas, ramas, sectores, prioridades, tipo_solicitante, estados } from "@/data";
@@ -26,38 +28,51 @@ export default function ProblemsPage() {
     const [selectedEstado, setSelectedEstado] = useState(null);
     
     const [visible, setVisible] = useState(false);
-    
     const [isOpen, setOpen] = useState(false);
-    const handleOpen = () => {
+
+    
+    const [rawProblems, setRawProblems] = useState<RawProblem[]>([]);
+    const [selectedProblem, setSelectedProblem] = useState<RawProblem>();
+
+
+    const handleOpen = (problemId: number) => {
+        const selectedProblemData = rawProblems.find(problem => problem.id === problemId);
+        setSelectedProblem(selectedProblemData);
+        
         setOpen(true);
         document.body.style.overflow = 'hidden';
     }
+
     const handleClose = () => {
         setOpen(false);
         document.body.style.overflow = 'auto';
     }
 
-    const [rawProblems, setRawProblems] = useState<RawProblem[]>([]);
 
 
-    function filtrarProblemasPorStatus(problemas: any[], statusOrden: string[]) {
-        return problemas.filter((problema) => statusOrden.includes(problema.status));
+    function sortByStatus(rawProblems: RawProblem[], orden: string[]): RawProblem[] {
+        return rawProblems.sort((a, b) => {
+            const indexOfA = orden.indexOf(a.raw_status);
+            const indexOfB = orden.indexOf(b.raw_status);
+            return indexOfA - indexOfB;
+        });
     }
-
-    const problemasFiltrados = filtrarProblemasPorStatus(problemas,  ["Revisión pendiente", "Desaprobado", "Publicado"]);
 
     useEffect(() => {
         const fetchRawProblems = async () => {
-        try {
-            const data = await getItems('rawproblems'); // Reemplaza 'rawProblems' con la ruta correcta de tu modelo en la API
-            setRawProblems(data);
-        } catch (error) {
-            console.error('Error al obtener datos rawProblems:', error);
-        }
+            try {
+                var data = await getItems('problems/rawproblems');
+                data = sortByStatus(data, ['Revisión pendiente', 'Desaprobado', 'Publicado']);
+                
+                setRawProblems(data);
+            } catch (error) {
+                console.error('Error al obtener datos rawProblems:', error);
+            }
         };
     
         fetchRawProblems();
     }, []);
+    
 
     
     
@@ -143,6 +158,7 @@ export default function ProblemsPage() {
                         return (
                         <ProblemCard
                             key={id}
+                            id={id}
                             title={title}
                             area={sector} 
                             cantRecursos={cantRecursos} 
@@ -168,8 +184,8 @@ export default function ProblemsPage() {
                 </Dialog>
             </Suspense>
             <Suspense >
-                <MyModalComponent isOpen={isOpen} onClose={handleClose}  className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
-                </MyModalComponent>
+                <ReviewProblemDialog problem={selectedProblem} isOpen={isOpen} onClose={handleClose}  className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
+                </ReviewProblemDialog>
             </Suspense>       
         </main>
         

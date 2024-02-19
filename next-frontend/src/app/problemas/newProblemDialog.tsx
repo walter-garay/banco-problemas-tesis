@@ -13,12 +13,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGr
 
 import { createItem } from "@/api/apiService";
 import { ramas } from "@/data"
-import { RawProblem } from "@/models/ProblemModels"
-import { Files } from "lucide-react"
+import { RawProblem } from "@/models/problems"
 
 
 export default function NewProblemDialog({}) {
     const [newProblem, setNewProblem] = useState<RawProblem>({
+        id: 0,
         title: '',
         sector: '',
         institution_type: 'Persona natural',
@@ -41,13 +41,13 @@ export default function NewProblemDialog({}) {
     const handleFileUpload = (event: { files: Array<File> }) => {
         console.log('Archivos adjuntados:');
         const updatedProblem = {
-          ...newProblem, // Duplica el objeto original
-          file_1: event.files[0] || null, // Adjunta el primer archivo
-          file_2: event.files[1] || null, // Adjunta el segundo archivo
-          file_3: event.files[2] || null, // Adjunta el tercer archivo
-          file_4: event.files[3] || null, // Adjunta el cuarto archivo
+            ...newProblem, 
+            file_1: event.files[0] || null, 
+            file_2: event.files[1] || null, 
+            file_3: event.files[2] || null, 
+            file_4: event.files[3] || null, 
         };
-        setNewProblem(updatedProblem); // Actualiza el estado con los archivos adjuntados
+        setNewProblem(updatedProblem); 
     }
     
 
@@ -90,7 +90,7 @@ export default function NewProblemDialog({}) {
                 formData.append('file_4', newProblem.file_4);
             }
         
-            const response = await createItem('rawproblems/', formData);
+            const response = await createItem('problems/rawproblems/', formData);
         
             console.log('Problema creado:', response);
         } catch (error) {
@@ -139,7 +139,7 @@ export default function NewProblemDialog({}) {
                     </SelectContent>
                 </Select>
             </LabelWithInput>
-
+            
             <LabelWithInput htmlFor="entidad" label="Tipo de entidad" >
                 <RadioGroup defaultValue="privada" className="flex justify-between text-gray-500 " onValueChange={handleTypeEntityChange}>
                     <div className="flex items-center space-x-2">

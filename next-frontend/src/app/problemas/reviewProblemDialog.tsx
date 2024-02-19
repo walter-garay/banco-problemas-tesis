@@ -1,5 +1,5 @@
 "use client"
-import Button from './Button';
+import Button from '../ui/Button';
 import DropdownSectores from "../ui/problemas/DropdownSector"
 
 import { Label } from "@/components/ui/label"
@@ -11,14 +11,16 @@ import { InputText } from "primereact/inputtext";
 
 
 import { useState } from "react";
+import { RawProblem } from '@/models/problems';
 
 type MyModalProps = {
     isOpen: boolean;
     onClose: () => void;
     className?: string;
+    problem?: RawProblem;
 };
 
-export default function MyModalComponent({isOpen, onClose, className}: MyModalProps) {
+export default function ReviewProblemDialog({isOpen, onClose, className, problem}: MyModalProps) {
     const [valueSocial, setValueSocial] = useState<number>(3);
     const [valueTecnologico, setValueTecnologico] = useState<number>(3);
     const [valueEconomico, setValueEconomico] = useState<number>(3);
@@ -38,7 +40,7 @@ export default function MyModalComponent({isOpen, onClose, className}: MyModalPr
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl '>
                         
                         <LabelWithInput htmlFor="entidad" label="Tipo de entidad" >
-                            <RadioGroup defaultValue="privada" className="flex justify-between text-gray-500 " disabled>
+                            <RadioGroup defaultValue={problem?.institution_type} className="flex justify-between text-gray-500 " disabled>
                                 <div className="flex items-center space-x-2">
                                     <RadioGroupItem value={"persona"} id="r1" />
                                     <Label htmlFor="r1">Persona natural</Label>
@@ -56,7 +58,7 @@ export default function MyModalComponent({isOpen, onClose, className}: MyModalPr
 
                         <LabelWithInput htmlFor="title" label="Nombre / Razón Social" >  
                             <Input id="title" type="text" 
-                                defaultValue={"IMPORTACIONES ACEROS PADRINOS LATINOS S.A.C"} readOnly >
+                                defaultValue={problem?.institution_name} readOnly >
                             </Input>          
                         </LabelWithInput>
 
@@ -83,7 +85,7 @@ export default function MyModalComponent({isOpen, onClose, className}: MyModalPr
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
                         <LabelWithInput htmlFor="title" label="Título del problema" >  
                             <Input id="title" type="text" 
-                                defaultValue="Problema con la conexión a internet en las zonas altas de Yuragyacu, Huánuco " 
+                                defaultValue={problem?.title} 
                                 readOnly
                                 >
                             </Input>          
@@ -92,7 +94,7 @@ export default function MyModalComponent({isOpen, onClose, className}: MyModalPr
                         <LabelWithInput htmlFor="description" label="Descripción detallada del problema" type="text">  
                             <textarea id="description" 
                                 className="cursor-text w-full min-h-32 px-3 py-2 border border-gray-300 bg-white rounded-md "
-                                defaultValue="El problema se presenta en las zonas altas de Yuragyacu, Huánuco, donde la conexión a internet es muy deficiente, lo que afecta a la población en general..."
+                                defaultValue={problem?.description}
                                 disabled>
                             </textarea>
                         </LabelWithInput>
@@ -112,11 +114,11 @@ export default function MyModalComponent({isOpen, onClose, className}: MyModalPr
                     <h1 className="font-bold text-gray-800 text-xl mb-5">Información Limpia</h1> 
                     
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
-                        <p className="w-full text-left font-normal text-gray-500 text-sm mb-4 leading-6">Un título claro y una descripción detallada mejorarán la comprensión de los tesistas. Ajusta y refina la información brindada por el solicitante:</p>                                        
+                        <p className="w-full text-left font-normal text-gray-500 text-sm mb-4 leading-6">Un título claro y una descripción detallada mejorarán la comprensión de los tesistas. Ajusta y mejora la información brindada por el solicitante:</p>                                        
 
                         <LabelWithInput htmlFor="title" label="Titulo mejorado" >  
                             <Input id="title" type="text" 
-                                defaultValue="Problema con la conexión a internet en las zonas altas de Yuragyacu, Huánuco " 
+                                defaultValue={problem?.title}
                                 required
                                 className="cursor-text">
                             </Input>          
@@ -125,7 +127,7 @@ export default function MyModalComponent({isOpen, onClose, className}: MyModalPr
                         <LabelWithInput htmlFor="description" label="Descripción mejorada" type="text">  
                             <textarea id="description" 
                                 className="cursor-text w-full min-h-64 px-3 py-2 border border-gray-300 bg-white rounded-md "
-                                defaultValue="El problema se presenta en las zonas altas de Yuragyacu, Huánuco, donde la conexión a internet es muy deficiente, lo que afecta a la población en general..."
+                                defaultValue={problem?.description}
                                 required>
                             </textarea>
                         </LabelWithInput>
@@ -154,23 +156,23 @@ export default function MyModalComponent({isOpen, onClose, className}: MyModalPr
                                 <div className="">
                                     <h3 className="text-xs font-medium">Social</h3>
                                     <div className="space-y-0">
-                                        <InputText disabled value={valueSocial} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueSocial(e.target.value)} className="w-full h-8" />
-                                        <Slider value={valueSocial} max={5} onChange={(e: SliderChangeEvent) => setValueSocial(e.value)} className="w-full" 
+                                        <InputText disabled value={valueSocial.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueSocial(parseInt(e.target.value))} className="w-full h-8" />
+                                        <Slider value={valueSocial} max={5} onChange={(e: SliderChangeEvent) => setValueSocial(parseInt(e.value.toString()))} className="w-full" 
                                         />
                                     </div>
                                 </div>
                                 <div className="">
                                     <h3 className="text-xs font-medium">Tecnológico</h3>
                                     <div className="space-y-0">
-                                        <InputText disabled value={valueTecnologico} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueTecnologico(e.target.value)} className="w-full h-8" />
-                                        <Slider value={valueTecnologico} max={5} onChange={(e: SliderChangeEvent) => setValueTecnologico(e.value)} className="w-full" />
+                                        <InputText disabled value={valueTecnologico.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueTecnologico(parseInt(e.target.value))} className="w-full h-8" />
+                                        <Slider value={valueTecnologico} max={5} onChange={(e: SliderChangeEvent) => setValueTecnologico(parseInt(e.value.toString()))} className="w-full" />
                                     </div>
                                 </div>
                                 <div className="">
                                     <h3 className="text-xs font-medium">Económico</h3>
                                     <div className="space-y-0">
-                                        <InputText disabled value={valueEconomico} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueEconomico(e.target.value)} className="w-full h-8" />
-                                        <Slider value={valueEconomico} max={5} onChange={(e: SliderChangeEvent) => setValueEconomico(e.value)} className="w-full" />
+                                        <InputText disabled value={valueEconomico.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueEconomico(parseInt(e.target.value))} className="w-full h-8" />
+                                        <Slider value={valueEconomico} max={5} onChange={(e: SliderChangeEvent) => setValueEconomico(parseInt(e.value.toString()))} className="w-full" />
                                     </div>
                                 </div>
                             </div>
@@ -179,22 +181,22 @@ export default function MyModalComponent({isOpen, onClose, className}: MyModalPr
                                 <div className="">
                                     <h3 className="text-xs font-medium">Político</h3>
                                     <div className="space-y-0">
-                                        <InputText disabled value={valuePolitico} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValuePolitico(e.target.value)} className="w-full h-8" />
-                                        <Slider value={valuePolitico} max={5} onChange={(e: SliderChangeEvent) => setValuePolitico(e.value)} className="w-full" />
+                                        <InputText disabled value={valuePolitico.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValuePolitico(parseInt(e.target.value))} className="w-full h-8" />
+                                        <Slider value={valuePolitico} max={5} onChange={(e: SliderChangeEvent) => setValuePolitico(parseInt(e.value.toString()))} className="w-full" />
                                     </div>
                                 </div>
                                 <div className="">
                                     <h3 className="text-xs font-medium">Ecológico</h3>
                                     <div className="space-y-0">
-                                        <InputText disabled value={valueEcologico} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueEcologico(e.target.value)} className="w-full h-8" />
-                                        <Slider value={valueEcologico} max={5} onChange={(e: SliderChangeEvent) => setValueEcologico(e.value)} className="w-full" />
+                                        <InputText disabled value={valueEcologico.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueEcologico(parseInt(e.target.value))} className="w-full h-8" />
+                                        <Slider value={valueEcologico} max={5} onChange={(e: SliderChangeEvent) => setValueEcologico(parseInt(e.value.toString()))} className="w-full" />
                                     </div>
                                 </div>
                                 <div className="">
                                     <h3 className="text-xs font-medium">Legal</h3>
                                     <div className="space-y-0">
-                                        <InputText disabled value={valueLegal} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueLegal(e.target.value)} className="w-full h-8" />
-                                        <Slider value={valueLegal} max={5} onChange={(e: SliderChangeEvent) => setValueLegal(e.value)} className="w-full" />
+                                        <InputText disabled value={valueLegal.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueLegal(parseInt(e.target.value))} className="w-full h-8" />
+                                        <Slider value={valueLegal} max={5} onChange={(e: SliderChangeEvent) => setValueLegal(parseInt(e.value.toString()))} className="w-full" />
                                     </div>
                                 </div>
                             </div>

@@ -6,6 +6,8 @@ import { PrimeReactProvider } from 'primereact/api';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import 'primeicons/primeicons.css';
 
+import ProblemCard from "./ui/problemas/ProblemCard";
+
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -2,17 +2,19 @@ import TagStatusProblemCard from "./TagStatusProblemCard";
 import Button from "../Button";
 
 type ProblemCardProps = {
+    id: number,
     title?: string,
     status?: string,
     area?: string,
     cantRecursos?: number,
     description?: string,
     dateRegistration?: string,
-    openDialog?: () => void
+    openDialog: (problemId: number) => void 
 }
 
 
 export default function ProblemCard({
+        id,
         title = 'Esta solicitud no tiene un título definido', 
         status = 'Sin estado', 
         area = 'No especificado', 
@@ -21,6 +23,10 @@ export default function ProblemCard({
         dateRegistration = "Sin fecha de registro",
         openDialog
     } : ProblemCardProps) {
+
+    const handleOpenDialog = () => {
+        openDialog(id);
+    };
         
     return (
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
@@ -31,6 +37,8 @@ export default function ProblemCard({
                     {status}
                 </TagStatusProblemCard>
             </h1>
+
+            
             
             <p className="font-medium">Sector del problema: <span className="font-normal">{area}</span></p>
             <p className="font-medium">Recursos compartidos: <span className="font-normal">{cantRecursos}</span></p>
@@ -39,7 +47,7 @@ export default function ProblemCard({
             <div className="flex justify-between">
                 <p className="mt-auto text-sm font-medium">Regitrado el {dateRegistration}</p>
                 <Button
-                    onClick={openDialog}
+                    onClick={handleOpenDialog}
                     className="bg-slate-600 
                     hover:bg-slate-700
                     w-24 h-8

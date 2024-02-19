@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import NewProblemDialog from "../nuevo/page"
+import NewProblemDialog from "../problemas/newProblemDialog"
 import { LabelWithInput } from "@/components/ui/input"
 
 export default function SelectScrollable() {
