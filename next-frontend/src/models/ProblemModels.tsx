@@ -10,7 +10,7 @@ export interface Usuario {
 }
 
 export interface RawProblem {
-  id: number;
+  id?: number;
   applicant: number;
   title: string;
   sector: string;
@@ -23,8 +23,8 @@ export interface RawProblem {
   file_4?: File | null;
   raw_status: string;
   observation?: string | null;
-  created_at: Date; 
-  updated_at: Date; 
+  created_at?: Date; 
+  updated_at?: Date; 
 }
 
 export interface CleanProblem {

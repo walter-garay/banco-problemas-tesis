@@ -20,11 +20,17 @@ const executeRequest = async (method: string, endpoint: string, data: any = null
   };
 
   if (data) {
-    config.body = JSON.stringify(data);
+    if (!(data instanceof FormData)) {
+      // Solo convierte a JSON si la data no es FormData
+      config.body = JSON.stringify(data);
+    } else {
+      config.body = data;
+    }
   }
 
   const response = await fetch(apiUrl + endpoint, config);
   const responseData = await handleErrors(response).json();
+  
   return responseData;
 };
 

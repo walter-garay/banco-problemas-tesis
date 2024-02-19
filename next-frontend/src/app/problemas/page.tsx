@@ -51,7 +51,6 @@ export default function ProblemsPage() {
         try {
             const data = await getItems('rawproblems'); // Reemplaza 'rawProblems' con la ruta correcta de tu modelo en la API
             setRawProblems(data);
-            console.log(data);
         } catch (error) {
             console.error('Error al obtener datos rawProblems:', error);
         }
@@ -64,7 +63,7 @@ export default function ProblemsPage() {
     
     return (
         <main className="relative w-full flex justify-center gap-x-8">
-            <div className="mt-24 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
+            <div className="mt-8 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
                 <span className="flex items-center gap-x-1.5 mb-4">
                     <i className="pi pi-filter text-slate-600" ></i> 
                     <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
@@ -131,7 +130,7 @@ export default function ProblemsPage() {
 
             <div className="flex-col flex items-center ">
                 <Button
-                    className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 w-44 h-10 text-white "
+                    className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 w-full h-10 text-white "
                     onClick={() => setVisible(true)}>
                     Agregar problema
                 </Button>
@@ -160,7 +159,7 @@ export default function ProblemsPage() {
             </div>
             <Suspense>
                 <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
-                    className="w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
+                    className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
                     pt={{
                         root: { className: 'min-h-full md:min-h-96' },     
                     }}
