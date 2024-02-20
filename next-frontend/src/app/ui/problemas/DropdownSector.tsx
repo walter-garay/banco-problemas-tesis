@@ -58,7 +58,7 @@ export default function DropdownSectores() {
             <Dropdown value={setSelectedRama} onChange={(e: DropdownChangeEvent) => setSelectedRama(e.value)} options={areas} optionLabel="label" 
                 optionGroupLabel="label" optionGroupChildren="items" optionGroupTemplate={groupedItemTemplate} 
                 className="w-full md:w-14rem " 
-                placeholder="Seleccionar una rama " 
+                placeholder="Seleccionar una rama" 
                 pt={{
                     root: { className: 'focus:ring-4 focus:ring-blue-200' },
                 }}

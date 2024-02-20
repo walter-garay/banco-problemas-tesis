@@ -22,7 +22,7 @@ export default function Login({}) {
 
                 <div className="w-full sm:w-full ">
                     <a>Contraseña</a>
-                     <InputWithLabel 
+                    <InputWithLabel 
                         id="title" label="Contraseña" type="password"  
                         placeholder="*******" 
                     />
