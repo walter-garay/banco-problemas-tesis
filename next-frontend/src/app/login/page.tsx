@@ -1,31 +1,79 @@
+'use client'
 
-import { InputWithLabel } from "@/components/ui/input"
+import { createItem } from "@/api/apiService";
+import { Input, InputWithLabel, LabelWithInput } from "@/components/ui/input"
 import Link from 'next/link';
+import { useState } from "react";
 
 export default function Login({}) {
+    const [user, setNewLogin] = useState({
+        email:'',
+        password:'',
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setNewLogin((prevLogin) => ({ ...prevLogin, [name]: value }));
+    };
+
+    // crear funcion para mi boton registrar
+    const handleSubmit = async () => {
+        try {
+            console.log('Login:', user);
+
+            const response = await createItem('api/authlogin/', user, 
+                {
+                    'Content-Type': 'application/json',
+                });
+        
+            console.log('Login creado:', response);
+
+            const token = await response.json();
+            localStorage.setItem('token', token);
+
+        } catch (error) {
+            console.error('Error creando el login:', error);
+        }
+
+
+    };
+
+
+
     return (
+        
         <div className="flex items-center justify-center h-screen">
-            <div className="max-w-3xl py-9 px-6 sm:px-9 mx-auto sm:mx-auto sm:max-w-2xl flex flex-col items-center space-y-1 bg-white rounded-xl shadow-sm">
-                <div className="flex flex-col items-center mt-6">
+            <div className="max-w-3xl py-9 px-6 sm:px-9 mx-auto sm:mx-auto sm:max-w-2xl 
+                flex flex-col items-center space-y-1 bg-white rounded-xl shadow-sm gap-y-4">
+                <div className="flex flex-col items-center ">
                     <h1 className="text-3xl mb-8">
                         Iniciar <span className="text-green-600">Sesión</span>
                     </h1>
                 </div>
-
                 <div className="w-full sm:w-full ">
-                    <a>Correo Electronico</a>
-                    <InputWithLabel 
-                        id="title" label="Email" type="email"  
-                        placeholder="davidcito@gmail.com" 
-                    />
+                        <LabelWithInput htmlFor="email" label="Correo Electronio">
+                            <Input
+                                id="email"
+                                type="text"
+                                placeholder=""
+                                name="email"
+                                value={user.email}
+                                onChange={handleInputChange}
+                            />
+                        </LabelWithInput> 
                 </div>
 
                 <div className="w-full sm:w-full ">
-                    <a>Contraseña</a>
-                    <InputWithLabel 
-                        id="title" label="Contraseña" type="password"  
-                        placeholder="*******" 
-                    />
+                        <LabelWithInput htmlFor="password" label="Contraseña">
+                            <Input
+                                id="paswword"
+                                type="password"
+                                placeholder="********"
+                                name="password"
+                                value={user.password}
+                                onChange={handleInputChange}
+                            />
+                        </LabelWithInput> 
                 </div>
 
                 <div className="flex items-center">

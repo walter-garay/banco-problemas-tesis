@@ -36,6 +36,8 @@ export default function Registro({}) {
     // crear funcion para mi boton registrar
     const handleSubmit = async () => {
         try {
+            console.log('Usuario por crear:', newUser);
+
             const response = await createItem('api/auth/registration/', newUser, 
                 {
                     'Content-Type': 'application/json',
@@ -160,8 +162,8 @@ export default function Registro({}) {
                         </LabelWithInput>
                     </div>
 
-                    <LabelWithInput htmlFor="password2" label="Confirmar contraseña">
-                        <Select onValueChange={handleInputChange}>
+                    <LabelWithInput htmlFor="role" label="Rol">
+                        <Select onValueChange={(selectedRole) => handleInputChange({ target: { name: 'role', value: selectedRole } } as React.ChangeEvent<HTMLInputElement>)}>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Select a fruit" />
                         </SelectTrigger>
