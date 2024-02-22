@@ -77,7 +77,7 @@ export default function Login({}) {
                 </div>
 
                 <div className="flex items-center">
-                    <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded shadow-md focus:outline-none focus:shadow-outline-green active:bg-green-900">
+                    <button onClick={handleSubmit} className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded shadow-md focus:outline-none focus:shadow-outline-green active:bg-green-900">
                         Iniciar
                     </button>
                 </div>
