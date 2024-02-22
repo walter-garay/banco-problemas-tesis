@@ -9,8 +9,8 @@ import Innovacion from "../../../public/images/Innovacion.png"
 
 export default function LandingPage({}) {
     return (
-        <div className="flex items-center justify-center h-screen h-full mx-6 py-6">
-            <div className="bg-white rounded-3xl shadow-md p-12 ">
+        <div className="flex items-center justify-center h-screen mx-32 py-32 ">
+            <div className=" p-12 h-full">
                 <div>
                     <h1 className="bold-heading" style={{ fontSize: '5.5em', marginBottom: '20px', fontFamily: 'sans-serif'}}>Banco<br/>de Ideas</h1>
                     <p style={{ fontSize: '2em', marginBottom: '40px', fontFamily: 'unset'}}>
