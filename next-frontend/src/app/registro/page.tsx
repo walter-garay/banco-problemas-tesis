@@ -1,13 +1,57 @@
-import { InputWithLabel } from "@/components/ui/input"
-import React from 'react';
+'use client'
+
+import { Input, InputWithLabel, LabelWithInput } from "@/components/ui/input"
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { IoPersonAddSharp } from "react-icons/io5";
 import { ImLibrary } from "react-icons/im";
-// Asegúrate de importar correctamente tu componente InputWithLabel
+import { createItem } from "@/api/apiService";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
 
 export default function Registro({}) {
+    // REGISTRE USERS
+    const [newUser, setNewUser] = useState({
+        nombre: '',
+        apellidos: '',
+        password1: '',
+        password2: '',
+        phone: '',
+        email:'',
+        role: '',
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setNewUser((prevUser) => ({ ...prevUser, [name]: value }));
+    };
+
+    // crear funcion para mi boton registrar
+    const handleSubmit = async () => {
+        try {
+            console.log('Usuario por crear:', newUser);
+
+            const response = await createItem('api/auth/registration/', newUser, 
+                {
+                    'Content-Type': 'application/json',
+                });
+        
+            console.log('Usuario creado:', response);
+        } catch (error) {
+            console.error('Error creando el usuario:', error);
+        }
+    };
+    
     return (
-        <div className="flex items-center justify-center h-screen ">
+
+        <div className="flex items-center justify-center h-screen">
             <div className="max-w-3xl py-9 px-6 sm:px-9 mx-auto sm:mx-auto sm:max-w-2xl flex flex-col items-center space-y-2 bg-white rounded-xl shadow-sm">
 
                 <div className="flex flex-col items-center mt-6">
@@ -36,52 +80,109 @@ export default function Registro({}) {
                     </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row space-y-2 sm:space-x-4 sm:space-y-0">
-                    <div className="w-full sm:w-1/2">
-                        <a>Nombres</a>
-                        <InputWithLabel 
-                            id="title" label="Nombre y Apellidos" type="text"  
-                            placeholder="Erick" 
-                        /> 
-                    </div> 
-
-                    <div className="w-full sm:w-1/2">
-                        <a>Apellidos</a>
-                        <InputWithLabel 
-                            id="title" label="Apellido" type="text"  
-                            placeholder="Vasquez Rengifo" 
-                        />
+                <div className="py-4 gap-y-6 flex flex-col">
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-x-4 sm:space-y-0">
+                        <div className="w-full sm:w-1/2">
+                            <LabelWithInput htmlFor="nombre" label="Nombres">
+                                <Input
+                                    id="nombre"
+                                    type="text"
+                                    placeholder="Erickson"
+                                    name="nombre"
+                                    value={newUser.nombre}
+                                    onChange={handleInputChange}
+                                />
+                            </LabelWithInput> 
+                        </div>
+                        <div className="w-full sm:w-1/2">
+                            <LabelWithInput htmlFor="apellido" label="Apellidos">
+                                <Input
+                                    id="apellido"
+                                    type="text"
+                                    placeholder="Vasquez"
+                                    name="apellidos"
+                                    value={newUser.apellidos}
+                                    onChange={handleInputChange}
+                                />
+                            </LabelWithInput> 
+                        </div>
                     </div>
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-x-4 sm:space-y-0">
+                        <div className="w-full sm:w-1/2">
+                            <LabelWithInput htmlFor="email" label="Correo Electronico">
+                                <Input
+                                    id="email"
+                                    type="text"
+                                    placeholder="example@gmail.com"
+                                    name="email"
+                                    value={newUser.email}
+                                    onChange={handleInputChange}
+                                />
+                            </LabelWithInput>
+                        </div>
+
+                        <div className="w-full sm:w-1/2">
+                            <LabelWithInput htmlFor="phone" label="Telefóno">
+                                <Input
+                                    id="phone"
+                                    type="text"
+                                    placeholder=""
+                                    name="phone"
+                                    value={newUser.phone}
+                                    onChange={handleInputChange}
+                                />
+                            </LabelWithInput> 
+                        </div>
+                    </div>
+
+                    <div className="w-full sm:w-full ">
+                        <LabelWithInput htmlFor="password1" label="Contraseña">
+                            <Input
+                                id="paswword1"
+                                type="text"
+                                placeholder="********"
+                                name="password1"
+                                value={newUser.password1}
+                                onChange={handleInputChange}
+                            />
+                        </LabelWithInput>
+                        
+                    </div>
+                    <div className="w-full sm:w-full ">
+
+                         <LabelWithInput htmlFor="password2" label="Confirmar contraseña">
+                            <Input
+                                id="paswword2"
+                                type="text"
+                                placeholder="********"
+                                name="password2"
+                                value={newUser.password2}
+                                onChange={handleInputChange}
+                            />
+                        </LabelWithInput>
+                    </div>
+
+                    <LabelWithInput htmlFor="role" label="Rol">
+                        <Select onValueChange={(selectedRole) => handleInputChange({ target: { name: 'role', value: selectedRole } } as React.ChangeEvent<HTMLInputElement>)}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Select a fruit" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                            <SelectLabel>Roles</SelectLabel>
+                            <SelectItem value="p_natural">Natural</SelectItem>
+                            <SelectItem value="emprendedor">Emprendedor</SelectItem>
+                            <SelectItem value="blueberry">Blueberry</SelectItem>
+                            <SelectItem value="grapes">Grapes</SelectItem>
+                            <SelectItem value="pineapple">Pineapple</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                        </Select>
+                    </LabelWithInput>
                 </div>
 
-                <div className="flex flex-col sm:flex-row space-y-2 sm:space-x-4 sm:space-y-0">
-                    <div className="w-full sm:w-1/2">
-                        <a>Correo Electronico</a>
-                        <InputWithLabel 
-                            id="title" label="Email" type="email"  
-                            placeholder="davidcito@gmail.com" 
-                        />
-                    </div>
-
-                    <div className="w-full sm:w-1/2">
-                        <a>Telefono</a>
-                        <InputWithLabel 
-                            id="title" label="Telefóno" type="text"  
-                            placeholder="" 
-                        />
-                    </div>
-                </div>
-
-                <div className="w-full sm:w-full ">
-                    <a>Contraseña</a>
-                    <InputWithLabel 
-                        id="title" label="Contraseña" type="password"  
-                        placeholder="*******" 
-                    />
-                </div>
-
-                <div className="flex items-center ">
-                    <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded shadow-md focus:outline-none focus:shadow-outline-green active:bg-green-900">
+                <div className="flex items-center">
+                    <button onClick={handleSubmit} className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded shadow-md focus:outline-none focus:shadow-outline-green active:bg-green-900">
                         Registrar
                     </button>
                 </div>

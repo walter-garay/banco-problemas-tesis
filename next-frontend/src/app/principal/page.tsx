@@ -9,8 +9,8 @@ import Innovacion from "../../../public/images/Innovacion.png"
 
 export default function LandingPage({}) {
     return (
-        <div className="flex items-center h-full mx-6 py-6">
-            <div className="bg-white rounded-3xl shadow-md p-12">
+        <div className="flex items-center justify-center h-screen mx-32 py-32 ">
+            <div className=" p-12 h-full">
                 <div>
                     <h1 className="bold-heading" style={{ fontSize: '5.5em', marginBottom: '20px', fontFamily: 'sans-serif'}}>Banco<br/>de Ideas</h1>
                     <p style={{ fontSize: '2em', marginBottom: '40px', fontFamily: 'unset'}}>
@@ -27,12 +27,12 @@ export default function LandingPage({}) {
                 </div>
             </div>
 
-            <div className="flex flex-col gap-y-2 items-center justify-center h-full w-full mb-8">
+            <div className="flex flex-col gap-y-2 items-center justify-center h-full w-full mb-20">
                 <Image
                     src={Innovacion}
                     alt="Innovacion"
-                    width={400}
-                    height={400}
+                    width={550}
+                    height={450}
                 ></Image>
 
                 <Link href="/login" passHref={true} legacyBehavior={true}>

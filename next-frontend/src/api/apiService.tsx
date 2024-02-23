@@ -1,4 +1,4 @@
-const apiUrl: string = 'http://127.0.0.1:8000/';
+const apiUrl: string = 'https://avicyt.onrender.com/';
 const token: string = 'Token d854000a3ab4a1b1242e3c22573058ca7420eddf';
 
 const handleErrors = (response: Response) => {
