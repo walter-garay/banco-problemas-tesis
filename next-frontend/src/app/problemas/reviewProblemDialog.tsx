@@ -17,7 +17,7 @@ type MyModalProps = {
     isOpen: boolean;
     onClose: () => void;
     className?: string;
-    problem?: RawProblem;
+    problem?: any;
 };
 
 export default function ReviewProblemDialog({isOpen, onClose, className, problem}: MyModalProps) {
@@ -29,6 +29,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
     const [valueLegal, setValueLegal] = useState<number>(3);
     
 
+    
     return (
         isOpen && (
         <div className={`fixed inset-0 bg-white lg:bg-black w-screen lg:bg-opacity-40 h-full lg:h-screen ${className}`}>
@@ -118,7 +119,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
 
                         <LabelWithInput htmlFor="title" label="Titulo mejorado" >  
                             <Input id="title" type="text" 
-                                defaultValue={problem?.title}
+                                defaultValue={problem?.applicant.username}
                                 required
                                 className="cursor-text">
                             </Input>          

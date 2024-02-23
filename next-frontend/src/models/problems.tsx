@@ -1,4 +1,6 @@
 // Interfaces para los modelos de Django
+import { User } from './user';
+
 type RawStatusOptions = 'Revisión Pendiente' | 'Desaprobado' | 'Publicado';
 
 

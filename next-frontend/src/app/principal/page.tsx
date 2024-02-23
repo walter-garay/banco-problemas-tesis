@@ -37,7 +37,7 @@ export default function LandingPage({}) {
 
                 <Link href="/login" passHref={true} legacyBehavior={true}>
                     <Button 
-                        className="text-x1 bg-green-600 hover:bg-green-700 w-64 text-white font-bold py-5 px-7 rounded-3xl shadow-full ml-8 ml-8 mt-[-50px]">
+                        className="text-x1 bg-green-600 hover:bg-green-700 w-64 text-white font-bold py-5 px-7 rounded-3xl shadow-full ml-8 mt-[-50px]">
                         Iniciar Sesión
                     </Button>
                 </Link>

@@ -48,7 +48,7 @@ export default function ProblemsPage() {
         document.body.style.overflow = 'auto';
     }
 
-
+    
 
     function sortByStatus(rawProblems: RawProblem[], orden: string[]): RawProblem[] {
         return rawProblems.sort((a, b) => {
