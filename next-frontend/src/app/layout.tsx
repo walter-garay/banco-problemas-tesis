@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <PrimeReactProvider  value={{ unstyled: false }}>
       <html lang="es" >
-        <body className={`${inter.className} bg-gray-100 min-h-screen antialiased  `}>{children}</body>    
+        <body className={`${inter.className} bg-white h-screen antialiased  `}>{children}</body>    
       </html>
     </PrimeReactProvider>
   );
