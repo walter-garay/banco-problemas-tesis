@@ -29,6 +29,9 @@ export default function Login({}) {
             console.log('Login creado:', response);
 
             const token = await response.json();
+
+            console.log('Token:', token);
+
             localStorage.setItem('token', token);
 
         } catch (error) {
