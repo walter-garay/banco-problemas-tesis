@@ -10,7 +10,6 @@ const handleErrors = (response: Response) => {
 
 const executeRequest = async (method: string, endpoint: string, data: any = null, customHeaders: Record<string, string> = {}) => {
   const headers: Record<string, string> = {
-    'Authorization': token,
     ...customHeaders,
   };
 

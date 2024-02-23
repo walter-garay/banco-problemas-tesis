@@ -16,7 +16,7 @@ export default function Login({}) {
         setNewLogin((prevLogin) => ({ ...prevLogin, [name]: value }));
     };
 
-    // crear funcion para mi boton registrar
+    // crear funcion para mi boton Iniciar
     const handleSubmit = async () => {
         try {
             console.log('Login:', user);
@@ -28,17 +28,32 @@ export default function Login({}) {
         
             console.log('Login creado:', response);
 
-            const token = await response.json();
+            
 
-            console.log('Token:', token);
+            console.log('Token:', response.key);
+            localStorage.setItem('token', response.key);
 
-            localStorage.setItem('token', token);
+            console.log('ID:', response.user.id);
+            localStorage.setItem('id', response.user.id);
 
+            console.log('Nombre:', response.user.first_name);
+            localStorage.setItem('first_name', response.user.first_name);
+
+            console.log('Email:', response.user.email);
+            localStorage.setItem('email', response.user.email);
+
+            console.log('Role:', response.user.role);
+            localStorage.setItem('role', response.user.role);
+
+            // EN CASO SEA EMPRESA
+            console.log('Razon Social:', response.user.razon_social);
+            localStorage.setItem('razon_social', response.user.razon_social);
+
+            window.location.href = '/problemas';
+            
         } catch (error) {
             console.error('Error creando el login:', error);
         }
-
-
     };
 
 
