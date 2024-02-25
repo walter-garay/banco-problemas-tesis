@@ -9,28 +9,26 @@ const handleErrors = (response: Response) => {
 };
 
 const executeRequest = async (method: string, endpoint: string, data: any = null, customHeaders: Record<string, string> = {}) => {
-  const headers: Record<string, string> = {
-    ...customHeaders,
-  };
+    const headers: Record<string, string> = {
+      ...customHeaders,
+    };
 
-  const config: RequestInit = {
-    method,
-    headers,
-  };
-
-  if (data) {
-    if (!(data instanceof FormData)) {
-      // Solo convierte a JSON si la data no es FormData
-      config.body = JSON.stringify(data);
-    } else {
-      config.body = data;
+    const config: RequestInit = {
+      method,
+      headers,
+    };
+    if (data) {
+      if (!(data instanceof FormData)) {
+        // Solo convierte a JSON si la data no es FormData
+        config.body = JSON.stringify(data);
+      } else {
+        config.body = data;
+      }
     }
-  }
-
-  const response = await fetch(apiUrl + endpoint, config);
-  const responseData = await handleErrors(response).json();
-  
-  return responseData;
+    const response = await fetch(apiUrl + endpoint, config);
+    const responseData = await handleErrors(response).json();
+    
+    return responseData;
 };
 
 const getItems = async (endpoint: string, headers: Record<string, string> = {}) => {

@@ -1,5 +1,3 @@
-
-
 'use client'
 
 import { createItem } from "@/api/apiService";
@@ -24,14 +22,12 @@ export default function Login({}) {
         try {
             console.log('Login:', user);
 
-            const response = await createItem('/api/authlogin/', user, 
+            const response = await createItem('api/authlogin/', user, 
                 {
                     'Content-Type': 'application/json',
                 });
         
             console.log('Login creado:', response);
-
-            
 
             console.log('Token:', response.key);
             localStorage.setItem('token', response.key);
@@ -52,7 +48,16 @@ export default function Login({}) {
             console.log('Razon Social:', response.user.razon_social);
             localStorage.setItem('razon_social', response.user.razon_social);
 
-            window.location.href = '/problemas';
+            const Role = localStorage.getItem('role');
+
+            //Redireccion de la pagina
+            if (Role === 'admin') {
+                // Si el rol es admin
+                window.location.href = '/problemas';
+            } else {
+                // Para otros roles
+                window.location.href = '/problemas';
+            }
 
         } catch (error) {
             console.error('Error creando el login:', error);
@@ -61,8 +66,6 @@ export default function Login({}) {
 
     const [showPwd, setShowPwd] = React.useState(false);
     const switchShown = () => setShowPwd(!showPwd);
-
-
 
     return (
 
