@@ -1,5 +1,6 @@
 const apiUrl: string = 'https://avicyt.onrender.com/';
-const token: string = 'Token d854000a3ab4a1b1242e3c22573058ca7420eddf';
+const userToken: string = localStorage.getItem('token') || '';
+const token: string = 'Token ' + userToken;
 
 const handleErrors = (response: Response) => {
   if (!response.ok) {
@@ -8,27 +9,31 @@ const handleErrors = (response: Response) => {
   return response;
 };
 
-const executeRequest = async (method: string, endpoint: string, data: any = null, customHeaders: Record<string, string> = {}) => {
-    const headers: Record<string, string> = {
-      ...customHeaders,
-    };
+const executeRequest = async (method: string, endpoint: string, data: any = null, customHeaders: Record<string, string> = {}, includeToken: boolean = true) => {
+  let headers: Record<string, string> = { ...customHeaders };
+  
+  if (includeToken) {
+      headers['Authorization'] = token;
+  }
 
-    const config: RequestInit = {
+  const config: RequestInit = {
       method,
       headers,
-    };
-    if (data) {
+  };
+
+  if (data) {
       if (!(data instanceof FormData)) {
-        // Solo convierte a JSON si la data no es FormData
-        config.body = JSON.stringify(data);
+          // Solo convierte a JSON si la data no es FormData
+          config.body = JSON.stringify(data);
       } else {
-        config.body = data;
+          config.body = data;
       }
-    }
-    const response = await fetch(apiUrl + endpoint, config);
-    const responseData = await handleErrors(response).json();
-    
-    return responseData;
+  }
+
+  const response = await fetch(apiUrl + endpoint, config);
+  const responseData = await handleErrors(response).json();
+  
+  return responseData;
 };
 
 const getItems = async (endpoint: string, headers: Record<string, string> = {}) => {
@@ -39,8 +44,8 @@ const getItemById = async (endpoint: string, id: number, headers: Record<string,
   return executeRequest('GET', `${endpoint}/${id}`, null, headers);
 };
 
-const createItem = async (endpoint: string, data: any, headers: Record<string, string> = {}) => {
-  return executeRequest('POST', endpoint, data, headers);
+const createItem = async (endpoint: string, data: any, headers: Record<string, string> = {}, includeToken?: boolean) => {
+  return executeRequest('POST', endpoint, data, headers, includeToken);
 };
 
 const updateItem = async (endpoint: string, id: number, data: any, headers: Record<string, string> = {}) => {

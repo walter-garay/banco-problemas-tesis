@@ -24,7 +24,7 @@ export default function NewProblemDialog({}) {
         description: '',
         applicant: 1,
         institution_name: 'David Garay',
-        raw_status: 'Revisión pendiente',
+        raw_status: 'en revision',
         observation: null,
         file_1: null,
         file_2: null,

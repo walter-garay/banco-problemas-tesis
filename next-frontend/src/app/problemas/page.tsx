@@ -17,7 +17,7 @@ import { Dialog } from 'primereact/dialog';
 import { RawProblem } from '@/models/problems'; 
 import { getItems } from '@/api/apiService';
 
-import { problemas, ramas, sectores, prioridades, tipo_solicitante, estados } from "@/data";
+import { ramas, sectores, prioridades, tipo_solicitante, estados } from "@/data";
 
 
 export default function ProblemsPage() {
@@ -29,11 +29,9 @@ export default function ProblemsPage() {
     
     const [visible, setVisible] = useState(false);
     const [isOpen, setOpen] = useState(false);
-
     
     const [rawProblems, setRawProblems] = useState<RawProblem[]>([]);
     const [selectedProblem, setSelectedProblem] = useState<RawProblem>();
-
 
     const handleOpen = (problemId: number) => {
         const selectedProblemData = rawProblems.find(problem => problem.id === problemId);
@@ -64,7 +62,16 @@ export default function ProblemsPage() {
                 var data = await getItems('problems/rawproblems');
                 data = sortByStatus(data, ['Revisión pendiente', 'Desaprobado', 'Publicado']);
                 
-                setRawProblems(data);
+                const userRol = localStorage.getItem('role');
+                if (userRol === "admin") {
+                    setRawProblems(data);
+                } else {
+                    const userId = localStorage.getItem('id');
+                    const validUserId: string = userId || ""; 
+                    data = data.filter((problem: RawProblem) => problem.applicant === parseInt(validUserId));
+                    setRawProblems(data);
+                }
+
             } catch (error) {
                 console.error('Error al obtener datos rawProblems:', error);
             }
@@ -143,33 +150,34 @@ export default function ProblemsPage() {
                 </LabelWithInput>
             </div>
 
-            <div className="flex-col flex items-center ">
+            <div className="flex-col flex items-center min-w-200 ">
                 <Button
                     className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 w-full h-10 text-white "
                     onClick={() => setVisible(true)}>
                     Agregar problema
                 </Button>
-                <div className="flex-col space-y-5 my-6">
-                {
-                    rawProblems.map(({ id, title, sector, description, raw_status, created_at, file_1, file_2, file_3, file_4 }) => {
-                        // Filtrar y contar los archivos no nulos
-                        const cantRecursos: number = [file_1, file_2, file_3, file_4].filter(file => file !== null).length;
-                    
-                        return (
-                        <ProblemCard
-                            key={id}
-                            id={id}
-                            title={title}
-                            area={sector} 
-                            cantRecursos={cantRecursos} 
-                            description={description}
-                            dateRegistration={created_at ? new Intl.DateTimeFormat('es-ES').format(new Date(created_at)) : ''}
-                            status={raw_status}
-                            openDialog={handleOpen}
-                        />
-                        );
-                    })
-                }
+                <div className="flex-col space-y-5 my-6 w-full">
+                    {
+                        rawProblems.map(({ id, title, sector, description, raw_status, created_at, file_1, file_2, file_3, file_4 }) => {
+                            // Filtrar y contar los archivos no nulos
+                            const cantRecursos: number = [file_1, file_2, file_3, file_4].filter(file => file !== null).length;
+
+                            return (
+                            <ProblemCard
+                                key={id}
+                                id={id}
+                                title={title}
+                                area={sector} 
+                                cantRecursos={cantRecursos} 
+                                description={description}
+                                dateRegistration={created_at ? new Intl.DateTimeFormat('es-ES').format(new Date(created_at)) : ''}
+                                status={raw_status}
+                                openDialog={handleOpen}
+                            />
+                            );
+                        })
+                    }
+
                 </div>
 
             </div>

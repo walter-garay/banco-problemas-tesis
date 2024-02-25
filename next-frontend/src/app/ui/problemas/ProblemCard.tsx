@@ -29,7 +29,7 @@ export default function ProblemCard({
     };
         
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
+        <div className="bg-white p-6 rounded-lg shadow-md w-full">
             
             <h1 className=" mb-4 font-bold ">
                 <span className="mr-2">{title}</span>
