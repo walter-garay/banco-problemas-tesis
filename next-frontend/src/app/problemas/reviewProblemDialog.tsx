@@ -11,16 +11,19 @@ import { InputText } from "primereact/inputtext";
 
 
 import { useState } from "react";
-import { RawProblem } from '@/models/problems';
+import { RawProblem, CleanProblem } from '@/models/problems';
+import { createItem } from '@/api/apiService';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@radix-ui/react-select';
+import { carreras } from '@/data';
 
 type MyModalProps = {
     isOpen: boolean;
     onClose: () => void;
     className?: string;
-    problem?: any;
+    rawProblem?: RawProblem;
 };
 
-export default function ReviewProblemDialog({isOpen, onClose, className, problem}: MyModalProps) {
+export default function ReviewProblemDialog({isOpen, onClose, className, rawProblem}: MyModalProps) {
     const [valueSocial, setValueSocial] = useState<number>(3);
     const [valueTecnologico, setValueTecnologico] = useState<number>(3);
     const [valueEconomico, setValueEconomico] = useState<number>(3);
@@ -28,6 +31,61 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
     const [valueEcologico, setValueEcologico] = useState<number>(3);
     const [valueLegal, setValueLegal] = useState<number>(3);
     
+    const [newCleanProblem, setNewCleanProblem] = useState<CleanProblem>(
+        {
+            id: 1,
+            raw_problem: 123,
+            clean_title: "Título limpio",
+            clean_description: "Descripción limpia",
+            clean_sector: "Sector limpio",
+            career_1: "Carrera 1",
+            career_2: "Carrera 2",
+            career_3: "Carrera 3",
+            economic_support: 5,
+            social_support: 3,
+            enviromental_support: 4,
+            importancy: 8,
+          }
+    );
+
+    const handleCareerChange = (selectedCareer: string, field: string) => {
+        setNewCleanProblem((prevCleanProblem) => ({
+          ...prevCleanProblem,
+          [field]: selectedCareer,
+        }));
+      };
+
+    // crear funcion para mi boton Iniciar
+    const handleSubmit = async () => {
+        console.log('newCleanProblem:', newCleanProblem)
+        try {
+            console.log('newCleanProblem:', newCleanProblem);
+
+            const response = await createItem('problems/cleanproblems', newCleanProblem, 
+                {
+                    'Content-Type': 'application/json',
+                },
+                false
+            );
+        
+            console.log('Crear Nuevo Problema:', response);
+
+        } catch (error) {
+            console.error('Error al crear problema:', error);
+        }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setNewCleanProblem((prevNewCleanProblem) => ({ ...prevNewCleanProblem, [name]: value }));
+    };
+
+    const handleSectorChange = (selectedSector: string) => {
+        setNewCleanProblem((prevNewCleanProblem) => ({
+            ...prevNewCleanProblem,
+            sector: selectedSector,
+        }));
+    };
 
     
     return (
@@ -41,7 +99,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl '>
                         
                         <LabelWithInput htmlFor="entidad" label="Tipo de entidad" >
-                            <RadioGroup defaultValue={problem?.institution_type} className="flex justify-between text-gray-500 " disabled>
+                            <RadioGroup defaultValue={rawProblem?.institution_type} className="flex justify-between text-gray-500 " disabled>
                                 <div className="flex items-center space-x-2">
                                     <RadioGroupItem value={"persona"} id="r1" />
                                     <Label htmlFor="r1">Persona natural</Label>
@@ -59,7 +117,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
 
                         <LabelWithInput htmlFor="title" label="Nombre / Razón Social" >  
                             <Input id="title" type="text" 
-                                defaultValue={problem?.institution_name} readOnly >
+                                defaultValue={rawProblem?.institution_name} readOnly >
                             </Input>          
                         </LabelWithInput>
 
@@ -86,7 +144,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
                         <LabelWithInput htmlFor="title" label="Título del problema" >  
                             <Input id="title" type="text" 
-                                defaultValue={problem?.title} 
+                                defaultValue={rawProblem?.title} 
                                 readOnly
                                 >
                             </Input>          
@@ -95,7 +153,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
                         <LabelWithInput htmlFor="description" label="Descripción detallada del problema" type="text">  
                             <textarea id="description" 
                                 className="cursor-text w-full min-h-32 px-3 py-2 border border-gray-300 bg-white rounded-md "
-                                defaultValue={problem?.description}
+                                defaultValue={rawProblem?.description}
                                 disabled>
                             </textarea>
                         </LabelWithInput>
@@ -119,17 +177,23 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
 
                         <LabelWithInput htmlFor="title" label="Titulo mejorado" >  
                             <Input id="title" type="text" 
-                                defaultValue={problem?.applicant.username}
+                                defaultValue={rawProblem?.title}
                                 required
-                                className="cursor-text">
+                                className="cursor-text"
+                                name="title"
+                                onChange={handleInputChange}
+                                >
                             </Input>          
                         </LabelWithInput>
 
                         <LabelWithInput htmlFor="description" label="Descripción mejorada" type="text">  
                             <textarea id="description" 
                                 className="cursor-text w-full min-h-64 px-3 py-2 border border-gray-300 bg-white rounded-md "
-                                defaultValue={problem?.description}
-                                required>
+                                defaultValue={rawProblem?.description}
+                                required
+                                name="description"
+                                onChange={handleInputChange}
+                                >
                             </textarea>
                         </LabelWithInput>
                     
@@ -143,9 +207,29 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
                             <p className="w-full text-left font-normal text-gray-500 text-sm mb-1 mt-2 leading-6">
                                 Escoge en orden de mayor a menor relación 3 carreras que puedan trabajar sobre la problemática brindada
                             </p>
-                            <DropdownSectores></DropdownSectores>
-                            <DropdownSectores></DropdownSectores>
-                            <DropdownSectores></DropdownSectores>
+                            
+                            {[1, 2, 3].map((index) => (
+                            <Select key={index} onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, `career_${index}`)
+                        }
+                            
+                            >
+                                <SelectTrigger className={`w-full h-12 border ${index === 1 ? 'border-black-700' : index === 2 ? 'border-black-700' : 'border-black-700'}`}>
+                                    <SelectValue placeholder={`Seleccione una carrera ${index}`} />
+                                </SelectTrigger>
+                                <SelectContent style={{ zIndex: 10002, top: '2rem' }}>
+                                {carreras.map((item) => (
+                                    <SelectGroup key={index} >
+                                    
+                                        <SelectItem key={item} value={item}>
+                                            {item}
+                                        </SelectItem>
+                                    
+                                    </SelectGroup>
+                                ))}
+                                </SelectContent>
+                            </Select>
+                            ))}
+        
                         </LabelWithInput>
 
                         <LabelWithInput label="Nivel de impacto" className="gap-y-5">
@@ -210,7 +294,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, problem
                         </p>                                        
                         
                         <div className="w-full space-y-2 md:gap-x-2 md:flex-row-reverse md:flex md:space-y-0 justify-start">
-                            <Button className="h-10  bg-blue-700 text-white rounded-xl md:w-52 w-full hover:bg-blue-800">Guardar y publicar</Button>
+                            <Button className="h-10  bg-blue-700 text-white rounded-xl md:w-52 w-full hover:bg-blue-800" onClick={handleSubmit}>Guardar y publicar</Button>
                             <Button className="h-10  bg-gray-100 text-gray-600 border-gray-700 border rounded-xl md:w-40 w-full hover:bg-gray-200">Desapobar</Button>
                         </div> 
                     </div>

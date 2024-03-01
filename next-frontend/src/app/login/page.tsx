@@ -62,21 +62,21 @@ export default function Login({}) {
     const switchShown = () => setShowPwd(!showPwd);
 
     return (
-        <>
-            <div className="flex items-center mx-36">
-                <aside className="w-1/2 ml-auto flex flex-col items-center">
-                    <h2 className="flex justify-center text-7xl font-semibold text-black-600">U<span className="text-7xl font-semibold text-cyan-600">D</span>
-                    H</h2>
-                    <Image
-                        src={login}
-                        width={300}
-                        alt='login image'
-                        className='w-5/6 h-auto '
-                        >
-                    </Image>
-                </aside>
+        <> 
+            <div className="flex items-center justify-center mx-5 sm:mx-36">
+                <section className="flex-1 flex flex-col items-center justify-center h-screen max-w-2xl py-9 px-6 sm:px-9 bg-white rounded-xl md:flex-row">
+                    <aside className="w-full mb-4 md:w-1/2 md:mr-4 flex items-center justify-center flex-row-reverse sm:flex-col">
+                        <h2 className="flex justify-center text-7xl font-semibold text-black-600 mr-8 sm:mr-1 mt-2 sm:mt-0">U<span className="text-7xl font-semibold text-cyan-600">D</span>
+                            H</h2>
+                        <Image
+                            src={login}
+                            width={100}
+                            alt='login image'
+                            className='w-3/6 sm:w-5/6 h-auto'
+                            >
+                        </Image>
+                    </aside>
 
-                <section className="flex-1 flex items-center justify-center h-screen">
                     <div className="max-w-3xl py-9 px-6 sm:px-9 mx-auto sm:mx-auto sm:max-w-2xl 
                         flex flex-col items-center space-y-1 bg-white rounded-xl gap-y-4 shadow-lg border-2 border-cyan-700">
                         <header className="flex flex-col items-center">
@@ -86,9 +86,9 @@ export default function Login({}) {
                         </header>
                         <form>
                             <div>
-                                <div className="w-full sm:w-full">
+                                <div className="flex-1">
                                     <LabelWithInput htmlFor="email" label="Correo Electronio">
-                                        <Input
+                                        <Input className="h-10"
                                             id="email"
                                             type="text"
                                             placeholder=""
@@ -101,9 +101,9 @@ export default function Login({}) {
 
                                 <br />
 
-                                <div className="w-full sm:w-full ">  
+                                <div className="flex-1 ">  
                                     <LabelWithInput htmlFor="password" label="Contraseña">
-                                            <Input
+                                            <Input className="h-10"
                                                 id="paswword"
                                                 type={showPwd ? 'text' : 'password'}
                                                 placeholder="********"
@@ -111,7 +111,7 @@ export default function Login({}) {
                                                 value={user.password}
                                                 onChange={handleInputChange}
                                             />
-                                            <div className="flex justify-end mr-3 -mt-16" onClick={() => switchShown()}>
+                                            <div className="flex justify-end mr-4 -mt-14" onClick={() => switchShown()}>
                                                 {showPwd ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height={"1.2rem"}>
                                                 <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                                 <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clipRule="evenodd" />
@@ -133,8 +133,8 @@ export default function Login({}) {
                             </button>
                         </div>
                         
-                        <div>
-                            <a>¿Aún no tienes una cuenta?</a>
+                        <div className="flex flex-col items-center">
+                            <a className="justify-center">¿No tienes una cuenta?</a>
                             <a href="/registro" className=" text-cyan-600"> Registrarse</a>
                         </div>
                     </div>

@@ -36,6 +36,27 @@ export const ramas = [
     }
 ];
 
+export const carreras = [
+    'Ingeniería de Software',
+    'Ciencias de la Computación',
+    'Ingeniería de Sistemas',
+    'Ingeniería Informática',
+    'Desarrollo Web',
+    'Inteligencia Artificial',
+    'Seguridad Informática',
+    'Diseño de Experiencia de Usuario (UX/UI)',
+    'Redes y Comunicaciones',
+    'Ingeniería de Datos',
+    'Matemáticas Aplicadas',
+    'Bioinformática',
+    'Ingeniería en Robótica',
+    'Ingeniería en Videojuegos',
+    'Ingeniería de Software Empresarial',
+    'Ciberseguridad',
+    'Analítica de Datos',
+    'Desarrollo de Aplicaciones Móviles',
+    'Sistemas Embebidos',
+  ];
 
 
 export const problemas = [

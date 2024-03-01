@@ -12,7 +12,7 @@ export interface Usuario {
 
 export interface RawProblem {
   id: number;
-  applicant: number;
+  applicant: Usuario | number;
   title: string;
   sector: string;
   institution_type: string;
