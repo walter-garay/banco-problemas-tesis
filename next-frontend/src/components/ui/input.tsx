@@ -25,8 +25,8 @@ Input.displayName = "Input"
 
 export function LabelWithInput({ ...props }) {
   return (
-    <div className={`grid w-full items-center gap-2.5 ${props.className}`}>
-      <Label htmlFor={props.htmlFor} className={`font-semibold`} > {...props.label} </Label>
+    <div className={`grid w-full items-center gap-1.5 ${props.className}`}>
+      <Label htmlFor={props.htmlFor} className={`text-sm ml-2`} > {...props.label} </Label>
       {props.children}
   </div>  
   )
