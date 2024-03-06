@@ -16,7 +16,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-  } from "@/components/ui/select"
+} from "@/components/ui/select"
 
 export default function Registro({}) {
 
@@ -572,8 +572,3 @@ export default function Registro({}) {
             </section>
     );
 }
-
-/*function setSuccessMessage(arg0: string) {
-    throw new Error("Function not implemented.");
-}*/
-
