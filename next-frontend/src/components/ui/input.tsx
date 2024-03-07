@@ -23,20 +23,32 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 )
 Input.displayName = "Input"
 
-export function LabelWithInput({ ...props }) {
-  return (
-    <div className={`grid w-full items-center gap-1.5 ${props.className}`}>
-      <Label htmlFor={props.htmlFor} className={`text-sm ml-2`} > {...props.label} </Label>
-      {props.children}
-  </div>  
-  )
-}
+
 
 export function InputWithLabel({ ...props }) {
   return (
     <div className="grid w-full items-center gap-1.5">
       <Input id={props.id} {...props}></Input>
-  </div>  
+    </div>  
   )
 }
 
+
+
+export interface LabelWithInputProps {
+  className?: string;
+  htmlFor: string;
+  label: React.ReactNode;
+  children: React.ReactNode;
+}
+
+export function LabelWithInput({ className, htmlFor, label, children }: LabelWithInputProps) {
+  return (
+    <div className={`grid w-full items-center gap-1.5 ${className}`}>
+      <Label htmlFor={htmlFor} className={`text-sm ml-2`}>
+        {label}
+      </Label>
+      {children}
+    </div>
+  );
+}
