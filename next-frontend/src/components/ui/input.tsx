@@ -45,9 +45,10 @@ export interface LabelWithInputProps {
 export function LabelWithInput({ className, htmlFor, label, children }: LabelWithInputProps) {
   return (
     <div className={`grid w-full items-center gap-1.5 ${className}`}>
-      <Label htmlFor={htmlFor} className={`text-sm ml-2`}>
+      <Label htmlFor={htmlFor} className={`text-sm`}>
         {label}
       </Label>
+
       {children}
     </div>
   );

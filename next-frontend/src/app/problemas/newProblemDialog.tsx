@@ -124,7 +124,7 @@ export default function NewProblemDialog({}) {
                     <SelectTrigger className="w-full h-12" >
                         <SelectValue placeholder="Seleccione un sector" />
                     </SelectTrigger>
-                    <SelectContent style={{ zIndex: 1102 }}>
+                    <SelectContent style={{ zIndex: 1502 }}>
                         {ramas.map((rama, index) => (
                         <SelectGroup key={index}>
                             <SelectLabel>{rama.label}</SelectLabel>

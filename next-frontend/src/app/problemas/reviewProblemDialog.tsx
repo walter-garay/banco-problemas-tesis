@@ -10,11 +10,12 @@ import { Slider, SliderChangeEvent } from "primereact/slider";
 import { InputText } from "primereact/inputtext";
 
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { RawProblem, CleanProblem } from '@/models/problems';
 import { createItem } from '@/api/apiService';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@radix-ui/react-select';
 import { carreras } from '@/data';
+import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+
 
 type MyModalProps = {
     isOpen: boolean;
@@ -22,6 +23,7 @@ type MyModalProps = {
     className?: string;
     rawProblem?: RawProblem;
 };
+
 
 export default function ReviewProblemDialog({isOpen, onClose, className, rawProblem}: MyModalProps) {
     const [valueSocial, setValueSocial] = useState<number>(3);
@@ -45,15 +47,15 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
             social_support: 3,
             enviromental_support: 4,
             importancy: 8,
-          }
+        }
     );
 
     const handleCareerChange = (selectedCareer: string, field: string) => {
         setNewCleanProblem((prevCleanProblem) => ({
-          ...prevCleanProblem,
-          [field]: selectedCareer,
+            ...prevCleanProblem,
+            [field]: selectedCareer,
         }));
-      };
+    };
 
     // crear funcion para mi boton Iniciar
     const handleSubmit = async () => {
@@ -167,15 +169,18 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                     
                 </div>
 
+                
 
                 <div className="relative mt-8 lg:mt-0 lg:bg-white shadow-sm rounded-xl w-full max-h-screen lg:overflow-y-auto flex flex-col items-center lg:p-8">
                     <i className="pi pi-times fixed lg:top-7 lg:right-11 top-1 right-1.5 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={onClose}></i>
                     <h1 className="font-bold text-gray-800 text-xl mb-5">Información Limpia</h1> 
                     
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
-                        <p className="w-full text-left font-normal text-gray-500 text-sm mb-4 leading-6">Un título claro y una descripción detallada mejorarán la comprensión de los tesistas. Ajusta y mejora la información brindada por el solicitante:</p>                                        
+                        <p className="w-full text-left font-normal text-gray-500 text-sm mb-4 leading-6">
+                            Un título claro y una descripción detallada mejorarán la comprensión de los tesistas. Ajusta y mejora la información brindada por el solicitante:
+                        </p>                                        
 
-                        <LabelWithInput htmlFor="title" label="Titulo mejorado" >  
+                        <LabelWithInput htmlFor="title" label="Titulo mejorado">  
                             <Input id="title" type="text" 
                                 defaultValue={rawProblem?.title}
                                 required
@@ -202,34 +207,25 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                     <h1 className="font-bold text-gray-800 text-xl mb-4 mt-6">Información Adicional</h1> 
 
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
-
-                        <LabelWithInput htmlFor="carrera" label="Identifica carreras relacionadas con el problema">  
-                            <p className="w-full text-left font-normal text-gray-500 text-sm mb-1 mt-2 leading-6">
-                                Escoge en orden de mayor a menor relación 3 carreras que puedan trabajar sobre la problemática brindada
+                        
+                        <LabelWithInput htmlFor="sector" label="Identifica carreras relacionadas con el problema" className='gap-y-1'>
+                            <p className="w-full text-left font-normal text-gray-500 text-sm leading-6 my-4">
+                                Escoge en orden de mayor a menor relación 3 carreras que puedan trabajar sobre la problemática brindada
                             </p>
-                            
-                            {[1, 2, 3].map((index) => (
-                            <Select key={index} onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, `career_${index}`)
-                        }
-                            
-                            >
-                                <SelectTrigger className={`w-full h-12 border ${index === 1 ? 'border-black-700' : index === 2 ? 'border-black-700' : 'border-black-700'}`}>
-                                    <SelectValue placeholder={`Seleccione una carrera ${index}`} />
-                                </SelectTrigger>
-                                <SelectContent style={{ zIndex: 10002, top: '2rem' }}>
-                                {carreras.map((item) => (
-                                    <SelectGroup key={index} >
-                                    
-                                        <SelectItem key={item} value={item}>
-                                            {item}
-                                        </SelectItem>
-                                    
-                                    </SelectGroup>
-                                ))}
-                                </SelectContent>
-                            </Select>
+                            {Array.from({ length: 3 }).map((_, index) => (
+                                <div key={index} className="card flex justify-content-center mb-2">
+                                    <Dropdown
+                                        value={newCleanProblem[`career_${index + 1}` as keyof CleanProblem] as string}
+                                        onChange={(e: DropdownChangeEvent) =>
+                                            handleCareerChange(e.value, `career_${index + 1}`)
+                                        }
+                                        options={carreras.map((carrera) => ({ label: carrera, value: carrera }))}
+                                        showClear
+                                        placeholder="Seleciona una carrera"
+                                        className="w-full md:w-14rem"
+                                    />
+                                </div>
                             ))}
-        
                         </LabelWithInput>
 
                         <LabelWithInput htmlFor='impacto' label="Nivel de impacto" className="gap-y-5">

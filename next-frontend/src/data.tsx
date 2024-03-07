@@ -56,7 +56,7 @@ export const carreras = [
     'Analítica de Datos',
     'Desarrollo de Aplicaciones Móviles',
     'Sistemas Embebidos',
-  ];
+];
 
 
 export const problemas = [
