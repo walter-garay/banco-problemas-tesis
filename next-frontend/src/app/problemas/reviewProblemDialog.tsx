@@ -150,7 +150,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                             </Input>          
                         </LabelWithInput>
 
-                        <LabelWithInput htmlFor="description" label="Descripción detallada del problema" type="text">  
+                        <LabelWithInput htmlFor="description" label="Descripción detallada del problema">  
                             <textarea id="description" 
                                 className="cursor-text w-full min-h-32 px-3 py-2 border border-gray-300 bg-white rounded-md "
                                 defaultValue={rawProblem?.description}
@@ -186,7 +186,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                             </Input>          
                         </LabelWithInput>
 
-                        <LabelWithInput htmlFor="description" label="Descripción mejorada" type="text">  
+                        <LabelWithInput htmlFor="description" label="Descripción mejorada" >  
                             <textarea id="description" 
                                 className="cursor-text w-full min-h-64 px-3 py-2 border border-gray-300 bg-white rounded-md "
                                 defaultValue={rawProblem?.description}
@@ -232,7 +232,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         
                         </LabelWithInput>
 
-                        <LabelWithInput label="Nivel de impacto" className="gap-y-5">
+                        <LabelWithInput htmlFor='impacto' label="Nivel de impacto" className="gap-y-5">
                             <p className="w-full text-left font-normal text-gray-500 text-sm leading-6">
                                 Indica el nivel de impacto y viabilidad que tendría solucionar el problema en las siguientes áreas
                             </p>

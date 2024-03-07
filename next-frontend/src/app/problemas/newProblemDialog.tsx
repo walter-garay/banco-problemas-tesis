@@ -156,7 +156,7 @@ export default function NewProblemDialog({}) {
                 </RadioGroup>
             </LabelWithInput> 
 
-            <LabelWithInput htmlFor="description" label="Descripción detallada del problema" type="text">
+            <LabelWithInput htmlFor="description" label="Descripción detallada del problema">
                 <Textarea
                     id="description"
                     placeholder=""
