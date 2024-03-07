@@ -88,7 +88,7 @@ export default function Login({}) {
                             <div>
                                 <div className="flex-1">
                                     <LabelWithInput htmlFor="email" label="Correo Electronio">
-                                        <Input className="h-10"
+                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
                                             id="email"
                                             type="text"
                                             placeholder=""
@@ -103,7 +103,7 @@ export default function Login({}) {
 
                                 <div className="flex-1 ">  
                                     <LabelWithInput htmlFor="password" label="Contraseña">
-                                            <Input className="h-10"
+                                            <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
                                                 id="paswword"
                                                 type={showPwd ? 'text' : 'password'}
                                                 placeholder="********"
@@ -111,7 +111,9 @@ export default function Login({}) {
                                                 value={user.password}
                                                 onChange={handleInputChange}
                                             />
-                                            <div className="flex justify-end mr-4 -mt-14" onClick={() => switchShown()}>
+                                    </LabelWithInput>              
+                                </div>
+                                <div className="flex justify-end mr-4 -mt-7 cursor-pointer"  onClick={() => switchShown()}>
                                                 {showPwd ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height={"1.2rem"}>
                                                 <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                                 <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clipRule="evenodd" />
@@ -121,8 +123,6 @@ export default function Login({}) {
                                                     <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0115.75 12zM12.53 15.713l-4.243-4.244a3.75 3.75 0 004.243 4.243z" />
                                                     <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 00-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 016.75 12z" />
                                                 </svg>} 
-                                            </div>
-                                    </LabelWithInput>              
                                 </div>
                             </div>  
                         </form>

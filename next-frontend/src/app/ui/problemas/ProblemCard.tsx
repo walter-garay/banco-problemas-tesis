@@ -1,5 +1,6 @@
 import TagStatusProblemCard from "./TagStatusProblemCard";
 import Button from "../Button";
+import { getItems } from "@/api/apiService";
 
 type ProblemCardProps = {
     id: number,
@@ -12,12 +13,14 @@ type ProblemCardProps = {
     openDialog: (problemId: number) => void 
 }
 
+const userRol = localStorage.getItem('role');
+
 
 export default function ProblemCard({
         id,
         title = 'Esta solicitud no tiene un título definido', 
         status = 'Sin estado', 
-        area = 'No especificado', 
+        area = 'No especificado',
         cantRecursos = 0, 
         description = 'La descripción de este problema no ha sido detallada', 
         dateRegistration = "Sin fecha de registro",
@@ -46,16 +49,18 @@ export default function ProblemCard({
 
             <div className="flex justify-between">
                 <p className="mt-auto text-sm font-medium">Regitrado el {dateRegistration}</p>
-                <Button
-                    onClick={handleOpenDialog}
-                    className="bg-slate-600 
-                    hover:bg-slate-700
-                    w-24 h-8
-                    text-white font-semibold 
-                    rounded-md shadow-md text-sm"
+                
+                    <Button
+                        onClick={handleOpenDialog}
+                        className="bg-slate-600 
+                        hover:bg-slate-700
+                        w-24 h-8
+                        text-white font-semibold 
+                        rounded-md shadow-md text-sm"
                     >
-                    Revisar                    
-                </Button>
+                        Revisar
+                    </Button>
+                
             </div>
 
         </div>

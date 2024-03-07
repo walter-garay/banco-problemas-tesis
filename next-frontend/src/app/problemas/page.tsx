@@ -158,7 +158,7 @@ export default function ProblemsPage() {
                 </Button>
                 <div className="flex-col space-y-5 my-6 w-full">
                     {
-                        rawProblems.map(({ id, title, sector, description, raw_status, created_at, file_1, file_2, file_3, file_4 }) => {
+                        rawProblems.map(({ id, title, sector, description,raw_status, created_at, file_1, file_2, file_3, file_4 }) => {
                             // Filtrar y contar los archivos no nulos
                             const cantRecursos: number = [file_1, file_2, file_3, file_4].filter(file => file !== null).length;
 
