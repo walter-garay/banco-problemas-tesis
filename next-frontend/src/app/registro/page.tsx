@@ -18,6 +18,8 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
+import { Password } from 'primereact/password';
+
 export default function Registro({}) {
 
     // REGISTRE USERS
@@ -135,10 +137,6 @@ export default function Registro({}) {
     const [showPwd, setShowPwd] = React.useState(false);
     const switchShown = () => setShowPwd(!showPwd);
     ////////////////////////////////////////////////////////////////
-
-    /////////////////////PARA LOS FORMULARIOS///////////////////////////
-    const [activeForm, setActiveForm] = useState('personaNatural');
-    ////////////////////////////////////////////////////////////////////
     
     //////////////////PARA EL MENSAJE DEL USUARIO//////////////////
     const [successMessage, setSuccessMessage] = useState('');
@@ -165,6 +163,8 @@ export default function Registro({}) {
        
     };
 
+    const [activeForm, setActiveForm] = useState('personaNatural');
+
     const handleNext = () => {
         // Asegúrate de que el siguiente paso esté dentro del rango de pasos válidos
         const nextStep = Math.min(activeStep + 1, 3);
@@ -176,6 +176,7 @@ export default function Registro({}) {
         const prevStep = Math.max(activeStep - 1, 1);
         setActiveStep(prevStep);
     };
+
     function shoowStep(step: any) {
         switch(activeForm) {
             case 'personaNatural':
@@ -215,7 +216,7 @@ export default function Registro({}) {
                                     focus:shadow-outline-green active:bg-cyan-900"
                                     onClick={handleNext}
                                     >
-                                        <span className="text-white text-sm">Siguiente</span>
+                                        <span className="text-white text-sm">Continuar</span>
                                     </button>
                                 </div>
                             </div>
@@ -241,7 +242,7 @@ export default function Registro({}) {
                                 <div className="">
                                     <LabelWithInput htmlFor="role" label="Rol">
                                         <Select onValueChange={(selectedRole) => handleInputChange({ target: { name: 'role', value: selectedRole } } as React.ChangeEvent<HTMLInputElement>)}>
-                                            <SelectTrigger className="w-[180px] h-11 rounded-full border-2 border-cyan-600 p-2">
+                                            <SelectTrigger className="w-[180px] h-11 rounded-full border-2 border-cyan-600 p-2 flex-1">
                                                 <SelectValue placeholder="Selecione un Rol" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -259,8 +260,8 @@ export default function Registro({}) {
                                 <br/>
 
                                 <div className="justiy-center space-x-4">
-                                    <button className="bg-red-600 hover:bg-red-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                    focus:shadow-outline-green active:bg-red-900"
+                                    <button className="bg-green-700 hover:bg-green-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
+                                    focus:shadow-outline-green active:bg-teal-900"
                                     onClick={handlePrev}
                                     >
                                         <span className="text-white text-sm">Anterior</span>
@@ -269,7 +270,7 @@ export default function Registro({}) {
                                     focus:shadow-outline-green active:bg-cyan-900"
                                     onClick={handleNext}
                                     >
-                                        <span className="text-white text-sm">Siguiente</span>
+                                        <span className="text-white text-sm">Continuar</span>
                                     </button>
                                 </div>
                                 
@@ -303,10 +304,7 @@ export default function Registro({}) {
                                             value={newUser.password1}
                                             onChange={handleInputChange}
                                         />
-                                    </LabelWithInput> 
-                                </div>
-
-                                <div className=" flex-row-reverse top-1/2 transform -translate-y-1/2 right-2 cursor-pointer"  onClick={() => switchShown()}>
+                                            <div className="flex w-full h-0 justify-end -mt-16 mb-2 pr-4"  onClick={() => switchShown()}>
                                                 {showPwd ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height={"1.2rem"}>
                                                 <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                                 <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clipRule="evenodd" />
@@ -316,11 +314,15 @@ export default function Registro({}) {
                                                     <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0115.75 12zM12.53 15.713l-4.243-4.244a3.75 3.75 0 004.243 4.243z" />
                                                     <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 00-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 016.75 12z" />
                                                 </svg>} 
+                                            </div>
+                                    </LabelWithInput> 
                                 </div>
 
+                                
+
                                 <div className="justiy-center">
-                                    <button className="bg-red-600 hover:bg-red-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                    focus:shadow-outline-green active:bg-red-900"
+                                    <button className="bg-green-700 hover:bg-green-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
+                                    focus:shadow-outline-green active:bg-green-900"
                                     onClick={handlePrev}
                                     >
                                         <span className="text-white text-sm">Anterior</span>
@@ -355,7 +357,7 @@ export default function Registro({}) {
                                         <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
                                             id="razon_social"
                                             type="text"
-                                            placeholder="Erickson"
+                                            placeholder=""
                                             name="razon_social"
                                             value={newUser.razon_social}
                                             onChange={handleInputChange}
@@ -382,7 +384,7 @@ export default function Registro({}) {
                                     focus:shadow-outline-green active:bg-cyan-900"
                                     onClick={handleNext}
                                     >
-                                        <span className="text-white text-sm">Siguiente</span>
+                                        <span className="text-white text-sm">Continuar</span>
                                     </button>
                                 </div>
                             </div>
@@ -396,7 +398,7 @@ export default function Registro({}) {
                                             <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
                                                 id="nombre"
                                                 type="text"
-                                                placeholder=""
+                                                placeholder="Cristian Garay Ortiz"
                                                 name="nombre"
                                                 value={newUser.nombre}
                                                 onChange={handleInputChange}
@@ -441,8 +443,8 @@ export default function Registro({}) {
                                     <br/>
 
                                     <div className="justiy-center space-x-4">
-                                        <button className="bg-red-600 hover:bg-red-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                        focus:shadow-outline-green active:bg-red-900"
+                                        <button className="bg-green-700 hover:bg-green-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
+                                        focus:shadow-outline-green active:bg-green-900"
                                         onClick={handlePrev}
                                         >
                                             <span className="text-white text-sm">Anterior</span>
@@ -486,10 +488,7 @@ export default function Registro({}) {
                                                 onChange={handleInputChange}
                                             />
                                             
-                                        </LabelWithInput>
-                                    </div>
-
-                                    <div className="flex justify-end mr-4 -mt-7 cursor-pointer"  onClick={() => switchShown()}>
+                                            <div className="flex w-full h-0 justify-end -mt-16 mb-2 pr-4"  onClick={() => switchShown()}>
                                                 {showPwd ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height={"1.2rem"}>
                                                 <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                                 <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clipRule="evenodd" />
@@ -499,12 +498,13 @@ export default function Registro({}) {
                                                     <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0115.75 12zM12.53 15.713l-4.243-4.244a3.75 3.75 0 004.243 4.243z" />
                                                     <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 00-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 016.75 12z" />
                                                 </svg>} 
+                                            </div>
+                                        </LabelWithInput>
                                     </div>
 
-                                    <br/>
                                     <div className="justiy-center">
-                                        <button className="bg-red-600 hover:bg-red-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                        focus:shadow-outline-green active:bg-red-900"
+                                        <button className="bg-green-700 hover:bg-green-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
+                                        focus:shadow-outline-green active:bg-green-900"
                                         onClick={handlePrev}
                                         >
                                             <span className="text-white text-sm">Anterior</span>
@@ -532,9 +532,9 @@ export default function Registro({}) {
         
     return (
         
-            <section className="flex items-center justify-center h-screen ">
-                <div className="max-w-xs py-6 px-6 sm:px-5 mx-auto sm:mx-auto sm:max-w-md flex flex-col 
-                    items-center space-y-2 bg-white rounded-xl border-2 border-cyan-700">
+            <section className="flex items-center justify-center h-screen bg-slate-100 w-full ">
+                <div className="max-w-xs py-6 px-6 sm:px-5  xl:max-w-2xl mx-auto sm:mx-auto sm:max-w-md flex flex-col 
+                    items-center space-y-2 bg-white shadow-lg rounded-xl border-2 border-cyan-700">
                         <header className="flex flex-col items-center">
                             <h1 className="text-2xl mb-4">
                                 Crear <span className="text-cyan-600">Cuenta</span> 
@@ -574,6 +574,7 @@ export default function Registro({}) {
                                     <StepLabel></StepLabel>
                                 </Step>
                         </Stepper>
+                        
 
                         { shoowStep(activeStep) }
                 </div>

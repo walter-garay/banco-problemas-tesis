@@ -104,7 +104,7 @@ export default function Login({}) {
 
                                 <div className="flex-1 ">  
                                     <LabelWithInput htmlFor="password" label="Contraseña" className="">
-                                        <Input className="h-10"
+                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
                                             id="paswword"
                                             type={showPwd ? 'text' : 'password'}
                                             placeholder="********"
@@ -112,7 +112,7 @@ export default function Login({}) {
                                             value={user.password}
                                             onChange={handleInputChange}
                                         />
-                                        <div className="flex w-full h-0 justify-end -mt-16 mb-2 pr-2" onClick={() => switchShown()}>
+                                        <div className="flex w-full h-0 justify-end -mt-16 mb-2 pr-4" onClick={() => switchShown()}>
                                             {showPwd ? 
                                             <svg className="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height={"1.2rem"}>
                                                 <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
