@@ -1,27 +1,37 @@
 import { getItemById, createItem } from "@/api/apiService";
 import { User, LoginBody } from "@/models/user";
 
-export class AuthAPI{
-    static async getLoggedInUser(token: String): Promise<User>{
+async function fetchData(url: string, options: RequestInit): Promise<Response> {
+    return fetch(url, options);
+}
 
-        const response = await fetchData('/api/authuser/',
-        {
+export class AuthAPI {
+    static async getLoggedInUser(): Promise<User | null> {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            // Manejar la ausencia de token, por ejemplo, redirigir a la página de inicio de sesión
+            return null;
+        }
+
+        const response = await fetchData('/api/authuser/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Token ' + token
-
-            },
+            }
         });
 
-        const user = await response.json();
+        if (!response.ok) {
+            // Manejar errores de autenticación u otros errores de solicitud
+            return null;
+        }
 
+        const user = await response.json();
         return user;
     }
 
-    static async login(body: LoginBody): Promise<User>{
-        const response = await fetchData('/api/authlogin',
-        {
+    static async login(body: LoginBody): Promise<User | null> {
+        const response = await fetchData('/api/authlogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -29,23 +39,29 @@ export class AuthAPI{
             body: JSON.stringify(body)
         });
 
+        if (!response.ok) {
+            // Manejar errores de autenticación u otros errores de solicitud
+            return null;
+        }
+
         const token = await response.json();
 
-        // Save the token and role in local storage
+        // Guardar el token en el almacenamiento local
         localStorage.setItem('token', token);
 
-        // Get the user data
-        const user = await this.getLoggedInUser(token); 
-        console.log(user.role);
-
+        // Obtener los datos del usuario
+        const user = await this.getLoggedInUser(); 
         return user;
     }
 
-    static async logout(): Promise<void>{
+    static async logout(): Promise<void> {
         const token = localStorage.getItem('token');
+        if (!token) {
+            // Manejar la ausencia de token, por ejemplo, redirigir a la página de inicio de sesión
+            return;
+        }
 
-        await fetchData('/api/authlogout',
-        {
+        await fetchData('/api/authlogout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,7 +69,7 @@ export class AuthAPI{
             }
         });
 
-        // Remove the token and role from local storage
+        // Eliminar el token del almacenamiento local
         localStorage.removeItem('token');
         localStorage.removeItem('role');
     }

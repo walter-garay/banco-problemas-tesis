@@ -21,7 +21,7 @@ type MyModalProps = {
     isOpen: boolean;
     onClose: () => void;
     className?: string;
-    rawProblem?: RawProblem;
+    rawProblem: RawProblem;
 };
 
 
@@ -33,10 +33,11 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
     const [valueEcologico, setValueEcologico] = useState<number>(3);
     const [valueLegal, setValueLegal] = useState<number>(3);
     
+
     const [newCleanProblem, setNewCleanProblem] = useState<CleanProblem>(
         {
-            id: 1,
-            raw_problem: 123,
+            id: rawProblem?.id ?? 1,
+            raw_problem: rawProblem?.id ?? 1,
             clean_title: "Título limpio",
             clean_description: "Descripción limpia",
             clean_sector: "Sector limpio",
@@ -63,11 +64,10 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         try {
             console.log('newCleanProblem:', newCleanProblem);
 
-            const response = await createItem('problems/cleanproblems', newCleanProblem, 
+            const response = await createItem('problems/cleanproblems/', newCleanProblem, 
                 {
                     'Content-Type': 'application/json',
-                },
-                false
+                }
             );
         
             console.log('Crear Nuevo Problema:', response);

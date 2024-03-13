@@ -1,5 +1,5 @@
 const apiUrl: string = 'https://avicyt.onrender.com/';
-const userToken: string = localStorage.getItem('token') || '';
+const userToken: string = typeof localStorage !== 'undefined' ? localStorage.getItem('token') || '' : '';
 const token: string = 'Token ' + userToken;
 
 const handleErrors = (response: Response) => {

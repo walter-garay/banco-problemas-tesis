@@ -209,7 +209,7 @@ export default function NewProblemDialog({}) {
                         >
                     Cancelar
                 </Button>
-                <Button
+                <Button href="/problemas"
                     className="sm:w-36 h-10 w-full
                     bg-blue-700 hover:bg-blue-800 border border-blue-600 text-white shadow-sm rounded-md"
                     onClick={handleSubmit}

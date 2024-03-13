@@ -29,14 +29,12 @@ export default function Registro({}) {
         password1: '',
         password2: '',
         phone: '',
-        email:'',
+        username:'',
         role: '',
         ruc: '',
         razon_social: '',
-
-        //Otros campos
-        emailError: '',
-        phoneError:'',
+        email: '',
+        
     });
  
     
@@ -55,11 +53,20 @@ export default function Registro({}) {
             }));
         }
 
+        if (name === 'email') {
+            // Asignar el valor de password1 a password2
+            setNewUser((prevUser) => ({
+                ...prevUser,
+                email: value,
+                username: value,
+            }));
+        }
+
         ///////////////////////////////PASSWORD/////////////////////////////
         
         //////////////////////////EMAIL INFO////////////////////////////////
 
-        if (name === 'email' && value.length >= 3) {
+       /* if (name === 'email' && value.length >= 3) {
             if (!validator.isEmail(value)) {
               setNewUser((prevUser) => ({
                 ...prevUser,
@@ -102,7 +109,7 @@ export default function Registro({}) {
                 phoneError: '',
               }));
             }
-          }
+          }*/
         //////////////////////////////////////////////////////////////////////
         setNewUser((prevUser) => ({ ...prevUser, [name]: value }));
     };
@@ -151,12 +158,12 @@ export default function Registro({}) {
             password1: '',
             password2: '',
             phone: '',
-            email: '',
+            username: '',
             role: '',
             ruc: '',
             razon_social: '',
-            emailError: '',
-            phoneError: '',
+            email: '',
+            
         });
         setActiveForm(activeForm);
         setActiveStep(1); // Reinicia el paso cuando cambias de formulario
@@ -236,7 +243,7 @@ export default function Registro({}) {
                                             onChange={handleInputChange}
                                         />
                                     </LabelWithInput> 
-                                    {newUser.phoneError && <p className="text-red-500 text-sm">{newUser.phoneError}</p>}
+                                    
                                 </div>
 
                                 <div className="">
@@ -287,11 +294,11 @@ export default function Registro({}) {
                                             type="text"
                                             placeholder="example@gmail.com"
                                             name="email"
-                                            value={newUser.email}
+                                            value={newUser.username}
                                             onChange={handleInputChange}
                                         />
                                     </LabelWithInput>
-                                    {newUser.emailError && <p className="text-red-500 text-sm">{newUser.emailError}</p>}
+                                    
                                 </div>
 
                                 <div className="flex-1">
@@ -404,7 +411,7 @@ export default function Registro({}) {
                                                 onChange={handleInputChange}
                                             />
                                         </LabelWithInput> 
-                                        {newUser.phoneError && <p className="text-red-500 text-sm">{newUser.phoneError}</p>}
+                                       
                                     </div>
 
                                     <div className="flex-1">
@@ -418,7 +425,7 @@ export default function Registro({}) {
                                                 onChange={handleInputChange}
                                             />
                                         </LabelWithInput> 
-                                        {newUser.phoneError && <p className="text-red-500 text-sm">{newUser.phoneError}</p>}
+                                        
                                     </div>
 
                                     <div className="flex-1">
@@ -470,11 +477,11 @@ export default function Registro({}) {
                                                 type="text"
                                                 placeholder="example@gmail.com"
                                                 name="email"
-                                                value={newUser.email}
+                                                value={newUser.username}
                                                 onChange={handleInputChange}
                                             />
                                         </LabelWithInput>
-                                        {newUser.emailError && <p className="text-red-500 text-sm">{newUser.emailError}</p>}
+                                        
                                     </div>
 
                                     <div className="flex-1">
