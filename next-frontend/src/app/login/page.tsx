@@ -64,22 +64,18 @@ export default function Login({}) {
     return (
         <> 
             <div className="flex items-center justify-center h-full bg-slate-100 w-full">
-                <section className="flex-1 flex flex-col items-center justify-center max-w-4xl py-9 px-6 
-                    sm:px-9 bg-white shadow-lg h-3/4 md:flex-row rounded-3xl">
-                    <aside className="w-full mb-4 md:w-1/2 md:mr-4 flex items-center justify-center flex-row-reverse sm:flex-col">
-                        <h2 className="flex justify-center text-7xl font-semibold text-black-600 mr-8 sm:mr-1 mt-2 sm:mt-0">U<span className="text-7xl font-semibold text-cyan-600">D</span>
-                            H</h2>
+                <section className="sm:flex-row sm:px-9 sm:py-9 sm:max-w-4xl flex-1 flex flex-col items-center justify-center max-w-3xl py-6 px-8 bg-white shadow-lg h-3/4 sm:rounded-3xl rounded-2xl">
+                    <aside className="w-full mb-4 sm:w-1/2 md:mr-4 flex items-center justify-center flex-row-reverse sm:flex-col">
+                        <h2 className="flex justify-center text-7xl font-semibold text-black-600 mr-8 sm:mr-1 mt-2 sm:mt-0">U<span className="text-7xl font-semibold text-cyan-600">D</span> H</h2>
                         <Image
                             src={login}
                             width={100}
                             alt='login image'
                             className='w-3/6 sm:w-5/6 h-auto'
-                            >
-                        </Image>
+                        ></Image>
                     </aside>
 
-                    <div className="max-w-3xl py-9 px-6 sm:px-9 mx-auto sm:mx-auto sm:max-w-2xl 
-                        flex flex-col items-center space-y-1 bg-white rounded-xl gap-y-4 border-2 border-cyan-700">
+                    <div className="sm:mx-auto sm:max-w-2xl sm:px-9 sm:py-6 max-w-2xl py-4 px-2 mx-auto flex flex-col items-center space-y-1 bg-white rounded-xl gap-y-4 border-2 border-cyan-700">
                         <header className="flex flex-col items-center">
                             <h1 className="text-2xl mb-4 ">
                                 Inicio <span className="text-cyan-600">de Sesión</span> 
@@ -88,7 +84,7 @@ export default function Login({}) {
                         <form>
                             <div>
                                 <div className="flex-1">
-                                    <LabelWithInput htmlFor="email" label="Correo Electronio">
+                                    <LabelWithInput htmlFor="email" label="Correo Electrónico">
                                         <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
                                             id="email"
                                             type="text"
@@ -102,10 +98,10 @@ export default function Login({}) {
 
                                 <br />
 
-                                <div className="flex-1 ">  
-                                    <LabelWithInput htmlFor="password" label="Contraseña" className="">
+                                <div className="flex-1">  
+                                    <LabelWithInput htmlFor="password" label="Contraseña" >
                                         <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
-                                            id="paswword"
+                                            id="password"
                                             type={showPwd ? 'text' : 'password'}
                                             placeholder="********"
                                             name="password"
@@ -130,7 +126,7 @@ export default function Login({}) {
                         </form>
 
                         <div className="flex items-center">
-                            <button onClick={handleSubmit} className="bg-cyan-600 hover:bg-cyan-900 w-32 font-bold py-2 px-4 rounded-full shadow-md focus:outline-none focus:shadow-outline-green active:bg-cyan-900">
+                            <button onClick={handleSubmit} className="sm:py-2 sm:px-4 sm:w-32 sm:rounded-full bg-cyan-600 hover:bg-cyan-900 w-30 font-bold py-1 px-2 rounded-lg shadow-md focus:outline-none focus:shadow-outline-green active:bg-cyan-900">
                                 <span className="text-white font-medium">Iniciar</span>
                             </button>
                         </div>

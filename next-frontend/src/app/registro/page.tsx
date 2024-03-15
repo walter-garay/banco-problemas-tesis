@@ -415,6 +415,20 @@ export default function Registro({}) {
                                     </div>
 
                                     <div className="flex-1">
+                                        <LabelWithInput htmlFor="apellidos" label="Apellidos">
+                                            <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
+                                                id="apellidos"
+                                                type="apellidos"
+                                                placeholder=" Garay Ortiz"
+                                                name="apellidos"
+                                                value={newUser.apellidos}
+                                                onChange={handleInputChange}
+                                            />
+                                        </LabelWithInput> 
+                                       
+                                    </div>
+
+                                    <div className="flex-1">
                                         <LabelWithInput htmlFor="phone" label="Telefóno">
                                             <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
                                                 id="phone"
