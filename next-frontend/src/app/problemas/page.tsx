@@ -38,6 +38,7 @@ export default function ProblemsPage() {
     const handleOpen = (problemId: number) => {
         const selectedProblemData = rawProblems.find(problem => problem.id === problemId);
         setSelectedProblem(selectedProblemData);
+        console.log("Problem:", selectedProblemData);   
         
         setOpen(true);
         document.body.style.overflow = 'hidden';
@@ -211,7 +212,7 @@ export default function ProblemsPage() {
                         </Dialog>
                     </Suspense>
                     <Suspense >
-                        <ReviewProblemDialog problem={selectedProblem} isOpen={isOpen} onClose={handleClose}  className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
+                        <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
                         </ReviewProblemDialog>
                     </Suspense>
                 </main>

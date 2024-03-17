@@ -18,8 +18,6 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-import { Password } from 'primereact/password';
-
 export default function Registro({}) {
 
     // REGISTRE USERS
@@ -36,7 +34,6 @@ export default function Registro({}) {
         email: '',
         
     });
- 
     
 
 
@@ -130,11 +127,14 @@ export default function Registro({}) {
             const response = await createItem('api/auth/registration/', newUser, 
                 {
                     'Content-Type': 'application/json',
-                });
+                },
+                false);
+            
         
-            console.log('Usuario creado:', response);
+            console.log('Usuario creado correctamente');
 
-            setSuccessMessage('Usuario creado correctamente');
+            window.location.href = '/login';
+
         } catch (error) {
             console.error('Error creando el usuario:', error);
         }
