@@ -1,6 +1,4 @@
 const apiUrl: string = 'https://avicyt.onrender.com/';
-const userToken: string = typeof localStorage !== 'undefined' ? localStorage.getItem('token') || '' : '';
-const token: string = 'Token ' + userToken;
 
 const handleErrors = (response: Response) => {
   if (!response.ok) {
@@ -11,30 +9,47 @@ const handleErrors = (response: Response) => {
 
 const executeRequest = async (method: string, endpoint: string, data: any = null, customHeaders: Record<string, string> = {}, includeToken: boolean = true) => {
   let headers: Record<string, string> = { ...customHeaders };
-  
+
   if (includeToken) {
-      headers['Authorization'] = token;
+    const userToken: string = typeof localStorage !== 'undefined' ? localStorage.getItem('token') || '' : '';
+    const token: string = 'Token ' + userToken;
+    headers['Authorization'] = token;
   }
 
   const config: RequestInit = {
-      method,
-      headers,
+    method,
+    headers,
   };
 
   if (data) {
-      if (!(data instanceof FormData)) {
-          // Solo convierte a JSON si la data no es FormData
-          config.body = JSON.stringify(data);
-      } else {
-          config.body = data;
-      }
+    if (!(data instanceof FormData)) {
+      config.body = JSON.stringify(data);
+    } else {
+      config.body = data;
+    }
   }
 
   const response = await fetch(apiUrl + endpoint, config);
-  const responseData = await handleErrors(response).json();
-  
-  return responseData;
+  await handleErrors(response);
+
+  // Clona la respuesta para probar si hay contenido.
+  const cloneResponse = response.clone();
+  try {
+    // Intenta leer el texto del cuerpo de la respuesta clonada.
+    const text = await cloneResponse.text();
+    // Si el texto no está vacío, intenta parsear el JSON.
+    if (text) {
+      return JSON.parse(text);
+    }
+    // Si el texto está vacío, retorna null o un objeto vacío.
+    return null;
+  } catch (error) {
+    // Maneja errores en caso de que el texto no pueda ser parseado a JSON.
+    console.error("Error parsing response JSON:", error);
+    throw error;
+  }
 };
+
 
 const getItems = async (endpoint: string, headers: Record<string, string> = {}) => {
   return executeRequest('GET', endpoint, null, headers);

@@ -1,6 +1,5 @@
 "use client"
 import Button from '../ui/Button';
-import DropdownSectores from "../ui/problemas/DropdownSector"
 
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -13,19 +12,20 @@ import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import { RawProblem, CleanProblem } from '@/models/problems';
 import { createItem } from '@/api/apiService';
-import { carreras } from '@/data';
+import { carreras, ramas } from '@/data';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select"
 
 
 type MyModalProps = {
     isOpen: boolean;
     onClose: () => void;
     className?: string;
-    rawProblem: RawProblem;
+    rawProblem?: RawProblem;
 };
 
-
 export default function ReviewProblemDialog({isOpen, onClose, className, rawProblem}: MyModalProps) {
+
     const [valueSocial, setValueSocial] = useState<number>(3);
     const [valueTecnologico, setValueTecnologico] = useState<number>(3);
     const [valueEconomico, setValueEconomico] = useState<number>(3);
@@ -103,15 +103,15 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         <LabelWithInput htmlFor="entidad" label="Tipo de entidad" >
                             <RadioGroup defaultValue={rawProblem?.institution_type} className="flex justify-between text-gray-500 " disabled>
                                 <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value={"persona"} id="r1" />
+                                    <RadioGroupItem value="Persona" id="persona" />
                                     <Label htmlFor="r1">Persona natural</Label>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="privada" id="r2" />
+                                    <RadioGroupItem value="Privada" id="privada" />
                                     <Label htmlFor="r2">Entidad privada</Label>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="pública" id="r3" />
+                                    <RadioGroupItem value="Publica" id="publica" />
                                     <Label htmlFor="r3">Entidad pública</Label>
                                 </div>
                             </RadioGroup>
@@ -144,6 +144,9 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                     <h2 className="mb-2 mt-6 font-medium">Del problema</h2>
                     
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
+
+                        
+
                         <LabelWithInput htmlFor="title" label="Título del problema" >  
                             <Input id="title" type="text" 
                                 defaultValue={rawProblem?.title} 
@@ -160,7 +163,15 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                             </textarea>
                         </LabelWithInput>
 
-                        <LabelWithInput htmlFor="anexos" label="Sector del problema">  
+                        <LabelWithInput htmlFor="sector" label="Sector del problema" >  
+                            <Input id="sector" type="text" 
+                                defaultValue={rawProblem?.sector} 
+                                readOnly
+                                >
+                            </Input>          
+                        </LabelWithInput>
+
+                        <LabelWithInput htmlFor="anexos" label="Anexos">  
                             <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
                             <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
                             <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
@@ -173,13 +184,14 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
 
                 <div className="relative mt-8 lg:mt-0 lg:bg-white shadow-sm rounded-xl w-full max-h-screen lg:overflow-y-auto flex flex-col items-center lg:p-8">
                     <i className="pi pi-times fixed lg:top-7 lg:right-11 top-1 right-1.5 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={onClose}></i>
-                    <h1 className="font-bold text-gray-800 text-xl mb-5">Información Limpia</h1> 
                     
+                    <h1 className="font-bold text-gray-800 text-xl mb-5">Información Limpia</h1> 
+                
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
                         <p className="w-full text-left font-normal text-gray-500 text-sm mb-4 leading-6">
                             Un título claro y una descripción detallada mejorarán la comprensión de los tesistas. Ajusta y mejora la información brindada por el solicitante:
                         </p>                                        
-
+                        
                         <LabelWithInput htmlFor="title" label="Titulo mejorado">  
                             <Input id="title" type="text" 
                                 defaultValue={rawProblem?.title}
@@ -200,6 +212,26 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                 onChange={handleInputChange}
                                 >
                             </textarea>
+                        </LabelWithInput>
+
+                        <LabelWithInput htmlFor="sector" label="Sector del problema">
+                            <Select onValueChange={handleSectorChange} defaultValue={rawProblem?.sector}>
+                                <SelectTrigger className="w-full h-12" >
+                                    <SelectValue placeholder="Seleccione un sector"  />
+                                </SelectTrigger>
+                                <SelectContent style={{ zIndex: 1502 }}>
+                                    {ramas.map((rama, index) => (
+                                    <SelectGroup key={index}>
+                                        <SelectLabel>{rama.label}</SelectLabel>
+                                        {rama.items.map((item) => (
+                                        <SelectItem key={item.value} value={item.value}>
+                                            {item.label}
+                                        </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </LabelWithInput>
                     
                     </div>
