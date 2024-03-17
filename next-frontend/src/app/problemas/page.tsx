@@ -17,12 +17,13 @@ import { Dialog } from 'primereact/dialog';
 import { RawProblem } from '@/models/problems'; 
 import { getItems } from '@/api/apiService';
 
-import { ramas, sectores, prioridades, tipo_solicitante, estados } from "@/data";
+import { sectores, prioridades, tipo_solicitante, estados } from "@/data";
 
 import Logout from "@/components/logout";
+import axios from 'axios';
 
 export default function ProblemsPage() {
-    const [selectedRama, setSelectedRama] = useState(null);
+    
     const [selectedSector, setSelectedSector] = useState(null);
     const [selectedPrioridad, setSelectedPrioridad] = useState(null);
     const [selectedTipoSolicitante, setSelectedTipoSolicitante] = useState(null);
@@ -61,7 +62,23 @@ export default function ProblemsPage() {
         
         const fetchRawProblems = async () => {
             try {
-                var data = await getItems('problems/rawproblems');
+                const userToken = localStorage.getItem("token");
+                const token: string = 'Token ' + userToken;
+
+                const response = await axios.get('https://avicyt.onrender.com/problems/rawproblems',  {
+                    params: {
+                        title: null,
+                        sector: selectedSector,
+                    },
+
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+        
+                var data = response.data; // Extrae los datos de la respuesta
+        
+                // Realiza las operaciones con los datos
                 data = sortByStatus(data, ['Revisión pendiente', 'Desaprobado', 'Publicado']);
                 
                 const userRol = localStorage.getItem('role');
@@ -73,11 +90,11 @@ export default function ProblemsPage() {
                     data = data.filter((problem: RawProblem) => problem.applicant === parseInt(validUserId));
                     setRawProblems(data);
                 }
-
             } catch (error) {
                 console.error('Error al obtener datos rawProblems:', error);
             }
         };
+        
 
         const isAuthenticated = localStorage.getItem("token");
         if (!isAuthenticated) {
@@ -88,7 +105,7 @@ export default function ProblemsPage() {
             fetchRawProblems();
         }
         
-    }, []);
+    }, [selectedSector]);
     
     return (
         <div>
@@ -100,26 +117,16 @@ export default function ProblemsPage() {
                             <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
                             
                         </span>
-                        <LabelWithInput htmlFor="rama" label="Rama" >  
-                            <Dropdown value={selectedRama} onChange={(e: DropdownChangeEvent) => setSelectedRama(e.value)} options={ramas} optionLabel="label" 
-                            showClear optionGroupLabel="label" optionGroupChildren="items" 
+                        <LabelWithInput htmlFor="sector" label="Sector" >  
+                            <Dropdown value={selectedSector} onChange={(e: DropdownChangeEvent) => setSelectedSector(e.value)} options={sectores} optionLabel="label" 
+                            showClear 
                             className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
                         </LabelWithInput>
 
                         {/* Dropdown para Sectores */}
-                        <LabelWithInput htmlFor="sector" label="Sector">
-                            <Dropdown
-                            value={selectedSector}
-                            onChange={(e) => setSelectedSector(e.value)}
-                            options={sectores.map(sector => ({ label: sector, value: sector }))}
-                            optionLabel="label"
-                            showClear
-                            placeholder="Todos"
-                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
-                            />
-                        </LabelWithInput>
+                        
 
-                        {/* Dropdown para Prioridades */}
+                        {/* Dropdown para Prioridades 
                         <LabelWithInput htmlFor="prioridad" label="Prioridad">
                             <Dropdown
                             value={selectedPrioridad}
@@ -130,7 +137,7 @@ export default function ProblemsPage() {
                             placeholder="Todos"
                             className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
                             />
-                        </LabelWithInput>
+                        </LabelWithInput>*/}
 
                         {/* Dropdown para Tipo de Solicitante */}
                         <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">

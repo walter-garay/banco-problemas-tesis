@@ -1,4 +1,4 @@
-export const sectores = ["Tecnología", "Derecho", "Salud"]
+
     
 export const tipo_solicitante = ["Persona Natural", "Entidad Privada", "Entidad Pública"]
 
@@ -6,34 +6,19 @@ export const estados = ["Revisión pendiente", "Publicado", "Desaprobado"]
 
 export const prioridades = ["Baja", "Media", "Alta"]
 
-export const ramas = [
-    {
-        label: 'Tecnología',
-        items: [
-            { label: 'Desarrollo de Software', value: 'software' },
-            { label: 'Redes y Seguridad', value: 'redes' },
-            { label: 'Inteligencia Artificial', value: 'IA' },
-            { label: 'Diseño UX/UI', value: 'diseño' }
-        ]
-    },
-    {
-        label: 'Derecho',
-        items: [
-            { label: 'Derecho Corporativo de Mirco & Macro Empresas', value: 'corporativo' },
-            { label: 'Derecho Penal', value: 'penal' },
-            { label: 'Derecho Laboral', value: 'laboral' },
-            { label: 'Propiedad Intelectual', value: 'propiedad_intelectual' }
-        ]
-    },
-    {
-        label: 'Salud',
-        items: [
-            { label: 'Medicina General', value: 'general' },
-            { label: 'Cirugía', value: 'cirugia' },
-            { label: 'Enfermería', value: 'enfermeria' },
-            { label: 'Investigación Médica', value: 'investigacion' }
-        ]
-    }
+export const  sectores = [
+    { label: 'Desarrollo de Software', value: 'Desarrollo de Software' },
+    { label: 'Redes y Seguridad', value: 'Redes y Seguridad' },
+    { label: 'Inteligencia Artificial', value: 'Inteligencia Artificial' },
+    { label: 'Diseño UX/UI', value: 'Diseño UX/UI' },
+    { label: 'Derecho Corporativo de Mirco & Macro Empresas', value: 'Derecho Corporativo de Mirco & Macro Empresas' },
+    { label: 'Derecho Penal', value: 'Derecho Penal' },
+    { label: 'Derecho Laboral', value: 'Derecho Laboral' },
+    { label: 'Propiedad Intelectual', value: 'Propiedad Intelectual' },
+    { label: 'Medicina General', value: 'Medicina General' },
+    { label: 'Cirugía', value: 'Cirugía' },
+    { label: 'Enfermería', value: 'Enfermería' },
+    { label: 'Investigación Médica', value: 'Investigación Médica' }
 ];
 
 export const carreras = [
