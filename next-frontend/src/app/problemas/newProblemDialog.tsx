@@ -11,11 +11,15 @@ import { FileUpload } from 'primereact/fileupload';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select"
 
 import { createItem } from "@/api/apiService";
-import { ramas } from "@/data"
+import { sectores } from "@/data"
 import { RawProblem } from "@/models/problems"
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown"
 
 
 export default function NewProblemDialog({}) {
+
+    
+
     const [newProblem, setNewProblem] = useState<RawProblem>({
         id: 0,
         title: '',
@@ -66,6 +70,9 @@ export default function NewProblemDialog({}) {
 
     const handleSubmit = async () => {
         try {
+
+            console.log('newProblem:');
+
             const formData = new FormData();
             formData.append('title', newProblem.title);
             formData.append('sector', newProblem.sector);
@@ -90,7 +97,7 @@ export default function NewProblemDialog({}) {
             }
         
             const response = await createItem('problems/rawproblems/', formData);
-        
+    
             console.log('Problema creado:', response);
         } catch (error) {
             console.error('Error creando el problema:', error);
@@ -119,24 +126,10 @@ export default function NewProblemDialog({}) {
                 />
             </LabelWithInput>
 
-            <LabelWithInput htmlFor="sector" label="Sector del problema">
-                <Select onValueChange={handleSectorChange}>
-                    <SelectTrigger className="w-full h-12" >
-                        <SelectValue placeholder="Seleccione un sector" />
-                    </SelectTrigger>
-                    <SelectContent style={{ zIndex: 1502 }}>
-                        {ramas.map((rama, index) => (
-                        <SelectGroup key={index}>
-                            <SelectLabel>{rama.label}</SelectLabel>
-                            {rama.items.map((item) => (
-                            <SelectItem key={item.value} value={item.value}>
-                                {item.label}
-                            </SelectItem>
-                            ))}
-                        </SelectGroup>
-                        ))}
-                    </SelectContent>
-                </Select>
+            <LabelWithInput htmlFor="sector" label="Sector" >  
+                <Dropdown value={newProblem.sector} onChange={(e: DropdownChangeEvent) => handleSectorChange(e.value)} options={sectores} optionLabel="label" 
+                showClear 
+                className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
             </LabelWithInput>
             
             <LabelWithInput htmlFor="entidad" label="Tipo de entidad" >
@@ -212,7 +205,10 @@ export default function NewProblemDialog({}) {
                 <Button href="/problemas"
                     className="sm:w-36 h-10 w-full
                     bg-blue-700 hover:bg-blue-800 border border-blue-600 text-white shadow-sm rounded-md"
-                    onClick={handleSubmit}
+                    onClick={(e) => {
+                        e.preventDefault(); // Evitar recarga de página
+                        handleSubmit(); // Llamar a la función de envío de formulario
+                    }}
                 >
                 Enviar
             </Button>
