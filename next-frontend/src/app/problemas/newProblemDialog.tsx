@@ -26,7 +26,7 @@ export default function NewProblemDialog({}) {
         sector: '',
         institution_type: 'Persona natural',
         description: '',
-        applicant: 1,
+        applicant: null,
         institution_name: 'David Garay',
         raw_status: 'en revision',
         observation: null,

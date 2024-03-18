@@ -91,7 +91,7 @@ export default function ProblemsPage() {
                 } else {
                     const userId = localStorage.getItem('id');
                     const validUserId: string = userId || ""; 
-                    data = data.filter((problem: RawProblem) => problem.applicant.id === parseInt(validUserId));
+                    data = data.filter((problem: RawProblem) => problem.applicant?.id === parseInt(validUserId));
                     setRawProblems(data);
                 }
             } catch (error) {
