@@ -13,9 +13,6 @@ type ProblemCardProps = {
     openDialog: (problemId: number) => void 
 }
 
-const userRol = localStorage.getItem('role');
-
-
 export default function ProblemCard({
         id,
         title = 'Esta solicitud no tiene un título definido', 

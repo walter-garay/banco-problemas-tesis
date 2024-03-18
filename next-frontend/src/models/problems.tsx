@@ -5,14 +5,23 @@ type RawStatusOptions = 'Revisión Pendiente' | 'Desaprobado' | 'Publicado';
 
 
 export interface Usuario {
-  id: number;
-  username: string;
-
+  id: number,
+  first_name: string,
+  last_name?: string,
+  email?: string,
+  role?: string,
+  dni?: null | number,
+  ruc?: null | number,
+  razon_social?: string | null,
+  phone?: number,
+  address?: string | null,
+  charge?: string | null,
+  area?: string | null
 }
 
 export interface RawProblem {
   id: number;
-  applicant: Usuario | number;
+  applicant: Usuario;
   title: string;
   sector: string;
   institution_type: string;

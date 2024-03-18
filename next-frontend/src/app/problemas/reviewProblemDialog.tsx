@@ -126,13 +126,13 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         <div className="flex gap-5">
                             <div className="w-3/5">
                                 <LabelWithInput htmlFor="email" label="Correo" className="">
-                                    <Input id="email" defaultValue={"contacto@acerospl.com"} readOnly></Input>
+                                    <Input id="email" defaultValue={rawProblem?.applicant.email} readOnly></Input>
                                 </LabelWithInput>
                             </div>
 
                             <div className="w-2/5">
                                 <LabelWithInput htmlFor="phone" label="Número">
-                                    <Input id="phone" defaultValue={"+51 951648955"} readOnly></Input>
+                                    <Input id="phone" defaultValue={rawProblem?.applicant.phone} readOnly></Input>
                                 </LabelWithInput>
                             </div>
 
