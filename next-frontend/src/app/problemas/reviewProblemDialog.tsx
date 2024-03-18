@@ -135,8 +135,6 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                     <Input id="phone" defaultValue={rawProblem?.applicant?.phone} readOnly></Input>
                                 </LabelWithInput>
                             </div>
-
-
                         </div>
 
                     </div>
@@ -144,8 +142,6 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                     <h2 className="mb-2 mt-6 font-medium">Del problema</h2>
                     
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
-
-                        
 
                         <LabelWithInput htmlFor="title" label="Título del problema" >  
                             <Input id="title" type="text" 
