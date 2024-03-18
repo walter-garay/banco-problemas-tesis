@@ -143,7 +143,7 @@ export default function NewProblemDialog({}) {
                         <Label htmlFor="r2">Entidad privada</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="pública" id="r3" />
+                        <RadioGroupItem value="publica" id="r3" />
                         <Label htmlFor="r3">Entidad pública</Label>
                     </div>
                 </RadioGroup>
