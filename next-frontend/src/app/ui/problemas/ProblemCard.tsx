@@ -1,6 +1,5 @@
 import TagStatusProblemCard from "./TagStatusProblemCard";
 import Button from "../Button";
-import { getItems } from "@/api/apiService";
 
 type ProblemCardProps = {
     id: number,

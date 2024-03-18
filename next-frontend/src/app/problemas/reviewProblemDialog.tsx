@@ -12,7 +12,7 @@ import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import { RawProblem, CleanProblem } from '@/models/problems';
 import { createItem } from '@/api/apiService';
-import { carreras, ramas } from '@/data';
+import { carreras, sectores } from '@/data';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select"
 
