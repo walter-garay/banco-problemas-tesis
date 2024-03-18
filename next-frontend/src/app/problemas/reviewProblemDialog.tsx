@@ -103,15 +103,15 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         <LabelWithInput htmlFor="entidad" label="Tipo de entidad" >
                             <RadioGroup defaultValue={rawProblem?.institution_type} className="flex justify-between text-gray-500 " disabled>
                                 <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Persona" id="persona" />
+                                    <RadioGroupItem value="persona" id="persona" />
                                     <Label htmlFor="r1">Persona natural</Label>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Privada" id="privada" />
+                                    <RadioGroupItem value="privada" id="privada" />
                                     <Label htmlFor="r2">Entidad privada</Label>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="Publica" id="publica" />
+                                    <RadioGroupItem value="publica" id="publica" />
                                     <Label htmlFor="r3">Entidad pública</Label>
                                 </div>
                             </RadioGroup>
@@ -214,24 +214,10 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                             </textarea>
                         </LabelWithInput>
 
-                        <LabelWithInput htmlFor="sector" label="Sector del problema">
-                            <Select onValueChange={handleSectorChange} defaultValue={rawProblem?.sector}>
-                                <SelectTrigger className="w-full h-12" >
-                                    <SelectValue placeholder="Seleccione un sector"  />
-                                </SelectTrigger>
-                                <SelectContent style={{ zIndex: 1502 }}>
-                                    {ramas.map((rama, index) => (
-                                    <SelectGroup key={index}>
-                                        <SelectLabel>{rama.label}</SelectLabel>
-                                        {rama.items.map((item) => (
-                                        <SelectItem key={item.value} value={item.value}>
-                                            {item.label}
-                                        </SelectItem>
-                                        ))}
-                                    </SelectGroup>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                        <LabelWithInput htmlFor="sector" label="Sector" >  
+                            <Dropdown value={rawProblem?.sector} onChange={(e: DropdownChangeEvent) => handleSectorChange(e.value)} options={sectores} optionLabel="label" 
+                            showClear 
+                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
                         </LabelWithInput>
                     
                     </div>

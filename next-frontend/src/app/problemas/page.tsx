@@ -17,7 +17,7 @@ import { Dialog } from 'primereact/dialog';
 import { RawProblem } from '@/models/problems'; 
 import { getItems } from '@/api/apiService';
 
-import { sectores, prioridades, tipo_solicitante, estados } from "@/data";
+import { sectores, applicant_type, estados } from "@/data";
 
 import Logout from "@/components/logout";
 import axios from 'axios';
@@ -25,7 +25,7 @@ import axios from 'axios';
 export default function ProblemsPage() {
     
     const [selectedSector, setSelectedSector] = useState(null);
-    const [selectedPrioridad, setSelectedPrioridad] = useState(null);
+    /*const [selectedPrioridad, setSelectedPrioridad] = useState(null);*/
     const [selectedTipoSolicitante, setSelectedTipoSolicitante] = useState(null);
     const [selectedEstado, setSelectedEstado] = useState(null);
     
@@ -48,7 +48,10 @@ export default function ProblemsPage() {
         setOpen(false);
         document.body.style.overflow = 'auto';
     }
-
+    function ListType(valor:any){
+        setSelectedTipoSolicitante(valor)
+       console.log(valor, "ListType")
+    }
     
 
     function sortByStatus(rawProblems: RawProblem[], orden: string[]): RawProblem[] {
@@ -68,8 +71,8 @@ export default function ProblemsPage() {
 
                 const response = await axios.get('https://avicyt.onrender.com/problems/rawproblems',  {
                     params: {
-                        title: null,
                         sector: selectedSector,
+                        applicant_type: selectedTipoSolicitante,
                     },
 
                     headers: {
@@ -106,7 +109,7 @@ export default function ProblemsPage() {
             fetchRawProblems();
         }
         
-    }, [selectedSector]);
+    }, [selectedSector,selectedTipoSolicitante]);
     
     return (
         <div>
@@ -144,8 +147,9 @@ export default function ProblemsPage() {
                         <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">
                             <Dropdown
                             value={selectedTipoSolicitante}
-                            onChange={(e) => setSelectedTipoSolicitante(e.value)}
-                            options={tipo_solicitante.map(tipo => ({ label: tipo, value: tipo }))}
+                            onChange={(e) => ListType(e.value)}
+                            options={applicant_type}
+                            optionValue='value'
                             optionLabel="label"
                             showClear
                             placeholder="Todos"

@@ -1,10 +1,19 @@
 
     
-export const tipo_solicitante = ["Persona Natural", "Entidad Privada", "Entidad Pública"]
+export const applicant_type = [
+    { label: 'Persona Natural', value: 'persona' },
+    { label: 'Entidad Privada', value: 'privada' },
+    { label: 'Entidad Pública', value: 'publica' }
+];
 
-export const estados = ["Revisión pendiente", "Publicado", "Desaprobado"]
+export const estados = [
+    { label: 'Revisión pendiente', value: 'Revisión pendiente' },
+    { label: 'Publicado', value: 'Publicado' },
+    { label: 'Desaprobado', value: 'Desaprobado' }
+];
 
-export const prioridades = ["Baja", "Media", "Alta"]
+export const prioridades = [
+    "Baja", "Media", "Alta"]
 
 export const  sectores = [
     { label: 'Desarrollo de Software', value: 'Desarrollo de Software' },
