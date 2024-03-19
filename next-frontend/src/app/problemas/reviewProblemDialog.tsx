@@ -210,10 +210,19 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                             </textarea>
                         </LabelWithInput>
 
-                        <LabelWithInput htmlFor="sector" label="Sector" >  
-                            <Dropdown value={rawProblem?.sector} onChange={(e: DropdownChangeEvent) => handleSectorChange(e.value)} options={sectores} optionLabel="label" 
-                            showClear 
-                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
+                        <LabelWithInput htmlFor="sector" label="Sector">
+                            <Select>
+                                <SelectTrigger className="w-full h-12">
+                                    <SelectValue placeholder="Seleccione un sector" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {sectores.map((sector, index) => (
+                                        <SelectItem key={index} value={sector.value}>
+                                            {sector.label}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </LabelWithInput>
                     
                     </div>

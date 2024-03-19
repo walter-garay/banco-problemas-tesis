@@ -50,7 +50,7 @@ export default function ProblemsPage() {
     }
     function ListType(valor:any){
         setSelectedTipoSolicitante(valor)
-       console.log(valor, "ListType")
+        console.log(valor, "ListType")
     }
     
 
@@ -113,119 +113,112 @@ export default function ProblemsPage() {
     
     return (
         <div>
-            {localStorage.getItem("token") ? (
-                <main className="relative w-full flex justify-center gap-x-8">
-                    <div className="mt-8 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
-                        <span className="flex items-center gap-x-1.5 mb-4">
-                            <i className="pi pi-filter text-slate-600" ></i> 
-                            <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
-                            
-                        </span>
-                        <LabelWithInput htmlFor="sector" label="Sector" >  
-                            <Dropdown value={selectedSector} onChange={(e: DropdownChangeEvent) => setSelectedSector(e.value)} options={sectores} optionLabel="label" 
-                            showClear 
-                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
-                        </LabelWithInput>
-
-                        {/* Dropdown para Sectores */}
+            <main className="relative w-full flex justify-center gap-x-8">
+                <div className="mt-8 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
+                    <span className="flex items-center gap-x-1.5 mb-4">
+                        <i className="pi pi-filter text-slate-600" ></i> 
+                        <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
                         
+                    </span>
+                    <LabelWithInput htmlFor="sector" label="Sector" >  
+                        <Dropdown value={selectedSector} onChange={(e: DropdownChangeEvent) => setSelectedSector(e.value)} options={sectores} optionLabel="label" 
+                        showClear 
+                        className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
+                    </LabelWithInput>
 
-                        {/* Dropdown para Prioridades 
-                        <LabelWithInput htmlFor="prioridad" label="Prioridad">
-                            <Dropdown
-                            value={selectedPrioridad}
-                            onChange={(e) => setSelectedPrioridad(e.value)}
-                            options={prioridades.map(prioridad => ({ label: prioridad, value: prioridad }))}
-                            optionLabel="label"
-                            showClear
-                            placeholder="Todos"
-                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
-                            />
-                        </LabelWithInput>*/}
+                    {/* Dropdown para Sectores */}
+                    
 
-                        {/* Dropdown para Tipo de Solicitante */}
-                        <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">
-                            <Dropdown
-                            value={selectedTipoSolicitante}
-                            onChange={(e) => ListType(e.value)}
-                            options={applicant_type}
-                            optionValue='value'
-                            optionLabel="label"
-                            showClear
-                            placeholder="Todos"
-                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
-                            />
-                        </LabelWithInput>
+                    {/* Dropdown para Prioridades 
+                    <LabelWithInput htmlFor="prioridad" label="Prioridad">
+                        <Dropdown
+                        value={selectedPrioridad}
+                        onChange={(e) => setSelectedPrioridad(e.value)}
+                        options={prioridades.map(prioridad => ({ label: prioridad, value: prioridad }))}
+                        optionLabel="label"
+                        showClear
+                        placeholder="Todos"
+                        className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
+                        />
+                    </LabelWithInput>*/}
 
-                        {/* Dropdown para Estados */}
-                        <LabelWithInput htmlFor="estado" label="Estado">
-                            <Dropdown
-                            value={selectedEstado}
-                            onChange={(e) => setSelectedEstado(e.value)}
-                            options={estados.map(estado => ({ label: estado, value: estado }))}
-                            optionLabel="label"
-                            showClear
-                            placeholder="Todos"
-                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm border-gray-300"
-                            />
-                        </LabelWithInput>
+                    {/* Dropdown para Tipo de Solicitante */}
+                    <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">
+                        <Dropdown
+                        value={selectedTipoSolicitante}
+                        onChange={(e) => ListType(e.value)}
+                        options={applicant_type}
+                        optionValue='value'
+                        optionLabel="label"
+                        showClear
+                        placeholder="Todos"
+                        className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
+                        />
+                    </LabelWithInput>
+
+                    {/* Dropdown para Estados */}
+                    <LabelWithInput htmlFor="estado" label="Estado">
+                        <Dropdown
+                        value={selectedEstado}
+                        onChange={(e) => setSelectedEstado(e.value)}
+                        options={estados.map(estado => ({ label: estado, value: estado }))}
+                        optionLabel="label"
+                        showClear
+                        placeholder="Todos"
+                        className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm border-gray-300"
+                        />
+                    </LabelWithInput>
+                </div>
+
+                <div className="flex-col flex items-center min-w-200 ">
+                    <Button
+                        className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 w-full h-10 text-white "
+                        onClick={() => setVisible(true)}>
+                        Agregar problema
+                    </Button>
+
+                    <Logout />
+                    
+                    <div className="flex-col space-y-5 my-6 w-full">
+                        {
+                            rawProblems.map(({ id, title, sector, description,raw_status, created_at, file_1, file_2, file_3, file_4 }) => {
+                                // Filtrar y contar los archivos no nulos
+                                const cantRecursos: number = [file_1, file_2, file_3, file_4].filter(file => file !== null).length;
+
+                                return (
+                                <ProblemCard
+                                    key={id}
+                                    id={id}
+                                    title={title}
+                                    area={sector} 
+                                    cantRecursos={cantRecursos} 
+                                    description={description}
+                                    dateRegistration={created_at ? new Intl.DateTimeFormat('es-ES').format(new Date(created_at)) : ''}
+                                    status={raw_status}
+                                    openDialog={handleOpen}
+                                />
+                                );
+                            })
+                        }
+
                     </div>
 
-                    <div className="flex-col flex items-center min-w-200 ">
-                        <Button
-                            className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 w-full h-10 text-white "
-                            onClick={() => setVisible(true)}>
-                            Agregar problema
-                        </Button>
-
-                        <Logout />
-                        
-                        <div className="flex-col space-y-5 my-6 w-full">
-                            {
-                                rawProblems.map(({ id, title, sector, description,raw_status, created_at, file_1, file_2, file_3, file_4 }) => {
-                                    // Filtrar y contar los archivos no nulos
-                                    const cantRecursos: number = [file_1, file_2, file_3, file_4].filter(file => file !== null).length;
-
-                                    return (
-                                    <ProblemCard
-                                        key={id}
-                                        id={id}
-                                        title={title}
-                                        area={sector} 
-                                        cantRecursos={cantRecursos} 
-                                        description={description}
-                                        dateRegistration={created_at ? new Intl.DateTimeFormat('es-ES').format(new Date(created_at)) : ''}
-                                        status={raw_status}
-                                        openDialog={handleOpen}
-                                    />
-                                    );
-                                })
-                            }
-
-                        </div>
-
-                    </div>
-                    <Suspense>
-                        <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
-                            className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
-                            pt={{
-                                root: { className: 'min-h-full md:min-h-96' },     
-                            }}
-                            >
-                            <NewProblemDialog />
-                        </Dialog>
-                    </Suspense>
-                    <Suspense >
-                        <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
-                        </ReviewProblemDialog>
-                    </Suspense>
-                </main>
-                ) : (
-                    // Este bloque se mostrará solo si el usuario no está autenticado
-                    <div>
-                    </div>
-                )}
-                   
+                </div>
+                <Suspense>
+                    <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
+                        className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
+                        pt={{
+                            root: { className: 'min-h-full md:min-h-96' },     
+                        }}
+                        >
+                        <NewProblemDialog />
+                    </Dialog>
+                </Suspense>
+                <Suspense >
+                    <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
+                    </ReviewProblemDialog>
+                </Suspense>
+            </main>
         </div>
         
     );

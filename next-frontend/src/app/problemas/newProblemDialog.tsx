@@ -127,7 +127,9 @@ export default function NewProblemDialog({}) {
             </LabelWithInput>
 
             <LabelWithInput htmlFor="sector" label="Sector" >  
-                <Dropdown value={newProblem.sector} onChange={(e: DropdownChangeEvent) => handleSectorChange(e.value)} options={sectores} optionLabel="label" 
+                <Dropdown value={newProblem.sector} onChange={(e: DropdownChangeEvent) => handleSectorChange(e.value)} options={sectores} 
+                optionLabel="label"
+                optionValue="value"
                 showClear 
                 className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
             </LabelWithInput>
