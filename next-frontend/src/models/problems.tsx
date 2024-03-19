@@ -27,10 +27,10 @@ export interface RawProblem {
   institution_type: string;
   institution_name: string;
   description: string;
-  file_1?: File | null;
-  file_2?: File | null;
-  file_3?: File | null;
-  file_4?: File | null;
+  file_1?: File | null | string;
+  file_2?: File | null | string;
+  file_3?: File | null | string;
+  file_4?: File | null | string;
   raw_status: string;
   observation?: string | null;
   created_at?: Date; 

@@ -17,7 +17,7 @@ import { Dialog } from 'primereact/dialog';
 import { RawProblem } from '@/models/problems'; 
 import { getItems } from '@/api/apiService';
 
-import { sectores, applicant_type, estados } from "@/data";
+import { sectores, institution_type, status } from "@/data";
 
 import Logout from "@/components/logout";
 import axios from 'axios';
@@ -48,10 +48,6 @@ export default function ProblemsPage() {
         setOpen(false);
         document.body.style.overflow = 'auto';
     }
-    function ListType(valor:any){
-        setSelectedTipoSolicitante(valor)
-       console.log(valor, "ListType")
-    }
     
 
     function sortByStatus(rawProblems: RawProblem[], orden: string[]): RawProblem[] {
@@ -72,7 +68,8 @@ export default function ProblemsPage() {
                 const response = await axios.get('https://avicyt.onrender.com/problems/rawproblems',  {
                     params: {
                         sector: selectedSector,
-                        applicant_type: selectedTipoSolicitante,
+                        institution_type: selectedTipoSolicitante,
+                        status: selectedEstado,
                     },
 
                     headers: {
@@ -103,17 +100,16 @@ export default function ProblemsPage() {
         const isAuthenticated = localStorage.getItem("token");
         if (!isAuthenticated) {
             // Si el usuario no está autenticado, redirigir al inicio de sesión
-            window.location.href = "/principal";
+            window.location.href = "/login";
         } else {
             // Si el usuario está autenticado, obtener los problemas
             fetchRawProblems();
         }
         
-    }, [selectedSector,selectedTipoSolicitante]);
+    }, [selectedSector,selectedTipoSolicitante,selectedEstado]);
     
     return (
         <div>
-            {localStorage.getItem("token") ? (
                 <main className="relative w-full flex justify-center gap-x-8">
                     <div className="mt-8 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
                         <span className="flex items-center gap-x-1.5 mb-4">
@@ -147,8 +143,8 @@ export default function ProblemsPage() {
                         <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">
                             <Dropdown
                             value={selectedTipoSolicitante}
-                            onChange={(e) => ListType(e.value)}
-                            options={applicant_type}
+                            onChange={(e) => setSelectedTipoSolicitante(e.value)}
+                            options={institution_type}
                             optionValue='value'
                             optionLabel="label"
                             showClear
@@ -162,7 +158,8 @@ export default function ProblemsPage() {
                             <Dropdown
                             value={selectedEstado}
                             onChange={(e) => setSelectedEstado(e.value)}
-                            options={estados.map(estado => ({ label: estado, value: estado }))}
+                            options={status}
+                            optionValue='value'
                             optionLabel="label"
                             showClear
                             placeholder="Todos"
@@ -177,8 +174,6 @@ export default function ProblemsPage() {
                             onClick={() => setVisible(true)}>
                             Agregar problema
                         </Button>
-
-                        <Logout />
                         
                         <div className="flex-col space-y-5 my-6 w-full">
                             {
@@ -205,6 +200,11 @@ export default function ProblemsPage() {
                         </div>
 
                     </div>
+
+                    <div className="flex-col flex items-end min-w-20 lg:mt-8 bg-white shadow-md h-12 rounded-md pr-2">
+                        <Logout />
+                    </div>
+
                     <Suspense>
                         <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
                             className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
@@ -220,11 +220,6 @@ export default function ProblemsPage() {
                         </ReviewProblemDialog>
                     </Suspense>
                 </main>
-                ) : (
-                    // Este bloque se mostrará solo si el usuario no está autenticado
-                    <div>
-                    </div>
-                )}
                    
         </div>
         

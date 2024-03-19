@@ -60,6 +60,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
 
     // crear funcion para mi boton Iniciar
     const handleSubmit = async () => {
+
         console.log('newCleanProblem:', newCleanProblem)
         try {
             console.log('newCleanProblem:', newCleanProblem);
@@ -95,7 +96,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         <div className={`fixed inset-0 bg-white lg:bg-black w-screen lg:bg-opacity-40 h-full lg:h-screen ${className}`}>
             <div className='lg:flex gap-x-6 h-full sm:px-8 overflow-y-auto'>
                 <div className=" lg:bg-white shadow-sm rounded-xl w-full lg:max-h-screen lg:overflow-y-auto flex flex-col items-center lg:p-8">
-                    {/* <i className="pi pi-times fixed top-7 right-11 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={onClose}></i> */}
+                    <i className="pi pi-times fixed top-7 right-11 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={onClose}></i>
                     <h1 className="font-bold text-gray-800 text-xl mb-4">Información Brindada</h1> 
                     <h2 className="mb-2 font-medium">Del solicitante</h2>
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl '>
@@ -172,16 +173,25 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         </LabelWithInput>
 
                         <LabelWithInput htmlFor="anexos" label="Anexos">  
-                            <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
-                            <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
-                            <Button className="bg-gray-200 text-gray-800 h-10 text-sm hover:bg-gray-300 shadow-none">{"Anexo1.pdf"}</Button>
+                            {rawProblem?.file_1 && (
+                                <a href={rawProblem.file_1 instanceof File ? URL.createObjectURL(rawProblem.file_1) : rawProblem.file_1} download>Archivo 1</a>
+                            )}
+                            {rawProblem?.file_2 && (
+                                <a href={rawProblem.file_2 instanceof File ? URL.createObjectURL(rawProblem.file_2) : rawProblem.file_2} download>Archivo 2</a>
+                            )}
+                            {rawProblem?.file_3 && (
+                                <a href={rawProblem.file_3 instanceof File ? URL.createObjectURL(rawProblem.file_3) : rawProblem.file_3} download>Archivo 3</a>
+                            )}
+                            {rawProblem?.file_4 && (
+                                <a href={rawProblem.file_4 instanceof File ? URL.createObjectURL(rawProblem.file_4) : rawProblem.file_4} download>Archivo 4</a>
+                            )}
                         </LabelWithInput>
                     </div>
                     
                 </div>
 
-                
-
+                {/* Verificar si el rol del usuario es "admin" */}
+                {localStorage.getItem('role') === 'admin' && (
                 <div className="relative mt-8 lg:mt-0 lg:bg-white shadow-sm rounded-xl w-full max-h-screen lg:overflow-y-auto flex flex-col items-center lg:p-8">
                     <i className="pi pi-times fixed lg:top-7 lg:right-11 top-1 right-1.5 hover:bg-gray-100 p-2 text-xl rounded-full" onClick={onClose}></i>
                     
@@ -314,7 +324,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                     </div>
                                 
                 </div>
-
+            )}
         
 
             </div>
