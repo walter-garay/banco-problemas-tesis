@@ -43,9 +43,9 @@ export interface CleanProblem {
   clean_title: string;
   clean_description: string;
   clean_sector: string;
-  career_1: string;
-  career_2?: string | null;
-  career_3?: string | null;
+  career_1: number;
+  career_2?: number | null;
+  career_3?: number | null;
   economic_support: number;
   social_support: number;
   enviromental_support: number;

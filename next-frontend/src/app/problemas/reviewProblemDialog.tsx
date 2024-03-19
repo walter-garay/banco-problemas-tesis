@@ -9,11 +9,10 @@ import { Slider, SliderChangeEvent } from "primereact/slider";
 import { InputText } from "primereact/inputtext";
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { RawProblem, CleanProblem } from '@/models/problems';
-import { createItem } from '@/api/apiService';
-import { carreras, sectores } from '@/data';
-import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+import { createItem, getItems } from '@/api/apiService';
+import { sectores } from '@/data';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select"
 
 
@@ -24,7 +23,13 @@ type MyModalProps = {
     rawProblem?: RawProblem;
 };
 
+interface Carrera {
+    id: number;
+    name: string;
+}
+
 export default function ReviewProblemDialog({isOpen, onClose, className, rawProblem}: MyModalProps) {
+    const [carreras, setCarreras] = useState<Carrera[]>([]);
 
     const [valueSocial, setValueSocial] = useState<number>(3);
     const [valueTecnologico, setValueTecnologico] = useState<number>(3);
@@ -41,15 +46,30 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
             clean_title: "Título limpio",
             clean_description: "Descripción limpia",
             clean_sector: "Sector limpio",
-            career_1: "Carrera 1",
-            career_2: "Carrera 2",
-            career_3: "Carrera 3",
+            career_1: 1,
+            career_2: null,
+            career_3: null,
             economic_support: 5,
             social_support: 3,
             enviromental_support: 4,
             importancy: 8,
         }
     );
+
+    useEffect(() => {
+        const fetchCarreras = async () => {
+            try {
+                // Llama a la función getItems con el endpoint correspondiente para obtener las carreras
+                const carrerasData = await getItems('api/data/careers/');
+                console.log('Carreras:', carrerasData);
+                setCarreras(carrerasData); // Actualiza el estado con las carreras obtenidas
+            } catch (error) {
+                console.error('Error al obtener las carreras:', error);
+                // Maneja el error aquí
+            }
+        };
+        fetchCarreras();
+    }, []);
 
     const handleCareerChange = (selectedCareer: string, field: string) => {
         setNewCleanProblem((prevCleanProblem) => ({
@@ -224,6 +244,28 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                 </SelectContent>
                             </Select>
                         </LabelWithInput>
+
+                        <LabelWithInput htmlFor="sector" label="Identifica carreras relacionadas con el problema" className='gap-y-1'>
+                            <p className="w-full text-left font-normal text-gray-500 text-sm leading-6 my-4">
+                                Escoge en orden de mayor a menor relación 3 carreras que puedan trabajar sobre la problemática brindada
+                            </p>
+                            <Select>
+                                <SelectTrigger className="w-full h-12r">
+                                    <SelectValue placeholder="Selecciona una carrera" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {/* Mapea la lista de carreras en SelectItem */}
+                                    {carreras.map((carrera) => (
+                                        console.log('Carrera:', carrera.name),
+                                        <SelectItem key={carrera.id} value={carrera.name}>
+                                            {carrera.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </LabelWithInput>
+
+
                     
                     </div>
 
@@ -231,25 +273,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
 
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
                         
-                        <LabelWithInput htmlFor="sector" label="Identifica carreras relacionadas con el problema" className='gap-y-1'>
-                            <p className="w-full text-left font-normal text-gray-500 text-sm leading-6 my-4">
-                                Escoge en orden de mayor a menor relación 3 carreras que puedan trabajar sobre la problemática brindada
-                            </p>
-                            {Array.from({ length: 3 }).map((_, index) => (
-                                <div key={index} className="card flex justify-content-center mb-2">
-                                    <Dropdown
-                                        value={newCleanProblem[`career_${index + 1}` as keyof CleanProblem] as string}
-                                        onChange={(e: DropdownChangeEvent) =>
-                                            handleCareerChange(e.value, `career_${index + 1}`)
-                                        }
-                                        options={carreras.map((carrera) => ({ label: carrera, value: carrera }))}
-                                        showClear
-                                        placeholder="Seleciona una carrera"
-                                        className="w-full md:w-14rem"
-                                    />
-                                </div>
-                            ))}
-                        </LabelWithInput>
+                        
 
                         <LabelWithInput htmlFor='impacto' label="Nivel de impacto" className="gap-y-5">
                             <p className="w-full text-left font-normal text-gray-500 text-sm leading-6">
