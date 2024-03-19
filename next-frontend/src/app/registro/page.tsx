@@ -17,6 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 
 export default function Registro({}) {
 
@@ -216,14 +217,11 @@ export default function Registro({}) {
                                     </LabelWithInput> 
                                 </div>
                 
-                                <br/>
-                
-                                <div className="justiy-center space-x-4">
-                                    <button className="bg-cyan-600 hover:bg-cyan-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                    focus:shadow-outline-green active:bg-cyan-900"
+                                <div className="justiy-center">
+                                    <button className="rounded-full px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-300"
                                     onClick={handleNext}
                                     >
-                                        <span className="text-white text-sm">Continuar</span>
+                                        <GrLinkNext className="text-xl hover:text-blue-600 active:text-blue-900"/>
                                     </button>
                                 </div>
                             </div>
@@ -246,7 +244,7 @@ export default function Registro({}) {
                                     
                                 </div>
 
-                                <div className="">
+                                <div className="flex-1">
                                     <LabelWithInput htmlFor="role" label="Rol">
                                         <Select onValueChange={(selectedRole) => handleInputChange({ target: { name: 'role', value: selectedRole } } as React.ChangeEvent<HTMLInputElement>)}>
                                             <SelectTrigger className="w-[180px] h-11 rounded-full border-2 border-cyan-600 p-2 flex-1">
@@ -264,21 +262,22 @@ export default function Registro({}) {
                                     </LabelWithInput>
                                 </div>
 
-                                <br/>
+                                <div className="flex justify-center space-x-3">
+                                    <div className="justiy-center">
+                                        <button className=" px-4 py-2 "
+                                        onClick={handlePrev}
+                                        >
+                                            <GrLinkPrevious className="text-xl hover:text-red-600 active:text-red-600"/>
+                                        </button>
+                                    </div>
 
-                                <div className="justiy-center space-x-4">
-                                    <button className="bg-green-700 hover:bg-green-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                    focus:shadow-outline-green active:bg-teal-900"
-                                    onClick={handlePrev}
-                                    >
-                                        <span className="text-white text-sm">Anterior</span>
-                                    </button>
-                                    <button className="bg-cyan-600 hover:bg-cyan-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                    focus:shadow-outline-green active:bg-cyan-900"
-                                    onClick={handleNext}
-                                    >
-                                        <span className="text-white text-sm">Continuar</span>
-                                    </button>
+                                    <div className="justiy-center">
+                                        <button className="rounded-full px-4 py-2 hover:bg-cyan-500 bg-cyan-600 text-white"
+                                        onClick={handleNext}
+                                        >
+                                            <GrLinkNext className="text-xl"/>
+                                        </button>
+                                    </div>
                                 </div>
                                 
                             </div>
@@ -328,11 +327,10 @@ export default function Registro({}) {
                                 
 
                                 <div className="justiy-center">
-                                    <button className="bg-green-700 hover:bg-green-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                    focus:shadow-outline-green active:bg-green-900"
+                                    <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500 text-white"
                                     onClick={handlePrev}
                                     >
-                                        <span className="text-white text-sm">Anterior</span>
+                                        <GrLinkPrevious className="text-xl hover:text-red-600 active:text-red-600"/>
                                     </button>
                                 </div>
 
@@ -383,15 +381,12 @@ export default function Registro({}) {
                                         />
                                     </LabelWithInput> 
                                 </div>
-                
-                                <br/>
-                
-                                <div className="justiy-center space-x-4">
-                                    <button className="bg-cyan-600 hover:bg-cyan-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                    focus:shadow-outline-green active:bg-cyan-900"
+
+                                <div className="justiy-center">
+                                    <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500"
                                     onClick={handleNext}
                                     >
-                                        <span className="text-white text-sm">Continuar</span>
+                                        <GrLinkNext className="text-xl hover:text-red-600 active:text-red-600"/>
                                     </button>
                                 </div>
                             </div>
@@ -461,21 +456,22 @@ export default function Registro({}) {
                                         </LabelWithInput>
                                     </div>
 
-                                    <br/>
+                                    <div className="flex justify-center space-x-3">
+                                        <div className="justiy-center">
+                                            <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500 text-white"
+                                            onClick={handlePrev}
+                                            >
+                                                <GrLinkPrevious className="text-xl hover:text-red-600 active:text-red-600"/>
+                                            </button>
+                                        </div>
 
-                                    <div className="justiy-center space-x-4">
-                                        <button className="bg-green-700 hover:bg-green-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                        focus:shadow-outline-green active:bg-green-900"
-                                        onClick={handlePrev}
-                                        >
-                                            <span className="text-white text-sm">Anterior</span>
-                                        </button>
-                                        <button className="bg-cyan-600 hover:bg-cyan-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                        focus:shadow-outline-green active:bg-cyan-900"
-                                        onClick={handleNext}
-                                        >
-                                            <span className="text-white text-sm">Siguiente</span>
-                                        </button>
+                                        <div className="justiy-center">
+                                            <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500"
+                                            onClick={handleNext}
+                                            >
+                                                <GrLinkNext className="text-xl hover:text-red-600 active:text-red-600"/>
+                                            </button>
+                                        </div>
                                     </div>
                                     
                                 </div>
@@ -524,12 +520,11 @@ export default function Registro({}) {
                                     </div>
 
                                     <div className="justiy-center">
-                                        <button className="bg-green-700 hover:bg-green-900 w-24 font-bold py-1 px-2 rounded-full shadow-md focus:outline-none
-                                        focus:shadow-outline-green active:bg-green-900"
-                                        onClick={handlePrev}
-                                        >
-                                            <span className="text-white text-sm">Anterior</span>
-                                        </button>
+                                            <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500 text-white"
+                                            onClick={handlePrev}
+                                            >
+                                                <GrLinkPrevious className="text-xl hover:text-red-600 active:text-red-600"/>
+                                            </button>
                                     </div>
 
                                     <div className="flex flex-col items-center space-y-2">

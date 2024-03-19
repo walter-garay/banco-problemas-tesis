@@ -1,15 +1,15 @@
 
     
-export const applicant_type = [
+export const institution_type = [
     { label: 'Persona Natural', value: 'persona' },
     { label: 'Entidad Privada', value: 'privada' },
     { label: 'Entidad Pública', value: 'publica' }
 ];
 
-export const estados = [
-    { label: 'Revisión pendiente', value: 'Revisión pendiente' },
-    { label: 'Publicado', value: 'Publicado' },
-    { label: 'Desaprobado', value: 'Desaprobado' }
+export const status = [
+    { label: 'Revisión pendiente', value: 'en revision' },
+    { label: 'Publicado', value: 'publicado' },
+    { label: 'Rechazado', value: 'rechazado' }
 ];
 
 export const prioridades = [

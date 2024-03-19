@@ -33,7 +33,7 @@ export default function ProblemCard({
             <h1 className=" mb-4 font-bold ">
                 <span className="mr-2">{title}</span>
                 <TagStatusProblemCard status={status}>
-                    {status}
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
                 </TagStatusProblemCard>
             </h1>
 

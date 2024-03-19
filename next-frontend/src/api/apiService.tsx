@@ -64,11 +64,11 @@ const createItem = async (endpoint: string, data: any, headers: Record<string, s
 };
 
 const updateItem = async (endpoint: string, id: number, data: any, headers: Record<string, string> = {}) => {
-  return executeRequest('PUT', `${endpoint}/${id}`, data, headers);
+  return executeRequest('PUT', `${endpoint}/${id}/`, data, headers);
 };
 
 const deleteItem = async (endpoint: string, id: number, headers: Record<string, string> = {}) => {
-  return executeRequest('DELETE', `${endpoint}/${id}`, null, headers);
+  return executeRequest('DELETE', `${endpoint}/${id}/`, null, headers);
 };
 
 export { getItems, getItemById, createItem, updateItem, deleteItem };

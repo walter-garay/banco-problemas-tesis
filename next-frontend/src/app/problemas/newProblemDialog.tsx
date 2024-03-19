@@ -21,6 +21,7 @@ export default function NewProblemDialog({}) {
     
 
     const [newProblem, setNewProblem] = useState<RawProblem>({
+        clean_data: null,
         id: 0,
         title: '',
         sector: '',
@@ -131,7 +132,7 @@ export default function NewProblemDialog({}) {
                 optionLabel="label"
                 optionValue="value"
                 showClear 
-                className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
+                className="w-full h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
             </LabelWithInput>
             
             <LabelWithInput htmlFor="entidad" label="Tipo de entidad" >

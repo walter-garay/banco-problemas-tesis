@@ -17,7 +17,7 @@ import { Dialog } from 'primereact/dialog';
 import { RawProblem } from '@/models/problems'; 
 import { getItems } from '@/api/apiService';
 
-import { sectores, applicant_type, estados } from "@/data";
+import { sectores, institution_type, status } from "@/data";
 
 import Logout from "@/components/logout";
 import axios from 'axios';
@@ -48,10 +48,6 @@ export default function ProblemsPage() {
         setOpen(false);
         document.body.style.overflow = 'auto';
     }
-    function ListType(valor:any){
-        setSelectedTipoSolicitante(valor)
-        console.log(valor, "ListType")
-    }
     
 
     function sortByStatus(rawProblems: RawProblem[], orden: string[]): RawProblem[] {
@@ -72,7 +68,8 @@ export default function ProblemsPage() {
                 const response = await axios.get('https://avicyt.onrender.com/problems/rawproblems',  {
                     params: {
                         sector: selectedSector,
-                        applicant_type: selectedTipoSolicitante,
+                        institution_type: selectedTipoSolicitante,
+                        status: selectedEstado,
                     },
 
                     headers: {
@@ -103,28 +100,28 @@ export default function ProblemsPage() {
         const isAuthenticated = localStorage.getItem("token");
         if (!isAuthenticated) {
             // Si el usuario no está autenticado, redirigir al inicio de sesión
-            window.location.href = "/principal";
+            window.location.href = "/login";
         } else {
             // Si el usuario está autenticado, obtener los problemas
             fetchRawProblems();
         }
         
-    }, [selectedSector,selectedTipoSolicitante]);
+    }, [selectedSector,selectedTipoSolicitante,selectedEstado]);
     
     return (
         <div>
-            <main className="relative w-full flex justify-center gap-x-8">
-                <div className="mt-8 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
-                    <span className="flex items-center gap-x-1.5 mb-4">
-                        <i className="pi pi-filter text-slate-600" ></i> 
-                        <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
-                        
-                    </span>
-                    <LabelWithInput htmlFor="sector" label="Sector" >  
-                        <Dropdown value={selectedSector} onChange={(e: DropdownChangeEvent) => setSelectedSector(e.value)} options={sectores} optionLabel="label" 
-                        showClear 
-                        className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
-                    </LabelWithInput>
+                <main className="relative w-full flex justify-center gap-x-8">
+                    <div className="mt-8 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
+                        <span className="flex items-center gap-x-1.5 mb-4">
+                            <i className="pi pi-filter text-slate-600" ></i> 
+                            <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
+                            
+                        </span>
+                        <LabelWithInput htmlFor="sector" label="Sector" >  
+                            <Dropdown value={selectedSector} onChange={(e: DropdownChangeEvent) => setSelectedSector(e.value)} options={sectores} optionLabel="label" 
+                            showClear 
+                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
+                        </LabelWithInput>
 
                     {/* Dropdown para Sectores */}
                     
@@ -142,33 +139,34 @@ export default function ProblemsPage() {
                         />
                     </LabelWithInput>*/}
 
-                    {/* Dropdown para Tipo de Solicitante */}
-                    <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">
-                        <Dropdown
-                        value={selectedTipoSolicitante}
-                        onChange={(e) => ListType(e.value)}
-                        options={applicant_type}
-                        optionValue='value'
-                        optionLabel="label"
-                        showClear
-                        placeholder="Todos"
-                        className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
-                        />
-                    </LabelWithInput>
+                        {/* Dropdown para Tipo de Solicitante */}
+                        <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">
+                            <Dropdown
+                            value={selectedTipoSolicitante}
+                            onChange={(e) => setSelectedTipoSolicitante(e.value)}
+                            options={institution_type}
+                            optionValue='value'
+                            optionLabel="label"
+                            showClear
+                            placeholder="Todos"
+                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
+                            />
+                        </LabelWithInput>
 
-                    {/* Dropdown para Estados */}
-                    <LabelWithInput htmlFor="estado" label="Estado">
-                        <Dropdown
-                        value={selectedEstado}
-                        onChange={(e) => setSelectedEstado(e.value)}
-                        options={estados.map(estado => ({ label: estado, value: estado }))}
-                        optionLabel="label"
-                        showClear
-                        placeholder="Todos"
-                        className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm border-gray-300"
-                        />
-                    </LabelWithInput>
-                </div>
+                        {/* Dropdown para Estados */}
+                        <LabelWithInput htmlFor="estado" label="Estado">
+                            <Dropdown
+                            value={selectedEstado}
+                            onChange={(e) => setSelectedEstado(e.value)}
+                            options={status}
+                            optionValue='value'
+                            optionLabel="label"
+                            showClear
+                            placeholder="Todos"
+                            className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm border-gray-300"
+                            />
+                        </LabelWithInput>
+                    </div>
 
                 <div className="flex-col flex items-center min-w-200 ">
                     <Button
@@ -203,22 +201,28 @@ export default function ProblemsPage() {
 
                     </div>
 
-                </div>
-                <Suspense>
-                    <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
-                        className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
-                        pt={{
-                            root: { className: 'min-h-full md:min-h-96' },     
-                        }}
-                        >
-                        <NewProblemDialog />
-                    </Dialog>
-                </Suspense>
-                <Suspense >
-                    <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
-                    </ReviewProblemDialog>
-                </Suspense>
-            </main>
+                    </div>
+
+                    <div className="flex-col flex items-end min-w-20 lg:mt-8 ">
+                        <Logout />
+                    </div>
+
+                    <Suspense>
+                        <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
+                            className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
+                            pt={{
+                                root: { className: 'min-h-full md:min-h-96' },     
+                            }}
+                            >
+                            <NewProblemDialog />
+                        </Dialog>
+                    </Suspense>
+                    <Suspense >
+                        <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
+                        </ReviewProblemDialog>
+                    </Suspense>
+                </main>
+
         </div>
         
     );
