@@ -65,7 +65,7 @@ export default function ProblemsPage() {
                 const userToken = localStorage.getItem("token");
                 const token: string = 'Token ' + userToken;
 
-                const response = await axios.get('https://avicyt.onrender.com/problems/rawproblems',  {
+                const response = await axios.get('https://avicyt.onrender.com/problems/raw',  {
                     params: {
                         sector: selectedSector,
                         institution_type: selectedTipoSolicitante,
@@ -174,8 +174,6 @@ export default function ProblemsPage() {
                         onClick={() => setVisible(true)}>
                         Agregar problema
                     </Button>
-
-                    <Logout />
                     
                     <div className="flex-col space-y-5 my-6 w-full">
                         {

@@ -97,7 +97,7 @@ export default function NewProblemDialog({}) {
                 formData.append('file_4', newProblem.file_4);
             }
         
-            const response = await createItem('problems/rawproblems/', formData);
+            const response = await createItem('problems/raw/', formData);
     
             console.log('Problema creado:', response);
         } catch (error) {

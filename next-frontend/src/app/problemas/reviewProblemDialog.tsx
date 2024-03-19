@@ -102,7 +102,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         };
 
         try {
-            const response = await updateItem('problems/rawproblems', rawProblem.id, rawProblemRejected, {
+            const response = await updateItem('problems/raw', rawProblem.id, rawProblemRejected, {
                 'Content-Type': 'application/json',
             });
 
@@ -125,7 +125,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         };
 
         try {
-            const response = await updateItem('problems/rawproblems', rawProblem.id, rawProblemRejected, {
+            const response = await updateItem('problems/raw', rawProblem.id, rawProblemRejected, {
                 'Content-Type': 'application/json',
             });
 
@@ -139,7 +139,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         try {
             console.log('newCleanProblem:', newCleanProblem);
 
-            const response = await createItem('problems/cleanproblems/', newCleanProblem, 
+            const response = await createItem('problems/clean/', newCleanProblem, 
                 {
                     'Content-Type': 'application/json',
                 }
