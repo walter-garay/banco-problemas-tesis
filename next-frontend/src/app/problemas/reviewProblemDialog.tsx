@@ -9,12 +9,13 @@ import { Slider, SliderChangeEvent } from "primereact/slider";
 import { InputText } from "primereact/inputtext";
 
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { RawProblem, CleanProblem } from '@/models/problems';
-import { createItem } from '@/api/apiService';
+import { createItem, updateItem } from '@/api/apiService';
 import { carreras, sectores } from '@/data';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select"
+import { error } from 'console';
 
 
 type MyModalProps = {
@@ -58,9 +59,63 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         }));
     };
 
-    // crear funcion para mi boton Iniciar
-    const handleSubmit = async () => {
+    
+    
 
+
+    const handleSubmitAprobado = async () => {
+        try {
+
+        } catch(error) {
+
+        } 
+    }
+    
+    const handleSubmitDesaprobado = async () => {
+        if (!rawProblem) {
+            console.error('No se puede desaprobar un problema nulo');
+            return;
+        }
+
+        const rawProblemRejected = {
+            ...rawProblem,
+            raw_status: 'rechazado'
+        };
+
+        try {
+            const response = await updateItem('problems/rawproblems', rawProblem.id, rawProblemRejected, {
+                'Content-Type': 'application/json',
+            });
+
+            console.log('Rechazado:', response);
+        } catch (error) {
+            console.error('Error al desaprobar el problema:', error);
+        }
+    }
+
+    // crear funcion para mi boton Iniciar
+    const handleSubmitPublicar = async () => {
+        if (!rawProblem) {
+            console.error('No se puede desaprobar un problema nulo');
+            return;
+        }
+
+        const rawProblemRejected = {
+            ...rawProblem,
+            raw_status: 'publicado'
+        };
+
+        try {
+            const response = await updateItem('problems/rawproblems', rawProblem.id, rawProblemRejected, {
+                'Content-Type': 'application/json',
+            });
+
+            console.log('Publicado:', response);
+        } catch (error) {
+            console.error('Error al desaprobar el problema:', error);
+        }
+
+    {/*  
         console.log('newCleanProblem:', newCleanProblem)
         try {
             console.log('newCleanProblem:', newCleanProblem);
@@ -70,12 +125,15 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                     'Content-Type': 'application/json',
                 }
             );
+
+            
         
             console.log('Crear Nuevo Problema:', response);
 
         } catch (error) {
             console.error('Error al crear problema:', error);
         }
+        */}
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -172,19 +230,37 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                             </Input>          
                         </LabelWithInput>
 
-                        <LabelWithInput htmlFor="anexos" label="Anexos">  
-                            {rawProblem?.file_1 && (
-                                <a href={rawProblem.file_1 instanceof File ? URL.createObjectURL(rawProblem.file_1) : rawProblem.file_1} download>Archivo 1</a>
-                            )}
-                            {rawProblem?.file_2 && (
-                                <a href={rawProblem.file_2 instanceof File ? URL.createObjectURL(rawProblem.file_2) : rawProblem.file_2} download>Archivo 2</a>
-                            )}
-                            {rawProblem?.file_3 && (
-                                <a href={rawProblem.file_3 instanceof File ? URL.createObjectURL(rawProblem.file_3) : rawProblem.file_3} download>Archivo 3</a>
-                            )}
-                            {rawProblem?.file_4 && (
-                                <a href={rawProblem.file_4 instanceof File ? URL.createObjectURL(rawProblem.file_4) : rawProblem.file_4} download>Archivo 4</a>
-                            )}
+                        <LabelWithInput htmlFor="anexos" label="Anexos">
+                            <div className='space-y-4'>
+                                {rawProblem?.file_1 && (
+                                    <div className="flex items-center justify-center bg-cyan-50 hover:bg-cyan-200 p-2 rounded-xl text-cyan-900">
+                                        <a href={typeof rawProblem.file_1 === 'string' ? rawProblem.file_1 : URL.createObjectURL(rawProblem.file_1)} download>
+                                            {rawProblem.file_1 instanceof File ? rawProblem.file_1.name : (rawProblem.file_1.split('?')[0].split('/').pop() || 'Archivo 1')}
+                                        </a>
+                                    </div>
+                                )}
+                                {rawProblem?.file_2 && (
+                                    <div className="flex items-center justify-center bg-cyan-50 hover:bg-cyan-200 p-2 rounded-xl">
+                                        <a href={typeof rawProblem.file_2 === 'string' ? rawProblem.file_2 : URL.createObjectURL(rawProblem.file_2)} download>
+                                            {rawProblem.file_2 instanceof File ? rawProblem.file_2.name : (rawProblem.file_2.split('?')[0].split('/').pop() || 'Archivo 2')}
+                                        </a>
+                                    </div>
+                                )}
+                                {rawProblem?.file_3 && (
+                                    <div className="flex items-center justify-center bg-cyan-50 hover:bg-cyan-200 p-2 rounded-xl text-cyan-900">
+                                        <a href={typeof rawProblem.file_3 === 'string' ? rawProblem.file_3 : URL.createObjectURL(rawProblem.file_3)} download>
+                                            {rawProblem.file_3 instanceof File ? rawProblem.file_3.name : (rawProblem.file_3.split('?')[0].split('/').pop() || 'Archivo 3')}
+                                        </a>
+                                    </div>
+                                )}
+                                {rawProblem?.file_4 && (
+                                    <div className="flex items-center justify-center bg-cyan-50 hover:bg-cyan-200 p-2 rounded-xl">
+                                        <a href={typeof rawProblem.file_4 === 'string' ? rawProblem.file_4 : URL.createObjectURL(rawProblem.file_4)} download>
+                                            {rawProblem.file_4 instanceof File ? rawProblem.file_4.name : (rawProblem.file_4.split('?')[0].split('/').pop() || 'Archivo 2')}
+                                        </a>
+                                    </div>
+                                )}
+                            </div>  
                         </LabelWithInput>
                     </div>
                     
@@ -318,8 +394,8 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         </p>                                        
                         
                         <div className="w-full space-y-2 md:gap-x-2 md:flex-row-reverse md:flex md:space-y-0 justify-start">
-                            <Button className="h-10  bg-blue-700 text-white rounded-xl md:w-52 w-full hover:bg-blue-800" onClick={handleSubmit}>Guardar y publicar</Button>
-                            <Button className="h-10  bg-gray-100 text-gray-600 border-gray-700 border rounded-xl md:w-40 w-full hover:bg-gray-200">Desapobar</Button>
+                            <Button className="h-10  bg-blue-700 text-white rounded-xl md:w-52 w-full hover:bg-blue-800" onClick={handleSubmitPublicar}>Guardar y publicar</Button>
+                            <Button className="h-10  bg-gray-100 text-gray-600 border-gray-700 border rounded-xl md:w-40 w-full hover:bg-gray-200" onClick={handleSubmitDesaprobado}>Desapobar</Button>
                         </div> 
                     </div>
                                 

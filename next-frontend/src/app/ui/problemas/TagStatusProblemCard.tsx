@@ -8,9 +8,9 @@ type tagProbleProps = {
 export default function TagStatusProblemCard({ children, status }: tagProbleProps) {
     let colorClass = "bg-green-100 text-green-700 border-green-600";
 
-    if (status === "Desaprobado") {
+    if (status === "rechazado") {
         colorClass = "bg-orange-100 text-orange-700 border-orange-600";
-    } else if (status === "Revisión pendiente") {
+    } else if (status === "publicado") {
         colorClass = "bg-blue-100 text-blue-800 border-blue-700";
     }
 
