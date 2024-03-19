@@ -64,7 +64,7 @@ export default function Login({}) {
     return (
         <> 
             <div className="flex items-center justify-center h-full bg-slate-100 w-full">
-                <section className="sm:flex-row sm:px-9 sm:py-9 sm:max-w-4xl flex-1 flex flex-col items-center justify-center max-w-3xl py-6 px-8 bg-white shadow-lg h-3/4 sm:rounded-3xl rounded-2xl">
+                <section className="sm:flex-row sm:px-9 sm:py-9 sm:max-w-4xl flex-1 flex flex-col items-center justify-center max-w-3xl py-6 px-2 bg-white shadow-lg h-auto sm:rounded-3xl rounded-2xl mx-4 sm:mx-0">
                     <aside className="w-full mb-4 sm:w-1/2 md:mr-4 flex items-center justify-center flex-row-reverse sm:flex-col">
                         <h2 className="flex justify-center text-7xl font-semibold text-black-600 mr-8 sm:mr-1 mt-2 sm:mt-0">U<span className="text-7xl font-semibold text-cyan-600">D</span> H</h2>
                         <Image
@@ -77,38 +77,35 @@ export default function Login({}) {
 
                     <div className="sm:mx-auto sm:max-w-2xl sm:px-9 sm:py-6 max-w-2xl py-4 px-2 mx-auto flex flex-col items-center space-y-1 bg-white rounded-xl gap-y-4 border-2 border-cyan-700">
                         <header className="flex flex-col items-center">
-                            <h1 className="text-2xl mb-4 ">
+                            <h1 className="text-2xl mb-4">
                                 Inicio <span className="text-cyan-600">de Sesión</span> 
                             </h1>
                         </header>
-                        <form>
-                            <div>
-                                <div className="flex-1">
-                                    <LabelWithInput htmlFor="email" label="Correo Electrónico">
-                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
-                                            id="email"
-                                            type="text"
-                                            placeholder=""
-                                            name="email"
-                                            value={user.email}
-                                            onChange={handleInputChange}
-                                        />
-                                    </LabelWithInput> 
-                                </div>
+                        <form className="w-full">
+                            <div className="w-full flex flex-col space-y-4">
+                                <LabelWithInput htmlFor="email" label="Correo Electrónico">
+                                    <Input
+                                        className="h-10 rounded-full border-2 p-2 text-center focus:outline-none border-cyan-600"
+                                        id="email"
+                                        type="email"
+                                        placeholder=""
+                                        name="email"
+                                        value={user.email}
+                                        onChange={handleInputChange}
+                                    />
+                                </LabelWithInput> 
 
-                                <br />
-
-                                <div className="flex-1">  
-                                    <LabelWithInput htmlFor="password" label="Contraseña" >
-                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
-                                            id="password"
-                                            type={showPwd ? 'text' : 'password'}
-                                            placeholder="********"
-                                            name="password"
-                                            value={user.password}
-                                            onChange={handleInputChange}
-                                        />
-                                        <div className="flex w-full h-0 justify-end -mt-16 mb-2 pr-4" onClick={() => switchShown()}>
+                                <LabelWithInput htmlFor="password" label="Contraseña" >
+                                    <Input
+                                        className="h-10 rounded-full border-2 p-2 text-center focus:outline-none border-cyan-600"
+                                        id="password"
+                                        type={showPwd ? 'text' : 'password'}
+                                        placeholder="********"
+                                        name="password"
+                                        value={user.password}
+                                        onChange={handleInputChange}
+                                    />
+                                    <div className="flex w-full h-0 justify-end -mt-16 mb-2 pr-4" onClick={() => switchShown()}>
                                             {showPwd ? 
                                             <svg className="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height={"1.2rem"}>
                                                 <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
@@ -120,20 +117,17 @@ export default function Login({}) {
                                                 <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 00-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 016.75 12z" />
                                             </svg>} 
                                         </div>
-                                    </LabelWithInput>              
-                                </div>
+                                </LabelWithInput>  
+
+                                <button onClick={handleSubmit} className="w-full py-2 rounded-lg bg-cyan-600 hover:bg-cyan-900 text-white font-medium focus:outline-none focus:shadow-outline-green active:bg-cyan-900">
+                                    Iniciar Sesión
+                                </button>
                             </div>  
                         </form>
 
-                        <div className="flex items-center">
-                            <button onClick={handleSubmit} className="sm:py-2 sm:px-4 sm:w-32 sm:rounded-full bg-cyan-600 hover:bg-cyan-900 w-30 font-bold py-1 px-2 rounded-lg shadow-md focus:outline-none focus:shadow-outline-green active:bg-cyan-900">
-                                <span className="text-white font-medium">Iniciar</span>
-                            </button>
-                        </div>
-                        
                         <div className="flex flex-col items-center">
-                            <a className="justify-center">¿No tienes una cuenta?</a>
-                            <a href="/registro" className=" text-cyan-600"> Registrarse</a>
+                            <span>¿No tienes una cuenta?</span>
+                            <a href="/registro" className="text-cyan-600">Registrarse</a>
                         </div>
                     </div>
                 </section>
