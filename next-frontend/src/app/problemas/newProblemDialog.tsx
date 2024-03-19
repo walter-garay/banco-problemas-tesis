@@ -21,6 +21,7 @@ export default function NewProblemDialog({}) {
     
 
     const [newProblem, setNewProblem] = useState<RawProblem>({
+        clean_data: null,
         id: 0,
         title: '',
         sector: '',

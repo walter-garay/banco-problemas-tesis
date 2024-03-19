@@ -201,7 +201,7 @@ export default function ProblemsPage() {
 
                     </div>
 
-                    <div className="flex-col flex items-end min-w-20 lg:mt-8 bg-white shadow-md h-12 rounded-md pr-2">
+                    <div className="flex-col flex items-end min-w-20 lg:mt-8 ">
                         <Logout />
                     </div>
 

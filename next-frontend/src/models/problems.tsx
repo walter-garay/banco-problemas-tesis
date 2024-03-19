@@ -20,6 +20,7 @@ export interface Usuario {
 }
 
 export interface RawProblem {
+  clean_data: CleanProblem | null;
   id: number;
   applicant: Usuario | null;
   title: string;
