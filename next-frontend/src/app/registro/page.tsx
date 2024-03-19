@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { IoPersonAddSharp } from "react-icons/io5";
 import { ImLibrary } from "react-icons/im";
 import { createItem } from "@/api/apiService";
-import validator from 'validator';
 import { Stepper, Step,StepLabel } from '@mui/material';
 import {
     Select,
@@ -41,7 +40,6 @@ export default function Registro({}) {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
 
-        
         if (name === 'password1') {
             // Asignar el valor de password1 a password2
             setNewUser((prevUser) => ({
@@ -52,72 +50,64 @@ export default function Registro({}) {
         }
 
         if (name === 'email') {
-            // Asignar el valor de password1 a password2
+            // Asignar el valor de email a username
             setNewUser((prevUser) => ({
                 ...prevUser,
                 email: value,
                 username: value,
             }));
         }
-
-        ///////////////////////////////PASSWORD/////////////////////////////
-        
-        //////////////////////////EMAIL INFO////////////////////////////////
-
-       /* if (name === 'email' && value.length >= 3) {
-            if (!validator.isEmail(value)) {
-              setNewUser((prevUser) => ({
-                ...prevUser,
-                [name]: value,
-                emailError: 'Correo electrónico no válido',
-              }));
-              return;
-            }
-          }
-          // Limpiar el error si el usuario modifica el campo
-            if (name === 'email') {
-                setNewUser((prevUser) => ({
-                ...prevUser,
-                emailError: '',
-                }));
-
-                setTimeout(() => {
-                    if (value.length >= 3 && !validator.isEmail(value)) {
-                        setNewUser((prevUser) => ({
-                            ...prevUser,
-                            emailError: 'Correo electrónico no válido',
-                        }));
-                    }
-                }, 500);
-            }
-        //////////////////////////////////////////////////////////////////////
-
-        //////////////////////VALIDATOR PHONE/////////////////////////////////
-        if (name === 'phone') {
-            if (!isValidPhone(value)) {
-              setNewUser((prevUser) => ({
-                ...prevUser,
-                [name]: value,
-                phoneError: 'Número de teléfono no válido',
-              }));
-            } else {
-              // Limpiar el error si el usuario modifica el campo
-              setNewUser((prevUser) => ({
-                ...prevUser,
-                phoneError: '',
-              }));
-            }
-          }*/
-        //////////////////////////////////////////////////////////////////////
+    
         setNewUser((prevUser) => ({ ...prevUser, [name]: value }));
+        setPhoneTouched(true);
+        setRucTouched(true);
+        setPasswordTouched(true);
+        setEmailTouched(true);
     };
-   
-    //////////////////PHONE///////////////////////////////
+
+    //////////////////////////////EMAIL////////////////////////////////////
+    const [emailTouched, setEmailTouched] = useState(false);
+    const isValidEmail = (email: string) => {
+        // Validar el formato del correo electrónico
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    ///////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////PASSWORD/////////////////////////////////
+
+    const [passwordTouched, setPasswordTouched] = useState(false);
+
+    const isValidPassword = (password: string) => {
+        // Verificar si la contraseña tiene al menos 4 caracteres
+        return password.length >= 4; 
+    };
+
+    ///////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////RUC//////////////////////////////////////
+
+    const [rucTouched, setRucTouched] = useState(false);
+
+    const isValidRuc = (ruc: string) => {
+        const rucRegex = /^[0-9]{11}$/;
+            return rucRegex.test(ruc);
+    };
+
+    //////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////PHONE////////////////////////////////////
+
+    const [phoneTouched, setPhoneTouched] = useState(false);
+
     const isValidPhone = (phone: string) => {
         // Puedes utilizar una expresión regular para validar el formato del número de teléfono
         const phoneRegex = /^[0-9]{9}$/;
-        return phoneRegex.test(phone);
+            return phoneRegex.test(phone);
     };
+
+    //////////////////////////////////////////////////////////////////////
 
     ////////////////////////////POST///////////////////////////////////////////
     const handleSubmit = async () => {
@@ -145,10 +135,6 @@ export default function Registro({}) {
     const [showPwd, setShowPwd] = React.useState(false);
     const switchShown = () => setShowPwd(!showPwd);
     ////////////////////////////////////////////////////////////////
-    
-    //////////////////PARA EL MENSAJE DEL USUARIO//////////////////
-    const [successMessage, setSuccessMessage] = useState('');
-    ///////////////////////////////////////////////////////////////
     
     const [activeStep, setActiveStep] = useState(1);
 
@@ -218,10 +204,10 @@ export default function Registro({}) {
                                 </div>
                 
                                 <div className="justiy-center">
-                                    <button className="rounded-full px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-300"
+                                    <button className="rounded-full px-4 py-2 hover:bg-cyan-500 bg-cyan-600 text-white"
                                     onClick={handleNext}
                                     >
-                                        <GrLinkNext className="text-xl hover:text-blue-600 active:text-blue-900"/>
+                                        <GrLinkNext className="text-xl"/>
                                     </button>
                                 </div>
                             </div>
@@ -232,22 +218,23 @@ export default function Registro({}) {
                             <div className="space-y-3 flex flex-col items-center">
                                 <div className="flex-1">
                                     <LabelWithInput htmlFor="phone" label="Telefóno">
-                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
+                                        <Input className={`h-10 rounded-full border-2 p-2 text-center ${phoneTouched && !isValidPhone(newUser.phone) ? 'border-red-500' : 'border-cyan-600'}`}
                                             id="phone"
                                             type="text"
-                                            placeholder=""
+                                            placeholder="987987654"
                                             name="phone"
                                             value={newUser.phone}
                                             onChange={handleInputChange}
                                         />
+                                        
                                     </LabelWithInput> 
-                                    
+                                
                                 </div>
 
                                 <div className="flex-1">
                                     <LabelWithInput htmlFor="role" label="Rol">
                                         <Select onValueChange={(selectedRole) => handleInputChange({ target: { name: 'role', value: selectedRole } } as React.ChangeEvent<HTMLInputElement>)}>
-                                            <SelectTrigger className="w-[180px] h-11 rounded-full border-2 border-cyan-600 p-2 flex-1">
+                                            <SelectTrigger className="w-[200px] h-11 rounded-full border-2 border-cyan-600 p-2 flex-1 ">
                                                 <SelectValue placeholder="Selecione un Rol" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -255,7 +242,6 @@ export default function Registro({}) {
                                                     <SelectLabel>Tipo de rol</SelectLabel>
                                                         <SelectItem value="p_natural">Persona Natural</SelectItem>
                                                         <SelectItem value="emprendedor">Emprendedor</SelectItem>
-                                                        <SelectItem value="admin">Admin</SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>
                                         </Select>
@@ -288,7 +274,7 @@ export default function Registro({}) {
                             <div className="space-y-3 flex flex-col items-center">
                                 <div className="flex-1">
                                     <LabelWithInput htmlFor="email" label="Correo Electronico">
-                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
+                                        <Input className={`h-10 rounded-full border-2 p-2 text-center ${emailTouched && !isValidEmail(newUser.email) ? 'border-red-500' : 'border-cyan-600'}`}
                                             id="email"
                                             type="text"
                                             placeholder="example@gmail.com"
@@ -302,7 +288,7 @@ export default function Registro({}) {
 
                                 <div className="flex-1">
                                     <LabelWithInput htmlFor="password1" label="Contraseña">
-                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center "
+                                        <Input className={`h-10 rounded-full border-2 p-2 text-center ${passwordTouched && !isValidPassword(newUser.password1) ? 'border-red-500' : 'border-cyan-600'}`}
                                             id="password1"
                                             type={showPwd ? 'text' : 'password'}
                                             placeholder="********"
@@ -324,10 +310,8 @@ export default function Registro({}) {
                                     </LabelWithInput> 
                                 </div>
 
-                                
-
                                 <div className="justiy-center">
-                                    <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500 text-white"
+                                    <button className=" px-4 py-2 "
                                     onClick={handlePrev}
                                     >
                                         <GrLinkPrevious className="text-xl hover:text-red-600 active:text-red-600"/>
@@ -335,15 +319,15 @@ export default function Registro({}) {
                                 </div>
 
                                 <div className="flex flex-col items-center space-y-2">
-                                            <button onClick={handleSubmit} className="bg-cyan-600 hover:bg-cyan-900 w-32
-                                            font-bold py-2 px-4 rounded-full shadow-md focus:outline-none focus:shadow-outline-green active:bg-cyan-900">
-                                                <span className="text-white font-medium">Registrarse</span>
-                                            </button>
+                                    <button onClick={handleSubmit} className="bg-cyan-600 hover:bg-cyan-900 w-32
+                                    font-bold py-2 px-4 rounded-full shadow-md focus:outline-none focus:shadow-outline-green active:bg-cyan-900">
+                                        <span className="text-white font-medium">Registrarse</span>
+                                    </button>
 
-                                            <div className="flex flex-col items-center justify-center">
-                                                <h1>¿Ya se encuentra registrado?</h1>
-                                                <a href="/login" className=" text-cyan-600 text-lg hover:text-red-800 active:text-red-800"> Iniciar Sesión</a>
-                                            </div>
+                                    <div className="flex flex-col items-center justify-center">
+                                        <h1>¿Ya se encuentra registrado?</h1>
+                                        <a href="/login" className=" text-cyan-600 text-lg hover:text-red-800 active:text-red-800"> Iniciar Sesión</a>
+                                    </div>
                                 </div>
                             </div>
                         )
@@ -358,35 +342,52 @@ export default function Registro({}) {
                         return (
                             <div className="space-y-3 flex flex-col items-center">
                                 <div className="flex-1">
-                                    <LabelWithInput htmlFor="razon_social" label="Razón Social">
+                                    <LabelWithInput htmlFor="nombre" label="Nombres">
                                         <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
-                                            id="razon_social"
+                                            id="nombre"
                                             type="text"
-                                            placeholder=""
-                                            name="razon_social"
-                                            value={newUser.razon_social}
-                                            onChange={handleInputChange}
-                                            />
-                                    </LabelWithInput> 
-                                </div>
-                                <div className="flex-1">
-                                    <LabelWithInput htmlFor="ruc" label="RUC">
-                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
-                                            id="ruc"
-                                            type="text"
-                                            placeholder=""
-                                            name="ruc"
-                                            value={newUser.ruc}
+                                            placeholder="Cristian"
+                                            name="nombre"
+                                            value={newUser.nombre}
                                             onChange={handleInputChange}
                                         />
                                     </LabelWithInput> 
+                                    
+                                </div>
+
+                                <div className="flex-1">
+                                    <LabelWithInput htmlFor="apellidos" label="Apellidos">
+                                        <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
+                                            id="apellidos"
+                                            type="apellidos"
+                                            placeholder=" Garay Ortiz"
+                                            name="apellidos"
+                                            value={newUser.apellidos}
+                                            onChange={handleInputChange}
+                                        />
+                                    </LabelWithInput> 
+                                    
+                                </div>
+
+                                <div className="flex-1">
+                                    <LabelWithInput htmlFor="phone" label="Telefóno">
+                                        <Input className={`h-10 rounded-full border-2 p-2 text-center ${phoneTouched && !isValidPhone(newUser.phone) ? 'border-red-500' : 'border-cyan-600'}`}
+                                            id="phone"
+                                            type="text"
+                                            placeholder="987987654"
+                                            name="phone"
+                                            value={newUser.phone}
+                                            onChange={handleInputChange}
+                                        />
+                                    </LabelWithInput> 
+                                    
                                 </div>
 
                                 <div className="justiy-center">
-                                    <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500"
+                                    <button className="rounded-full px-4 py-2 hover:bg-cyan-500 bg-cyan-600 text-white"
                                     onClick={handleNext}
                                     >
-                                        <GrLinkNext className="text-xl hover:text-red-600 active:text-red-600"/>
+                                        <GrLinkNext className="text-xl"/>
                                     </button>
                                 </div>
                             </div>
@@ -396,51 +397,34 @@ export default function Registro({}) {
                             return (
                                 <div className="space-y-3 flex flex-col items-center">
                                     <div className="flex-1">
-                                        <LabelWithInput htmlFor="nombre" label="Representante">
+                                        <LabelWithInput htmlFor="razon_social" label="Razón Social">
                                             <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
-                                                id="nombre"
-                                                type="text"
-                                                placeholder="Cristian Garay Ortiz"
-                                                name="nombre"
-                                                value={newUser.nombre}
-                                                onChange={handleInputChange}
-                                            />
-                                        </LabelWithInput> 
-                                       
-                                    </div>
-
-                                    <div className="flex-1">
-                                        <LabelWithInput htmlFor="apellidos" label="Apellidos">
-                                            <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
-                                                id="apellidos"
-                                                type="apellidos"
-                                                placeholder=" Garay Ortiz"
-                                                name="apellidos"
-                                                value={newUser.apellidos}
-                                                onChange={handleInputChange}
-                                            />
-                                        </LabelWithInput> 
-                                       
-                                    </div>
-
-                                    <div className="flex-1">
-                                        <LabelWithInput htmlFor="phone" label="Telefóno">
-                                            <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
-                                                id="phone"
+                                                id="razon_social"
                                                 type="text"
                                                 placeholder=""
-                                                name="phone"
-                                                value={newUser.phone}
+                                                name="razon_social"
+                                                value={newUser.razon_social}
+                                                onChange={handleInputChange}
+                                                />
+                                        </LabelWithInput> 
+                                    </div>
+                                    <div className="flex-1">
+                                        <LabelWithInput htmlFor="ruc" label="RUC">
+                                            <Input className={`h-10 rounded-full border-2 p-2 text-center ${rucTouched && !isValidRuc(newUser.ruc) ? 'border-red-500' : 'border-cyan-600'}`}
+                                                id="ruc"
+                                                type="text"
+                                                placeholder=""
+                                                name="ruc"
+                                                value={newUser.ruc}
                                                 onChange={handleInputChange}
                                             />
                                         </LabelWithInput> 
-                                        
                                     </div>
 
                                     <div className="flex-1">
                                         <LabelWithInput htmlFor="role" label="Rol">
                                             <Select onValueChange={(selectedRole) => handleInputChange({ target: { name: 'role', value: selectedRole } } as React.ChangeEvent<HTMLInputElement>)}>
-                                                <SelectTrigger className="w-[180px] h-11 rounded-full border-2 border-cyan-600 p-2 text-center">
+                                                <SelectTrigger className="w-[200px] h-11 rounded-full border-2 border-cyan-600 p-2 text-center">
                                                     <SelectValue placeholder="Selecione un Rol" />
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -458,7 +442,7 @@ export default function Registro({}) {
 
                                     <div className="flex justify-center space-x-3">
                                         <div className="justiy-center">
-                                            <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500 text-white"
+                                            <button className=" px-4 py-2 "
                                             onClick={handlePrev}
                                             >
                                                 <GrLinkPrevious className="text-xl hover:text-red-600 active:text-red-600"/>
@@ -466,10 +450,10 @@ export default function Registro({}) {
                                         </div>
 
                                         <div className="justiy-center">
-                                            <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500"
+                                            <button className="rounded-full px-4 py-2 hover:bg-cyan-500 bg-cyan-600 text-white"
                                             onClick={handleNext}
                                             >
-                                                <GrLinkNext className="text-xl hover:text-red-600 active:text-red-600"/>
+                                                <GrLinkNext className="text-xl"/>
                                             </button>
                                         </div>
                                     </div>
@@ -482,7 +466,7 @@ export default function Registro({}) {
                                 <div className="space-y-3 flex flex-col items-center">
                                     <div className="flex-1">
                                         <LabelWithInput htmlFor="email" label="Correo Electronico">
-                                            <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
+                                            <Input className={`h-10 rounded-full border-2 p-2 text-center ${emailTouched && !isValidEmail(newUser.email) ? 'border-red-500' : 'border-cyan-600'}`}
                                                 id="email"
                                                 type="text"
                                                 placeholder="example@gmail.com"
@@ -496,7 +480,7 @@ export default function Registro({}) {
 
                                     <div className="flex-1">
                                         <LabelWithInput htmlFor="password1" label="Contraseña">
-                                            <Input className="h-10 rounded-full border-2 border-cyan-600 p-2 text-center"
+                                            <Input className={`h-10 rounded-full border-2 p-2 text-center ${passwordTouched && !isValidPassword(newUser.password1) ? 'border-red-500' : 'border-cyan-600'}`}
                                                 id="password1"
                                                 type={showPwd ? 'text' : 'password'}
                                                 placeholder="********"
@@ -520,11 +504,11 @@ export default function Registro({}) {
                                     </div>
 
                                     <div className="justiy-center">
-                                            <button className="rounded-full px-4 py-2 bg-gradient-to-r from-slate-400 to-slate-500 text-white"
-                                            onClick={handlePrev}
-                                            >
-                                                <GrLinkPrevious className="text-xl hover:text-red-600 active:text-red-600"/>
-                                            </button>
+                                        <button className=" px-4 py-2 "
+                                        onClick={handlePrev}
+                                        >
+                                            <GrLinkPrevious className="text-xl hover:text-red-600 active:text-red-600"/>
+                                        </button>
                                     </div>
 
                                     <div className="flex flex-col items-center space-y-2">

@@ -11,7 +11,7 @@ import { InputText } from "primereact/inputtext";
 
 import React, { useState, useEffect } from 'react';
 import { RawProblem, CleanProblem } from '@/models/problems';
-import { getItems, updateItem } from '@/api/apiService';
+import { createItem, getItems, updateItem } from '@/api/apiService';
 import { sectores } from '@/data';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select"
 
@@ -114,27 +114,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
 
     // crear funcion para mi boton Iniciar
     const handleSubmitPublicar = async () => {
-        if (!rawProblem) {
-            console.error('No se puede desaprobar un problema nulo');
-            return;
-        }
-
-        const rawProblemRejected = {
-            ...rawProblem,
-            raw_status: 'publicado'
-        };
-
-        try {
-            const response = await updateItem('problems/raw', rawProblem.id, rawProblemRejected, {
-                'Content-Type': 'application/json',
-            });
-
-            console.log('Publicado:', response);
-        } catch (error) {
-            console.error('Error al desaprobar el problema:', error);
-        }
-
-    {/*  
+ 
         console.log('newCleanProblem:', newCleanProblem)
         try {
             console.log('newCleanProblem:', newCleanProblem);
@@ -152,7 +132,6 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         } catch (error) {
             console.error('Error al crear problema:', error);
         }
-        */}
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -349,9 +328,6 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                 </SelectContent>
                             </Select>
                         </LabelWithInput>
-
-
-                    
                     </div>
 
                     <h1 className="font-bold text-gray-800 text-xl mb-4 mt-6">Información Adicional</h1> 

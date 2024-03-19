@@ -1,5 +1,5 @@
 import React from "react";
-import { RiLogoutBoxRFill } from "react-icons/ri";
+import { TbLogout } from "react-icons/tb";
 export default function Logout() {
 
   const handleLogout = () => {
@@ -18,7 +18,7 @@ export default function Logout() {
   return (
     
     <button onClick={handleLogout} className="flex text-black items-center justify-center mt-2 text-sm hover:text-red-600 active:text-red-600 ">
-      <RiLogoutBoxRFill className="text-2xl"/>
+      <TbLogout className="text-2xl"/>
       Cerrar Sesión
     </button>
   );
