@@ -30,37 +30,42 @@ interface Carrera {
 
 export default function ReviewProblemDialog({isOpen, onClose, className, rawProblem}: MyModalProps) {
 
-    if (rawProblem?.clean_data) {
-        console.log('Clean data:', rawProblem?.clean_data[0]);
-    } {
-        console.log('No hay clean data');
-    }
-
     const [carreras, setCarreras] = useState<Carrera[]>([]);
 
-    const [valueSocial, setValueSocial] = useState<number>(3);
+    // const [valueSocial, setValueSocial] = useState<number>(3);
     const [valueTecnologico, setValueTecnologico] = useState<number>(3);
-    const [valueEconomico, setValueEconomico] = useState<number>(3);
+    // const [valueEconomico, setValueEconomico] = useState<number>(3);
     const [valuePolitico, setValuePolitico] = useState<number>(3);
     const [valueEcologico, setValueEcologico] = useState<number>(3);
     const [valueLegal, setValueLegal] = useState<number>(3);
     
 
-    const [newCleanProblem, setNewCleanProblem] = useState<CleanProblem>(
-        {
-            raw_problem: rawProblem?.id || 0,
-            clean_title: rawProblem?.clean_data && rawProblem.clean_data[0]?.clean_title || rawProblem?.title || "",
-            clean_description: "Descripción limpia",
-            clean_sector: "Sector limpio",
-            career_1: 1,
-            career_2: null,
-            career_3: null,
-            economic_support: 5,
-            social_support: 3,
-            enviromental_support: 4,
-            importancy: 8,
-        }
-    );
+    const [newCleanProblem, setNewCleanProblem] = useState<CleanProblem>({
+        raw_problem: rawProblem?.id,
+        id: rawProblem?.clean_data?.[0]?.id || 0,
+        clean_title: rawProblem?.clean_data?.[0]?.clean_title || rawProblem?.title || "Título limpio",
+        clean_description: rawProblem?.clean_data?.[0]?.clean_description || rawProblem?.description || "Descripcion limpia",
+        clean_sector: rawProblem?.clean_data?.[0]?.clean_sector || rawProblem?.sector || "Sin sector",
+        career_1: rawProblem?.clean_data?.[0]?.career_1 || 1, 
+        career_2: rawProblem?.clean_data?.[0]?.career_2 || null,
+        career_3: rawProblem?.clean_data?.[0]?.career_3 || null,
+        economic_support: rawProblem?.clean_data?.[0]?.economic_support || 0, 
+        social_support: rawProblem?.clean_data?.[0]?.social_support || 0,
+        enviromental_support: rawProblem?.clean_data?.[0]?.enviromental_support || 0, 
+        importancy: rawProblem?.clean_data?.[0]?.importancy || 0, 
+    });
+    
+    // Función para manejar el cambio en el valor de los sliders
+    const handleSliderChange = (fieldName: string, value: number) => {
+        setNewCleanProblem((prevCleanProblem) => ({
+            ...prevCleanProblem,
+            [fieldName]: value,
+        }));
+    };
+    
+
+    console.log('newCleanProblemDDD:', newCleanProblem);
+    console.log('rawProblemDDD:', rawProblem);
 
     useEffect(() => {
         const fetchCarreras = async () => {
@@ -79,7 +84,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
     const handleCareerChange = (id_career: string, field: string) => {
         setNewCleanProblem((prevCleanProblem) => ({
             ...prevCleanProblem,
-            [field]: id_career,
+            [field]: parseInt(id_career) || '',
         }));
     };
     
@@ -107,28 +112,33 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
 
     // crear funcion para mi boton Iniciar
     const handleSubmitPublicar = async () => {
-        try {
-            console.log('newCleanProblem:', newCleanProblem);
-
-            const response = await createItem('problems/clean/', newCleanProblem, 
-                {
-                    'Content-Type': 'application/json',
+            if (rawProblem?.clean_data == null) {
+                try {        
+                    const response = await createItem('problems/clean/', newCleanProblem, 
+                        {
+                            'Content-Type': 'application/json',
+                        }
+                    );  
+                    console.log('Nuevo problema limpio creado:', response);
+                } catch (error) {
+                    console.error('Error al crear problema:', error);
                 }
-            );
+            } else {
+                try {  
+                    const response = await updateItem('problems/clean', newCleanProblem?.id ?? 0, newCleanProblem, 
+                        {
+                            'Content-Type': 'application/json',
+                        }
+                    );  
+                    console.log('Problema limpio actualizado:', response);
+                } catch (error) {
+                    console.error('Error al acltualizar el cleanproblem:', error);
+                }
+            }
+            onClose();            
+        };
 
-            
-        
-            console.log('Crear Nuevo Problema:', response);
-
-            onClose();
-
-        } catch (error) {
-            console.error('Error al crear problema:', error);
-        }
-
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setNewCleanProblem((prevNewCleanProblem) => ({ ...prevNewCleanProblem, [name]: value }));
     };
@@ -279,7 +289,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         <LabelWithInput htmlFor="clean_description" label="Descripción mejorada" >  
                             <textarea id="clean_description" 
                                 className="cursor-text w-full min-h-64 px-3 py-2 border border-gray-300 bg-white rounded-md "
-                                defaultValue={rawProblem?.description}
+                                defaultValue={newCleanProblem.clean_description}
                                 required
                                 name="clean_description"
                                 onChange={handleInputChange}
@@ -288,7 +298,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         </LabelWithInput>
 
                         <LabelWithInput htmlFor="sector" label="Sector">
-                            <Select onValueChange={handleSectorChange}>
+                            <Select onValueChange={handleSectorChange} defaultValue={newCleanProblem.clean_sector}>
                                 <SelectTrigger className="w-full h-12" >
                                     <SelectValue placeholder="Seleccione un sector" />
                                 </SelectTrigger>
@@ -307,14 +317,13 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                 Escoge en orden de mayor a menor relación 3 carreras que puedan trabajar sobre la problemática brindada
                             </p>
                             <div className="flex flex-col gap-y-2">
-                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_1")}>
+                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_1")} defaultValue={newCleanProblem.career_1.toString()} >
                                     <SelectTrigger className="w-full h-12">
                                         <SelectValue placeholder="Selecciona una carrera" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {/* Mapea la lista de carreras en SelectItem */}
                                         {carreras.map((carrera) => (
-                                            console.log('Carrera:', carrera.name),
                                             <SelectItem key={carrera.id} value={carrera.id.toString()}>
                                                 {carrera.name}
                                             </SelectItem>
@@ -322,14 +331,13 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                     </SelectContent>
                                 </Select>
 
-                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_2")}>
+                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_2")} defaultValue={newCleanProblem.career_2?.toString()}>
                                     <SelectTrigger className="w-full h-12">
                                         <SelectValue placeholder="Selecciona una carrera" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {/* Mapea la lista de carreras en SelectItem */}
                                         {carreras.map((carrera) => (
-                                            console.log('Carrera:', carrera.name),
                                             <SelectItem key={carrera.id} value={carrera.id.toString()}>
                                                 {carrera.name}
                                             </SelectItem>
@@ -337,14 +345,13 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                     </SelectContent>
                                 </Select>
 
-                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_3")}>
+                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_3")} defaultValue={newCleanProblem.career_3?.toString()}>
                                     <SelectTrigger className="w-full h-12">
                                         <SelectValue placeholder="Selecciona una carrera" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {/* Mapea la lista de carreras en SelectItem */}
                                         {carreras.map((carrera) => (
-                                            console.log('Carrera:', carrera.name),
                                             <SelectItem key={carrera.id} value={carrera.id.toString()}>
                                                 {carrera.name}
                                             </SelectItem>
@@ -363,7 +370,7 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                     <div id='content' className='w-full space-y-6 bg-gray-50 p-6 rounded-xl shadow-sm'>
                         
                         
-
+                        {/* Solo está implementado economico y social */}
                         <LabelWithInput htmlFor='impacto' label="Nivel de impacto" className="gap-y-5">
                             <p className="w-full text-left font-normal text-gray-500 text-sm leading-6">
                                 Indica el nivel de impacto y viabilidad que tendría solucionar el problema en las siguientes áreas
@@ -373,9 +380,8 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                 <div className="">
                                     <h3 className="text-xs font-medium">Social</h3>
                                     <div className="space-y-0">
-                                        <InputText disabled value={valueSocial.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueSocial(parseInt(e.target.value))} className="w-full h-8" />
-                                        <Slider value={valueSocial} max={5} onChange={(e: SliderChangeEvent) => setValueSocial(parseInt(e.value.toString()))} className="w-full" 
-                                        />
+                                        <InputText disabled value={newCleanProblem.social_support.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSliderChange("social_support", parseInt(e.target.value))} className="w-full h-8" />
+                                        <Slider value={newCleanProblem.social_support} max={5} onChange={(e: SliderChangeEvent) => handleSliderChange("social_support", parseInt(e.value.toString()))} className="w-full" />                                       
                                     </div>
                                 </div>
                                 <div className="">
@@ -388,8 +394,8 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                                 <div className="">
                                     <h3 className="text-xs font-medium">Económico</h3>
                                     <div className="space-y-0">
-                                        <InputText disabled value={valueEconomico.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValueEconomico(parseInt(e.target.value))} className="w-full h-8" />
-                                        <Slider value={valueEconomico} max={5} onChange={(e: SliderChangeEvent) => setValueEconomico(parseInt(e.value.toString()))} className="w-full" />
+                                        <InputText disabled value={newCleanProblem.economic_support.toString()} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSliderChange("economic_support", parseInt(e.target.value))} className="w-full h-8" />
+                                        <Slider value={newCleanProblem.economic_support} max={5} onChange={(e: SliderChangeEvent) => handleSliderChange("economic_support", parseInt(e.value.toString()))} className="w-full" />
                                     </div>
                                 </div>
                             </div>

@@ -548,9 +548,9 @@ export default function Registro({}) {
         
     return (
         
-            <section className="flex items-center justify-center h-screen bg-slate-100 w-full ">
-                <div className="max-w-xs py-6 px-6 sm:px-5  xl:max-w-2xl mx-auto sm:mx-auto sm:max-w-md flex flex-col 
-                    items-center space-y-2 bg-white shadow-lg rounded-xl border-2 border-cyan-700">
+            <section className="flex items-center justify-center h-screen bg-slate-100 w-scree ">
+                <div className="max-w-xs py-8 sm:px-5  xl:max-w-2xl mx-auto sm:mx-auto sm:min-w-80 flex flex-col 
+                    items-center space-y-2 bg-white shadow-lg rounded-xl border-2 border-cyan-600">
                         <header className="flex flex-col items-center">
                             <h1 className="text-2xl mb-4">
                                 Crear <span className="text-cyan-600">Cuenta</span> 

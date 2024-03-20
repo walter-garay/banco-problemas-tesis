@@ -45,12 +45,12 @@ export default function LandingPage({}) {
                                 </li>
                             </ul>
                         
-                        <ul className="flex gap-x-2 sm:gap-x-4 items-center">
+                        <ul className="flex gap-x-2 sm:gap-x-2 ">
                             <li>
-                                <a href="/registro">Registrarse</a>
+                                <a href="/registro" className='hover:bg-white px-4 py-2 rounded-2xl transition-all' >Registrarse</a>
                             </li>
                             <li >
-                                <a href="/login" className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-1 rounded-2xl transition-all">Ingresar</a>
+                                <a href="/login" className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-2xl transition-all">Ingresar</a>
                             </li>
                         </ul>
                     </nav>
@@ -63,7 +63,7 @@ export default function LandingPage({}) {
                             <p className='text-base sm:text-lg'>
                                 Deja en evidencia un problema que te aqueje para que nosotros como universidad lo solucionemos.
                             </p>
-                            <a href="#main-section" className="bg-cyan-600 hover:bg-cyan-700 font-semibold text-white rounded-2xl text-center sm:w-44 py-2">Más inforación...</a>
+                            <a href="#main-section" className="bg-cyan-600 hover:bg-cyan-700 font-semibold text-white rounded-2xl text-center sm:w-44 py-2">Más información</a>
                         </div>
                         <Image
                             src={principal}
@@ -74,10 +74,10 @@ export default function LandingPage({}) {
                     </div>
                 </header>
     
-                <main id="main-section" className='pt-10 sm:pt-20 pb-14'>
+                <main id="main-section" className='pt-10 sm:pt-20 pb-14 h-screen flex items-center justify-center'>
                     <div className='flex flex-col sm:flex-row items-center justify-center space-x-0 sm:space-x-14 space-y-6 sm:space-y-0 max-w-full'>
 
-                        <div className='flex-1 max-w-sm py-9 px-6 sm:px-9 bg-white shadow-lg h-3/4 md:flex-row rounded-3xl
+                        <div className='flex-1 max-w-sm py-20 px-6 sm:px-9 bg-white shadow-lg h-3/4 md:flex-row rounded-3xl
                             hover:shadow-2xl transform hover:-translate-y-2 transition-transform border-2 border-cyan-600'>
                                 <div className='flex flex-col items-center justify-center'>
                                     <FaUsers className='text-5xl mb-4'/>
@@ -91,7 +91,7 @@ export default function LandingPage({}) {
                                 </div>
                         </div>
 
-                        <div className='flex-1 max-w-sm py-9 px-6 sm:px-9 bg-white shadow-lg h-3/4 md:flex-row rounded-3xl 
+                        <div className='flex-1 max-w-sm py-20 px-6 sm:px-9 bg-white shadow-lg h-3/4 md:flex-row rounded-3xl 
                             hover:shadow-2xl transform hover:-translate-y-2 transition-transform border-2 border-cyan-600'>
                                 <div className='flex flex-col items-center justify-center'>
                                     <RiLoginCircleFill className='text-5xl mb-4'/>
@@ -104,15 +104,15 @@ export default function LandingPage({}) {
                                 </div>
                         </div>
 
-                        <div className='flex-1 max-w-sm py-9 px-6 sm:px-9 bg-white shadow-lg h-3/4 md:flex-row rounded-3xl
+                        <div className='flex-1 max-w-sm py-20 px-6 sm:px-9 bg-white shadow-lg h-3/4 md:flex-row rounded-3xl
                             hover:shadow-2xl transform hover:-translate-y-2 transition-transform border-2 border-cyan-600'>
                                 <div className='flex flex-col items-center justify-center'>
                                     <MdReportProblem className='text-5xl mb-4'/>
                                     <section>
                                         <h2 className='text-center text-base mb-10 font-bold'>PASO 3: Comparte tu Problema</h2>
                                         <p className='break-words overflow-auto text-center'>
-                                            Comparte los problemas que enfrentas en tu entorno. 
-                                            ¡La Universidad está aquí para ayudar a encontrar soluciones!
+                                            Comparte los problemas que enfrentas en tu entorno o negocio y 
+                                            la universidad te ayudará a encontrar soluciones.
                                         </p>
                                     </section>
                                 </div>
