@@ -35,6 +35,12 @@ export default function ProblemsPage() {
     const [rawProblems, setRawProblems] = useState<RawProblem[]>([]);
     const [selectedProblem, setSelectedProblem] = useState<RawProblem>();
 
+    const [showFilters, setShowFilters] = useState(false); // Estado para controlar la visibilidad de los filtros
+
+    const toggleFilters = () => {
+        setShowFilters(!showFilters);
+    };
+    
     const handleOpen = (problemId: number) => {
         const selectedProblemData = rawProblems.find(problem => problem.id === problemId);
         setSelectedProblem(selectedProblemData);
@@ -110,35 +116,21 @@ export default function ProblemsPage() {
     
     return (
         <div>
-                <main className="relative w-full flex justify-center gap-x-8">
-                    <div className="mt-8 h-full space-y-6 max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6">
-                        <span className="flex items-center gap-x-1.5 mb-4">
-                            <i className="pi pi-filter text-slate-600" ></i> 
-                            <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
-                            
-                        </span>
+            <main className="relative w-full flex sm:flex-row flex-col justify-center gap-x-8">
+                <div className="mt-8 h-full max-w-full w-72 bg-white shadow-md rounded-md pl-4 pt-4 pb-6 sm:mx-0 mx-60 ">
+                    <span className="flex items-center gap-x-1.5 mb-4 cursor-pointer" onClick={toggleFilters}>
+                        <i className="pi pi-filter text-slate-600" ></i> 
+                        <h1 className="font-normal text-slate-700 text-xl">Filtrar</h1>
+                    </span>
+
+                    <div className={showFilters ? "block space-y-6" : "hidden"}>
+                        {/* Dropdowns para Sectores */}
                         <LabelWithInput htmlFor="sector" label="Sector" >  
                             <Dropdown value={selectedSector} onChange={(e: DropdownChangeEvent) => setSelectedSector(e.value)} options={sectores} optionLabel="label" 
                             showClear 
                             className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
                         </LabelWithInput>
-
-                    {/* Dropdown para Sectores */}
-                    
-
-                    {/* Dropdown para Prioridades 
-                    <LabelWithInput htmlFor="prioridad" label="Prioridad">
-                        <Dropdown
-                        value={selectedPrioridad}
-                        onChange={(e) => setSelectedPrioridad(e.value)}
-                        options={prioridades.map(prioridad => ({ label: prioridad, value: prioridad }))}
-                        optionLabel="label"
-                        showClear
-                        placeholder="Todos"
-                        className="w-64 max-w-96 h-10 items-center bg-gray-50 shadow-sm"
-                        />
-                    </LabelWithInput>*/}
-
+ 
                         {/* Dropdown para Tipo de Solicitante */}
                         <LabelWithInput htmlFor="tipoSolicitante" label="Tipo de Solicitante">
                             <Dropdown
@@ -167,15 +159,25 @@ export default function ProblemsPage() {
                             />
                         </LabelWithInput>
                     </div>
+                </div>
+
+                
 
                 <div className="flex-col flex items-center min-w-200 ">
                     <Button
-                        className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 w-full h-10 text-white "
+                        className="bg-blue-700 mt-5 lg:mt-8 hover:bg-blue-800 lg:w-full lg:h-10 lg:text-white sm:max-w-2xl  h-8 text-white text-sm"
                         onClick={() => setVisible(true)}>
                         Agregar problema
                     </Button>
                     
-                    <div className="flex-col space-y-5 my-6 w-full">
+                    <div className="flex-col flex items-end min-w-20 lg:mt-8 ">
+                        <Logout />
+                    </div>
+                    
+                    <div className="flex flex-col space-y-5 my-6 lg:w-full max-w-xl">
+
+                        {/* Contenido de los problemas */}
+
                         {
                             rawProblems.map(({ id, title, sector, description,raw_status, created_at, file_1, file_2, file_3, file_4 }) => {
                                 // Filtrar y contar los archivos no nulos
@@ -196,30 +198,29 @@ export default function ProblemsPage() {
                                 );
                             })
                         }
-
                     </div>
+                </div>
 
-                    </div>
+                
 
-                    <div className="flex-col flex items-end min-w-20 lg:mt-8 ">
-                        <Logout />
-                    </div>
+                {/* Suspense y Diálogos */}
+                <Suspense>
+                    <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
+                        className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
+                        pt={{
+                            root: { className: 'min-h-full md:min-h-96' },     
+                        }}
+                        >
+                        <NewProblemDialog />
+                    </Dialog>
+                </Suspense>
+                <Suspense >
+                    <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
+                    </ReviewProblemDialog>
+                </Suspense>
+                
+            </main>
 
-                    <Suspense>
-                        <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
-                            className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
-                            pt={{
-                                root: { className: 'min-h-full md:min-h-96' },     
-                            }}
-                            >
-                            <NewProblemDialog />
-                        </Dialog>
-                    </Suspense>
-                    <Suspense >
-                        <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
-                        </ReviewProblemDialog>
-                    </Suspense>
-                </main>
 
         </div>
         

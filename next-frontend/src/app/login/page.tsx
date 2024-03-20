@@ -19,15 +19,17 @@ export default function Login({}) {
     };
 
     // crear funcion para mi boton Iniciar
-    const handleSubmit = async () => {
+    const handleSubmit = async (event:any) => {
+        event.preventDefault();
         try {
+            
             console.log('Login:', user);
 
             const response = await createItem('api/authlogin/', user, 
                 {
                     'Content-Type': 'application/json',
                 },
-                false
+                false,
             );
         
             console.log('Login creado:', response);
@@ -81,7 +83,7 @@ export default function Login({}) {
                                 Inicio <span className="text-cyan-600">de Sesión</span> 
                             </h1>
                         </header>
-                        <form className="w-full">
+                        <form onSubmit={(event) => handleSubmit(event)} className="w-full">
                             <div className="w-full flex flex-col space-y-4">
                                 <LabelWithInput htmlFor="email" label="Correo Electrónico">
                                     <Input
