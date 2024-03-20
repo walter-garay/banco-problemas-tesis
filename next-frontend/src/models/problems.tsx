@@ -20,7 +20,7 @@ export interface Usuario {
 }
 
 export interface RawProblem {
-  clean_data: CleanProblem | null;
+  clean_data: CleanProblem[] | null;
   id: number;
   applicant: Usuario | null;
   title: string;
@@ -39,8 +39,8 @@ export interface RawProblem {
 }
 
 export interface CleanProblem {
-  id: number;
-  raw_problem: number;
+  id?: number;
+  raw_problem?: number | RawProblem;
   clean_title: string;
   clean_description: string;
   clean_sector: string;

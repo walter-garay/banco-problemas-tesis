@@ -11,9 +11,9 @@ import { InputText } from "primereact/inputtext";
 
 import React, { useState, useEffect } from 'react';
 import { RawProblem, CleanProblem } from '@/models/problems';
-import { getItems, updateItem } from '@/api/apiService';
+import { getItems, updateItem, createItem } from '@/api/apiService';
 import { sectores } from '@/data';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 
 type MyModalProps = {
@@ -29,6 +29,13 @@ interface Carrera {
 }
 
 export default function ReviewProblemDialog({isOpen, onClose, className, rawProblem}: MyModalProps) {
+
+    if (rawProblem?.clean_data) {
+        console.log('Clean data:', rawProblem?.clean_data[0]);
+    } {
+        console.log('No hay clean data');
+    }
+
     const [carreras, setCarreras] = useState<Carrera[]>([]);
 
     const [valueSocial, setValueSocial] = useState<number>(3);
@@ -41,9 +48,8 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
 
     const [newCleanProblem, setNewCleanProblem] = useState<CleanProblem>(
         {
-            id: rawProblem?.id ?? 1,
-            raw_problem: rawProblem?.id ?? 1,
-            clean_title: "Título limpio",
+            raw_problem: rawProblem?.id || 0,
+            clean_title: rawProblem?.clean_data && rawProblem.clean_data[0]?.clean_title || rawProblem?.title || "",
             clean_description: "Descripción limpia",
             clean_sector: "Sector limpio",
             career_1: 1,
@@ -61,7 +67,6 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
             try {
                 // Llama a la función getItems con el endpoint correspondiente para obtener las carreras
                 const carrerasData = await getItems('api/data/careers/');
-                console.log('Carreras:', carrerasData);
                 setCarreras(carrerasData); // Actualiza el estado con las carreras obtenidas
             } catch (error) {
                 console.error('Error al obtener las carreras:', error);
@@ -71,24 +76,12 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         fetchCarreras();
     }, []);
 
-    const handleCareerChange = (selectedCareer: string, field: string) => {
+    const handleCareerChange = (id_career: string, field: string) => {
         setNewCleanProblem((prevCleanProblem) => ({
             ...prevCleanProblem,
-            [field]: selectedCareer,
+            [field]: id_career,
         }));
     };
-
-    
-    
-
-
-    const handleSubmitAprobado = async () => {
-        try {
-
-        } catch(error) {
-
-        } 
-    }
     
     const handleSubmitDesaprobado = async () => {
         if (!rawProblem) {
@@ -114,28 +107,6 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
 
     // crear funcion para mi boton Iniciar
     const handleSubmitPublicar = async () => {
-        if (!rawProblem) {
-            console.error('No se puede desaprobar un problema nulo');
-            return;
-        }
-
-        const rawProblemRejected = {
-            ...rawProblem,
-            raw_status: 'publicado'
-        };
-
-        try {
-            const response = await updateItem('problems/raw', rawProblem.id, rawProblemRejected, {
-                'Content-Type': 'application/json',
-            });
-
-            console.log('Publicado:', response);
-        } catch (error) {
-            console.error('Error al desaprobar el problema:', error);
-        }
-
-    {/*  
-        console.log('newCleanProblem:', newCleanProblem)
         try {
             console.log('newCleanProblem:', newCleanProblem);
 
@@ -149,10 +120,12 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         
             console.log('Crear Nuevo Problema:', response);
 
+            onClose();
+
         } catch (error) {
             console.error('Error al crear problema:', error);
         }
-        */}
+
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -163,11 +136,10 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
     const handleSectorChange = (selectedSector: string) => {
         setNewCleanProblem((prevNewCleanProblem) => ({
             ...prevNewCleanProblem,
-            sector: selectedSector,
+            clean_sector: selectedSector,
         }));
     };
 
-    
     return (
         isOpen && (
         <div className={`fixed inset-0 bg-white lg:bg-black w-screen lg:bg-opacity-40 h-full lg:h-screen ${className}`}>
@@ -295,29 +267,29 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         
                         <LabelWithInput htmlFor="title" label="Titulo mejorado">  
                             <Input id="title" type="text" 
-                                defaultValue={rawProblem?.title}
+                                defaultValue={newCleanProblem.clean_title}
                                 required
                                 className="cursor-text"
-                                name="title"
+                                name="clean_title"
                                 onChange={handleInputChange}
                                 >
                             </Input>          
                         </LabelWithInput>
 
-                        <LabelWithInput htmlFor="description" label="Descripción mejorada" >  
-                            <textarea id="description" 
+                        <LabelWithInput htmlFor="clean_description" label="Descripción mejorada" >  
+                            <textarea id="clean_description" 
                                 className="cursor-text w-full min-h-64 px-3 py-2 border border-gray-300 bg-white rounded-md "
                                 defaultValue={rawProblem?.description}
                                 required
-                                name="description"
+                                name="clean_description"
                                 onChange={handleInputChange}
                                 >
                             </textarea>
                         </LabelWithInput>
 
                         <LabelWithInput htmlFor="sector" label="Sector">
-                            <Select>
-                                <SelectTrigger className="w-full h-12">
+                            <Select onValueChange={handleSectorChange}>
+                                <SelectTrigger className="w-full h-12" >
                                     <SelectValue placeholder="Seleccione un sector" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -334,20 +306,52 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                             <p className="w-full text-left font-normal text-gray-500 text-sm leading-6 my-4">
                                 Escoge en orden de mayor a menor relación 3 carreras que puedan trabajar sobre la problemática brindada
                             </p>
-                            <Select>
-                                <SelectTrigger className="w-full h-12r">
-                                    <SelectValue placeholder="Selecciona una carrera" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {/* Mapea la lista de carreras en SelectItem */}
-                                    {carreras.map((carrera) => (
-                                        console.log('Carrera:', carrera.name),
-                                        <SelectItem key={carrera.id} value={carrera.name}>
-                                            {carrera.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            <div className="flex flex-col gap-y-2">
+                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_1")}>
+                                    <SelectTrigger className="w-full h-12">
+                                        <SelectValue placeholder="Selecciona una carrera" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {/* Mapea la lista de carreras en SelectItem */}
+                                        {carreras.map((carrera) => (
+                                            console.log('Carrera:', carrera.name),
+                                            <SelectItem key={carrera.id} value={carrera.id.toString()}>
+                                                {carrera.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+
+                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_2")}>
+                                    <SelectTrigger className="w-full h-12">
+                                        <SelectValue placeholder="Selecciona una carrera" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {/* Mapea la lista de carreras en SelectItem */}
+                                        {carreras.map((carrera) => (
+                                            console.log('Carrera:', carrera.name),
+                                            <SelectItem key={carrera.id} value={carrera.id.toString()}>
+                                                {carrera.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+
+                                <Select onValueChange={(selectedCareer) => handleCareerChange(selectedCareer, "career_3")}>
+                                    <SelectTrigger className="w-full h-12">
+                                        <SelectValue placeholder="Selecciona una carrera" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {/* Mapea la lista de carreras en SelectItem */}
+                                        {carreras.map((carrera) => (
+                                            console.log('Carrera:', carrera.name),
+                                            <SelectItem key={carrera.id} value={carrera.id.toString()}>
+                                                {carrera.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
                         </LabelWithInput>
 
 
@@ -422,8 +426,8 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
                         </p>                                        
                         
                         <div className="w-full space-y-2 md:gap-x-2 md:flex-row-reverse md:flex md:space-y-0 justify-start">
-                            <Button className="h-10  bg-blue-700 text-white rounded-xl md:w-52 w-full hover:bg-blue-800" onClick={handleSubmitPublicar}>Guardar y publicar</Button>
-                            <Button className="h-10  bg-gray-100 text-gray-600 border-gray-700 border rounded-xl md:w-40 w-full hover:bg-gray-200" onClick={handleSubmitDesaprobado}>Desapobar</Button>
+                            <Button className="h-10 shadow-none bg-blue-700 text-white rounded-xl md:w-52 w-full hover:bg-blue-800" onClick={handleSubmitPublicar}>Guardar y publicar</Button>
+                            <Button className="h-10 shadow-none bg-gray-100 text-gray-600  border rounded-xl md:w-40 w-full hover:bg-gray-200" onClick={handleSubmitDesaprobado}>Desapobar</Button>
                         </div> 
                     </div>
                                 
