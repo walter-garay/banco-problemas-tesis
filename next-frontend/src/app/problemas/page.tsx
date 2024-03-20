@@ -44,7 +44,6 @@ export default function ProblemsPage() {
     const handleOpen = (problemId: number) => {
         const selectedProblemData = rawProblems.find(problem => problem.id === problemId);
         setSelectedProblem(selectedProblemData);
-        console.log("Problem:", selectedProblemData);   
         
         setOpen(true);
         document.body.style.overflow = 'hidden';
@@ -201,25 +200,25 @@ export default function ProblemsPage() {
                     </div>
                 </div>
 
-                
+                    <div className="flex-col flex items-end min-w-20 lg:mt-8 ">
+                        <Logout />
+                    </div>
 
-                {/* Suspense y Diálogos */}
-                <Suspense>
-                    <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
-                        className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
-                        pt={{
-                            root: { className: 'min-h-full md:min-h-96' },     
-                        }}
-                        >
-                        <NewProblemDialog />
-                    </Dialog>
-                </Suspense>
-                <Suspense >
-                    <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
-                    </ReviewProblemDialog>
-                </Suspense>
-                
-            </main>
+                    <Suspense>
+                        <Dialog header="Información sobre la problemática" visible={visible} maximizable blockScroll
+                            className=" w-full sm:w-[780px] mx-0" onHide={() => setVisible(false)}
+                            pt={{
+                                root: { className: 'min-h-full md:min-h-96' },     
+                            }}
+                            >
+                            <NewProblemDialog />
+                        </Dialog>
+                    </Suspense>
+                    <Suspense >
+                        <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
+                        </ReviewProblemDialog>
+                    </Suspense>
+                </main>
 
 
         </div>
