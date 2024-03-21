@@ -65,7 +65,7 @@ export default function LandingPage({}) {
                     </div>
                 </header>
     
-                <main id="main-section" className='pt-10 sm:pt-20 pb-14 h-screen flex items-center justify-center'>
+                <main id="main-section" className='pt-10 sm:pt-20 pb-14 h-screen'>
                     <div className='flex flex-col sm:flex-row items-center justify-center space-x-0 sm:space-x-14 space-y-6 sm:space-y-0 max-w-full'>
 
                         <div className='flex-1 max-w-sm py-20 px-6 sm:px-9 bg-white shadow-lg h-3/4 md:flex-row rounded-3xl

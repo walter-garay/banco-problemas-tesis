@@ -115,21 +115,40 @@ export default function Registro({}) {
 
             console.log('Usuario por crear:', newUser);
             
-            const response = await createItem('api/auth/registration/', newUser, 
+            const response = await createItem('accounts/register/', newUser, 
                 {
                     'Content-Type': 'application/json',
                 },
                 false);
             
         
-            console.log('Usuario creado correctamente');
+            console.log('Usuario creado correctamente', response);
 
-            window.location.href = '/login';
+            const userId = response.data.id;
+
+            const userEmail = newUser.email;
+
+
+            await handleVerification(userId, userEmail);
+
+            window.location.href = '/verificacion';
 
         } catch (error) {
             console.error('Error creando el usuario:', error);
         }
     };
+
+    const handleVerification = async (userId: string, userEmail: string) => {
+        try {
+            const response = await createItem('accounts/register/verify-email/', { id: userId, email: userEmail }, {
+                'Content-Type': 'application/json',
+            }, false);
+    
+            console.log('Email de verificación enviado:', response);
+        } catch (error) {
+            console.error('Error al enviar el email de verificación:', error);
+        }
+    }
     
     //////////////////PARA LA CONTRASEÑA/////////////////////////////
     const [showPwd, setShowPwd] = React.useState(false);
@@ -533,8 +552,8 @@ export default function Registro({}) {
     return (
         
             <section className="flex items-center justify-center h-screen bg-slate-100 w-scree ">
-                <div className="max-w-xs py-8 sm:px-5  xl:max-w-2xl mx-auto sm:mx-auto sm:min-w-80 flex flex-col 
-                    items-center space-y-2 bg-white shadow-lg rounded-xl border-2 border-cyan-600">
+                <div className="max-w-md py-8 sm:px-5 xl:max-w-2xl mx-auto sm:mx-auto sm:min-w-100 flex flex-col 
+                    items-center space-y-2 bg-white shadow-lg rounded-xl border-2 border-cyan-600 p-4">
                         <header className="flex flex-col items-center">
                             <h1 className="text-2xl mb-4">
                                 Crear <span className="text-cyan-600">Cuenta</span> 

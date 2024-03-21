@@ -25,7 +25,7 @@ export default function Login({}) {
             
             console.log('Login:', user);
 
-            const response = await createItem('api/authlogin/', user, 
+            const response = await createItem('accounts/login/', user, 
                 {
                     'Content-Type': 'application/json',
                 },
