@@ -11,11 +11,7 @@ import { InputText } from "primereact/inputtext";
 
 import React, { useState, useEffect } from 'react';
 import { RawProblem, CleanProblem } from '@/models/problems';
-<<<<<<< HEAD
-import { createItem, getItems, updateItem } from '@/api/apiService';
-=======
 import { getItems, updateItem, createItem } from '@/api/apiService';
->>>>>>> d3a39f8e20f23c00b4456655f8f41bb142f08291
 import { sectores } from '@/data';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
@@ -116,29 +112,6 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
 
     // crear funcion para mi boton Iniciar
     const handleSubmitPublicar = async () => {
-<<<<<<< HEAD
- 
-        console.log('newCleanProblem:', newCleanProblem)
-        try {
-            console.log('newCleanProblem:', newCleanProblem);
-
-            const response = await createItem('problems/clean/', newCleanProblem, 
-                {
-                    'Content-Type': 'application/json',
-                }
-            );
-
-            
-        
-            console.log('Crear Nuevo Problema:', response);
-
-        } catch (error) {
-            console.error('Error al crear problema:', error);
-        }
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-=======
             if (rawProblem?.clean_data == null) {
                 try {        
                     const response = await createItem('problems/clean/', newCleanProblem, 
@@ -166,7 +139,6 @@ export default function ReviewProblemDialog({isOpen, onClose, className, rawProb
         };
 
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
->>>>>>> d3a39f8e20f23c00b4456655f8f41bb142f08291
         const { name, value } = e.target;
         setNewCleanProblem((prevNewCleanProblem) => ({ ...prevNewCleanProblem, [name]: value }));
     };

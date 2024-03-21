@@ -41,13 +41,8 @@ export default function LandingPage({}) {
                             <li>
                                 <a href="/registro" className='hover:bg-white px-4 py-2 rounded-2xl transition-all' >Registrarse</a>
                             </li>
-<<<<<<< HEAD
-                            <li>
-                                <a href="/login" className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-1 rounded-2xl transition-all">Ingresar</a>
-=======
                             <li >
                                 <a href="/login" className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-2xl transition-all">Ingresar</a>
->>>>>>> d3a39f8e20f23c00b4456655f8f41bb142f08291
                             </li>
                         </ul>
                     </nav>
@@ -60,11 +55,7 @@ export default function LandingPage({}) {
                             <p className='text-base sm:text-lg'>
                                 Deja en evidencia un problema que te aqueje para que nosotros como universidad lo solucionemos.
                             </p>
-<<<<<<< HEAD
-                            <a href="#main-section" className="bg-cyan-600 hover:bg-cyan-700 font-semibold text-white rounded-2xl text-center sm:w-44 py-2">Más información...</a>
-=======
                             <a href="#main-section" className="bg-cyan-600 hover:bg-cyan-700 font-semibold text-white rounded-2xl text-center sm:w-44 py-2">Más información</a>
->>>>>>> d3a39f8e20f23c00b4456655f8f41bb142f08291
                         </div>
                         <Image
                             src={principal}
@@ -73,47 +64,6 @@ export default function LandingPage({}) {
                         />
                     </div>
                 </header>
-<<<<<<< HEAD
-
-                <main id="main-section" className='pt-10 sm:pt-20 pb-14 px-6 sm:px-10'>
-                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto'>
-                        <div className='py-8 px-6 sm:px-8 bg-white shadow-lg md:h-80 lg:h-96 xl:h-80 rounded-3xl hover:shadow-2xl transform hover:-translate-y-2 transition-transform border-2 border-cyan-600'>
-                            <div className='flex flex-col items-center justify-center'>
-                                <FaUsers className='text-5xl mb-4'/>
-                                <section>
-                                    <h2 className='text-center text-base mb-6 font-bold'>PASO 1: Regístrate</h2>
-                                    <p className='text-sm md:text-base break-words overflow-auto text-center'>
-                                        Regístrate en nuestra plataforma proporcionando la información necesaria.
-                                        ¡Solo toma unos minutos!
-                                    </p>
-                                </section>
-                            </div>
-                        </div>
-
-                        <div className='py-8 px-6 sm:px-8 bg-white shadow-lg md:h-80 lg:h-96 xl:h-80 rounded-3xl hover:shadow-2xl transform hover:-translate-y-2 transition-transform border-2 border-cyan-600'>
-                            <div className='flex flex-col items-center justify-center'>
-                                <RiLoginCircleFill className='text-5xl mb-4'/>
-                                <section>
-                                    <h2 className='text-center text-base mb-6 font-bold'>PASO 2: Inicia Sesión</h2>
-                                    <p className='text-sm md:text-base break-words overflow-auto text-center'>
-                                        Inicia sesión con tu nueva cuenta. Accede fácilmente a todas las funciones y características.
-                                    </p>
-                                </section>
-                            </div>
-                        </div>
-
-                        <div className='py-8 px-6 sm:px-8 bg-white shadow-lg md:h-80 lg:h-96 xl:h-80 rounded-3xl hover:shadow-2xl transform hover:-translate-y-2 transition-transform border-2 border-cyan-600'>
-                            <div className='flex flex-col items-center justify-center'>
-                                <MdReportProblem className='text-5xl mb-4'/>
-                                <section>
-                                    <h2 className='text-center text-base mb-6 font-bold'>PASO 3: Comparte tu Problema</h2>
-                                    <p className='text-sm md:text-base break-words overflow-auto text-center'>
-                                        Comparte los problemas que enfrentas en tu entorno. 
-                                        ¡La Universidad está aquí para ayudar a encontrar soluciones!
-                                    </p>
-                                </section>
-                            </div>
-=======
     
                 <main id="main-section" className='pt-10 sm:pt-20 pb-14 h-screen flex items-center justify-center'>
                     <div className='flex flex-col sm:flex-row items-center justify-center space-x-0 sm:space-x-14 space-y-6 sm:space-y-0 max-w-full'>
@@ -157,7 +107,6 @@ export default function LandingPage({}) {
                                         </p>
                                     </section>
                                 </div>
->>>>>>> d3a39f8e20f23c00b4456655f8f41bb142f08291
                         </div>
                     </div>
                 </main>
