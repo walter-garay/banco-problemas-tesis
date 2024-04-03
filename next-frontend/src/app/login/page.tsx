@@ -23,7 +23,7 @@ export default function Login({}) {
         try {
             console.log('Login:', user);
 
-            const response = await createItem('api/authlogin/', user, 
+            const response = await createItem('accounts/login/', user, 
                 {
                     'Content-Type': 'application/json',
                 },

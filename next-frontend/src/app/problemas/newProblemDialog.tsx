@@ -131,8 +131,8 @@ export default function NewProblemDialog({}) {
                 <Dropdown value={newProblem.sector} onChange={(e: DropdownChangeEvent) => handleSectorChange(e.value)} options={sectores} 
                 optionLabel="label"
                 optionValue="value"
-                showClear 
-                className="w-full h-10 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
+                showClear
+                className="w-full h-12 items-center bg-gray-50 shadow-sm" placeholder="Todos" />
             </LabelWithInput>
             
             <LabelWithInput htmlFor="entidad" label="Tipo de entidad" >
@@ -212,9 +212,9 @@ export default function NewProblemDialog({}) {
                         e.preventDefault(); // Evitar recarga de página
                         handleSubmit(); // Llamar a la función de envío de formulario
                     }}
-                >
-                Enviar
-            </Button>
+                    >
+                    Enviar
+                </Button>
             </div>
         </div>
     );

@@ -21,6 +21,7 @@ import { sectores, institution_type, status } from "@/data";
 
 import Logout from "@/components/logout";
 import axios from 'axios';
+import NewProposalDialog from './newProposalDialog';
 
 export default function ProblemsPage() {
     
@@ -30,21 +31,35 @@ export default function ProblemsPage() {
     const [selectedEstado, setSelectedEstado] = useState(null);
     
     const [visible, setVisible] = useState(false);
-    const [isOpen, setOpen] = useState(false);
+    const [isOpenReview, setOpenReview] = useState(false);
+    const [isOpenProposal, setOpenProposal] = useState(false);
     
     const [rawProblems, setRawProblems] = useState<RawProblem[]>([]);
     const [selectedProblem, setSelectedProblem] = useState<RawProblem>();
 
-    const handleOpen = (problemId: number) => {
+    const handleOpenReview = (problemId: number) => {
         const selectedProblemData = rawProblems.find(problem => problem.id === problemId);
         setSelectedProblem(selectedProblemData);
         
-        setOpen(true);
+        setOpenReview(true);
         document.body.style.overflow = 'hidden';
     }
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleOpenProposal = (problemId: number) => {
+        const selectedProblemData = rawProblems.find(problem => problem.id === problemId);
+        setSelectedProblem(selectedProblemData);
+        
+        setOpenProposal(true);
+        document.body.style.overflow = 'hidden';
+    }
+
+    const handleCloseReview = () => {
+        setOpenReview(false);
+        document.body.style.overflow = 'auto';
+    }
+
+    const handleCloseProposal = () => {
+        setOpenProposal(false);
         document.body.style.overflow = 'auto';
     }
     
@@ -190,7 +205,8 @@ export default function ProblemsPage() {
                                     description={description}
                                     dateRegistration={created_at ? new Intl.DateTimeFormat('es-ES').format(new Date(created_at)) : ''}
                                     status={raw_status}
-                                    openDialog={handleOpen}
+                                    openReviewDialog={handleOpenReview}
+                                    openProposalDialog={handleOpenProposal}
                                 />
                                 );
                             })
@@ -214,9 +230,17 @@ export default function ProblemsPage() {
                             <NewProblemDialog />
                         </Dialog>
                     </Suspense>
-                    {isOpen && (
+
+                    {isOpenProposal && (
                         <Suspense>
-                            <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpen} onClose={handleClose} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
+                            <NewProposalDialog rawProblem={selectedProblem} isOpen={isOpenProposal} onClose={handleCloseProposal} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
+                            </NewProposalDialog>
+                        </Suspense>
+                    )}
+
+                    {isOpenReview && (
+                        <Suspense>
+                            <ReviewProblemDialog rawProblem={selectedProblem} isOpen={isOpenReview} onClose={handleCloseReview} className="space-y-4 lg:space-y-0 lg:gap-x-5 py-6 ">
                             </ReviewProblemDialog>
                         </Suspense>
                     )}

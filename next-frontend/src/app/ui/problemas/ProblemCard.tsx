@@ -9,7 +9,8 @@ type ProblemCardProps = {
     cantRecursos?: number,
     description?: string,
     dateRegistration?: string,
-    openDialog: (problemId: number) => void 
+    openReviewDialog: (problemId: number) => void
+    openProposalDialog: (problemId: number) => void 
 }
 
 export default function ProblemCard({
@@ -20,12 +21,18 @@ export default function ProblemCard({
         cantRecursos = 0, 
         description = 'La descripción de este problema no ha sido detallada', 
         dateRegistration = "Sin fecha de registro",
-        openDialog
+        openReviewDialog,
+        openProposalDialog
     } : ProblemCardProps) {
 
-    const handleOpenDialog = () => {
-        openDialog(id);
+    const handleOpenReviewDialog = () => {
+        openReviewDialog(id);
     };
+
+    const handleOpenProposalDialog = () => {
+        openProposalDialog(id);
+    };
+        
         
     return (
         <div className="bg-white p-6 rounded-lg shadow-md w-full">
@@ -47,14 +54,25 @@ export default function ProblemCard({
                 <p className="mt-auto text-sm font-medium">Regitrado el {dateRegistration}</p>
                 
                     <Button
-                        onClick={handleOpenDialog}
+                        onClick={handleOpenReviewDialog}
                         className="bg-slate-600 
                         hover:bg-slate-700
-                        w-24 h-8
+                        px-6 py-2
                         text-white font-semibold 
                         rounded-md shadow-md text-sm"
                     >
                         Revisar
+                    </Button>
+
+                    <Button
+                        onClick={handleOpenProposalDialog}
+                        className="bg-slate-600 
+                        hover:bg-slate-700
+                        px-6 py-2
+                        text-white font-semibold 
+                        rounded-md shadow-md text-sm"
+                    >
+                        Crear propuesta
                     </Button>
                 
             </div>
